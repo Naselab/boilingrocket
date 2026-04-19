@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Members Vault — Boiling Rocket</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --bg2: #111111;
+    --bg3: #181818;
+    --border: rgba(255,255,255,0.07);
+    --text: #f0ece4;
+    --muted: #888880;
+    --accent: #c8a96e;
+    --accent2: #e8c98e;
+    --red: #c0392b;
+    --gold-glow: rgba(200,169,110,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(8,8,8,0.97);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(4px);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--text); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .members-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #080808;
+    background: var(--accent);
+    padding: 0.3rem 0.8rem;
+  }
+
+  .nav-back {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--text); }
+
+  /* VAULT HEADER */
+  .vault-header {
+    padding: 7rem 4rem 3rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vault-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent 0%, var(--accent) 40%, var(--accent2) 60%, transparent 100%);
+  }
+
+  .vault-header::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -10%; right: -10%; bottom: -50%;
+    background: radial-gradient(ellipse at 50% 0%, var(--gold-glow) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .vault-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .vault-header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .vault-header p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .vault-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .vault-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+  }
+
+  .vault-stat-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* FILTER BAR */
+  .filter-bar {
+    padding: 1.5rem 4rem;
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 65px;
+    z-index: 50;
+    background: rgba(8,8,8,0.97);
+    backdrop-filter: blur(4px);
+  }
+
+  .filter-btn {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover { border-color: rgba(200,169,110,0.3); color: var(--text); }
+  .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(200,169,110,0.05); }
+
+  /* CATALOG */
+  .catalog {
+    padding: 3rem 4rem 5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+  }
+
+  .section-count {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .video-card {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .video-thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--bg3);
+  }
+
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease, opacity 0.3s;
+    opacity: 0.85;
+  }
+
+  .video-card:hover .video-thumb img {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  .video-thumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-card:hover .video-thumb-overlay { opacity: 1; }
+
+  .play-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: rgba(200,169,110,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.8);
+    transition: transform 0.2s;
+  }
+
+  .video-card:hover .play-btn { transform: scale(1); }
+  .play-btn svg { width: 20px; height: 20px; fill: #080808; margin-left: 3px; }
+
+  .video-duration {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    background: rgba(8,8,8,0.85);
+    color: var(--text);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.15rem 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  .video-tag {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .tag-mv { background: var(--accent); color: #080808; }
+  .tag-film { background: var(--red); color: #fff; }
+  .tag-new { background: #1a6b3a; color: #a8f0c0; }
+
+  .video-info { padding: 0.75rem 0 0; }
+
+  .video-title {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+    transition: color 0.2s;
+  }
+
+  .video-card:hover .video-title { color: var(--accent); }
+
+  .video-meta {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+
+  .modal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: -2.5rem;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .modal-close:hover { color: var(--text); }
+
+  .modal-video {
+    aspect-ratio: 16/9;
+    width: 100%;
+    background: #000;
+  }
+
+  .modal-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .modal-info {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-meta { font-size: 0.8rem; color: var(--muted); }
+
+  /* NEW RELEASES BANNER */
+  .new-banner {
+    background: linear-gradient(135deg, rgba(26,107,58,0.15) 0%, transparent 60%);
+    border: 1px solid rgba(26,107,58,0.3);
+    padding: 1rem 1.5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .new-banner-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2ecc71;
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .new-banner p {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .new-banner strong { color: var(--text); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-note { font-size: 0.75rem; color: var(--muted); }
+  .footer-note a { color: var(--accent); text-decoration: none; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .vault-header { padding: 6rem 1.5rem 2rem; }
+    .filter-bar { padding: 1rem 1.5rem; flex-wrap: wrap; }
+    .catalog { padding: 2rem 1.5rem 4rem; }
+    footer { flex-direction: column; gap: 1rem; padding: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Boiling<span>Rocket</span></a>
+  <div class="nav-right">
+    <span class="members-badge">Members Vault</span>
+    <a href="index.html" class="nav-back">← Public Site</a>
+  </div>
+</nav>
+
+<div class="vault-header">
+  <div class="vault-eyebrow">Full Access — Members Only</div>
+  <h1>Your Private Catalog</h1>
+  <p>Every music video and short film, unlocked. Bookmark this page — this is your personal access key.</p>
+  <div class="vault-stats">
+    <div>
+      <div class="vault-stat-num">9</div>
+      <div class="vault-stat-label">Videos</div>
+    </div>
+    <div>
+      <div class="vault-stat-num">5</div>
+      <div class="vault-stat-label">Music Videos</div>
+    </div>
+    <div>
+      <div class="vault-stat-num">4</div>
+      <div class="vault-stat-label">Short Films</div>
+    </div>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterVideos('all', this)">All</button>
+  <button class="filter-btn" onclick="filterVideos('mv', this)">Music Videos</button>
+  <button class="filter-btn" onclick="filterVideos('film', this)">Short Films</button>
+  <button class="filter-btn" onclick="filterVideos('new', this)">New Releases</button>
+</div>
+
+<div class="catalog">
+
+  <div class="new-banner">
+    <div class="new-banner-dot"></div>
+    <p><strong>New release available:</strong> Who's Driving? was just added to your vault. Enjoy.</p>
+  </div>
+
+  <div class="section-header">
+    <span class="section-title">New Releases</span>
+    <span class="section-count" id="count-new"></span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="video-grid" id="grid-new">
+
+    <div class="video-card" data-type="mv new" onclick="openModal('YOUR_BUNNY_EMBED_URL_1', 'Who\'s Driving?', '2024 · Music Video · 4:32')">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Who's Driving?">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-new">New</span>
+        <span class="video-duration">4:32</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Who's Driving?</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; Bodies &nbsp;·&nbsp; 2024</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="film new" onclick="openModal('YOUR_BUNNY_EMBED_URL_2', 'Signal Lost', '2024 · Short Film · 8:14')">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&q=80" alt="Signal Lost">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-new">New</span>
+        <span class="video-duration">8:14</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Signal Lost</div>
+        <div class="video-meta">Short Film &nbsp;·&nbsp; 2024</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-header">
+    <span class="section-title">Full Catalog</span>
+    <span class="section-count" id="count-all"></span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="video-grid" id="grid-all">
+
+    <div class="video-card" data-type="mv" onclick="openModal('YOUR_BUNNY_EMBED_URL_3', 'Afterimage', '2024 · Music Video · 3:55')">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Afterimage">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">3:55</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Afterimage</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2024</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="mv" onclick="openModal('YOUR_BUNNY_EMBED_URL_4', 'Neon Passenger', '2023 · Music Video · 3:20')">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1520034475321-cbe63696469a?w=600&q=80" alt="Neon Passenger">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">3:20</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Neon Passenger</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2023</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="film" onclick="openModal('YOUR_BUNNY_EMBED_URL_5', 'The Hollow Hours', '2023 · Short Film · 12:07')">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=600&q=80" alt="The Hollow Hours">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-film">Short Film</span>
+        <span class="video-duration">12:07</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">The Hollow Hours</div>
+        <div class="video-meta">Short Film &nbsp;·&nbsp; 2023</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="mv" onclick="openModal('YOUR_BUNNY_EMBED_URL_6', 'Synthetic Bloom', '2023 · Music Video · 4:01')">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1569587112025-0d460e81a126?w=600&q=80" alt="Synthetic Bloom">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">4:01</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Synthetic Bloom</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2023</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="film" onclick="openModal('YOUR_BUNNY_EMBED_URL_7', 'Exit Protocol', '2023 · Short Film · 9:45')">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&q=80" alt="Exit Protocol">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-film">Short Film</span>
+        <span class="video-duration">9:45</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Exit Protocol</div>
+        <div class="video-meta">Short Film &nbsp;·&nbsp; 2023</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="mv" onclick="openModal('YOUR_BUNNY_EMBED_URL_8', 'Particle Memory', '2022 · Music Video · 3:38')">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80" alt="Particle Memory">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">3:38</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Particle Memory</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2022</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="film" onclick="openModal('YOUR_BUNNY_EMBED_URL_9', 'Last Transmission', '2022 · Short Film · 15:22')">
+      <div class="video-thumb">
+        <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=600&q=80" alt="Last Transmission">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-film">Short Film</span>
+        <span class="video-duration">15:22</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Last Transmission</div>
+        <div class="video-meta">Short Film &nbsp;·&nbsp; 2022</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-note">
+    This is your private members page. Please don't share this URL. &nbsp;·&nbsp;
+    <a href="index.html">Back to public site</a> &nbsp;·&nbsp;
+    <a href="https://YOUR-GUMROAD-SUBSCRIPTION-URL" target="_blank">Manage subscription</a>
+  </div>
+  <div class="footer-note">&copy; 2025 Boiling Rocket</div>
+</footer>
+
+<!-- VIDEO MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOnBg(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">
+      <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Close
+    </button>
+    <div class="modal-video">
+      <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay"></iframe>
+    </div>
+    <div class="modal-info">
+      <div>
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-meta" id="modal-meta"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(url, title, meta) {
+    document.getElementById('modal-iframe').src = url;
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-meta').textContent = meta;
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-iframe').src = '';
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOnBg(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function filterVideos(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const allCards = document.querySelectorAll('.video-card');
+    allCards.forEach(card => {
+      const types = card.dataset.type || '';
+      if (type === 'all') {
+        card.style.display = '';
+      } else {
+        card.style.display = types.includes(type) ? '' : 'none';
+      }
+    });
+
+    // Hide empty section headers
+    document.querySelectorAll('.video-grid').forEach(grid => {
+      const visible = [...grid.querySelectorAll('.video-card')].some(c => c.style.display !== 'none');
+      const header = grid.previousElementSibling;
+      if (header && header.classList.contains('section-header')) {
+        header.style.display = visible ? '' : 'none';
+      }
+      grid.style.display = visible ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
