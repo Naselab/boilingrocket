@@ -117,7 +117,7 @@
   }
 
   .hero-eyebrow {
-    font-size: 0.72rem;
+    font-size: 0.94rem;
     font-weight: 600;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -127,7 +127,7 @@
 
   .hero h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-size: clamp(4.5rem, 9vw, 7.8rem);
     line-height: 0.95;
     letter-spacing: 0.04em;
     color: var(--text);
@@ -140,7 +140,7 @@
   }
 
   .hero p {
-    font-size: 1rem;
+    font-size: 1.3rem;
     color: var(--muted);
     max-width: 480px;
     margin-bottom: 2rem;
@@ -335,16 +335,28 @@
     display: grid;
     grid-template-columns: 1.8fr 1fr;
     gap: 1.5rem;
+    align-items: stretch;
   }
 
   .featured-card {
     position: relative;
     cursor: pointer;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   .featured-card .video-thumb {
-    aspect-ratio: 16/9;
+    flex: 1;
+    aspect-ratio: unset;
+    min-height: 0;
+  }
+
+  .featured-card .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   /* PRODUCTS */
@@ -418,13 +430,17 @@
   /* ABOUT */
   .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1.6fr;
-    gap: 5rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
     align-items: center;
+    max-width: 800px;
   }
 
   .about-img-wrap {
     position: relative;
+    max-width: 300px;
+    margin-left: auto;
+    display: none;
   }
 
   .about-img-wrap::before {
@@ -437,7 +453,7 @@
 
   .about-img {
     width: 100%;
-    aspect-ratio: 3/4;
+    aspect-ratio: 1/1;
     object-fit: cover;
     display: block;
     filter: grayscale(30%);
@@ -953,7 +969,7 @@
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-      <div class="video-card" onclick="openEmailCapture('YOUR_BUNNY_EMBED_URL_2', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.')">
+      <div class="video-card" onclick="openEmailCapture('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.')">
         <div class="video-thumb">
           <img src="https://i.ibb.co/p6THDkLX/The-simulation.png" alt="The Simulation">
           <div class="video-thumb-overlay">
@@ -983,6 +999,45 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-title">Also Free</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="video-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(2, 1fr);">
+
+    <div class="video-card" onclick="openEmailCapture('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2025 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.')">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/tMk7qz3J/Authorized-Access.png" alt="Authorized Access">
+        <div class="video-thumb-overlay">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">2:13</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Authorized Access</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openEmailCapture('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.')">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/39vXKxPW/Those-Who-See-part1.png" alt="Those Who See Part 1">
+        <div class="video-thumb-overlay">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <span class="video-tag tag-film">Series</span>
+        <span class="video-duration">3:26</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Those Who See — Part 1: Arrival</div>
+        <div class="video-meta">Series &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
+
   </div>
 
   <div class="section-header">
@@ -1233,8 +1288,15 @@
       <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       Close
     </button>
-    <div class="modal-video">
+    <div class="modal-video" style="position:relative;">
       <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay"></iframe>
+      <!-- END SCREEN OVERLAY -->
+      <div id="end-screen" style="display:none;position:absolute;inset:0;background:rgba(8,8,8,0.96);z-index:10;flex-direction:column;align-items:center;justify-content:center;padding:2rem;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.4rem;">WATCH NEXT</div>
+        <div style="font-size:0.75rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:2rem;">More from Boiling Rocket</div>
+        <div id="end-screen-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;width:100%;max-width:640px;"></div>
+        <button onclick="closeModal()" style="margin-top:2rem;background:none;border:1px solid rgba(200,169,110,0.3);color:var(--muted);font-family:'Outfit',sans-serif;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.6rem 1.5rem;cursor:pointer;">Close</button>
+      </div>
     </div>
     <div class="modal-info">
       <div>
@@ -1316,16 +1378,72 @@
   }
 
 
+  // Video catalog for end-screen suggestions
+  const videoCatalog = [
+    { title: 'The Simulation', thumb: 'https://i.ibb.co/p6THDkLX/The-simulation.png', url: 'https://rumble.com/embed/v7708xs/?pub=4pcu4u', meta: '2025 · Music Video · 2:21' },
+    { title: 'Authorized Access', thumb: 'https://i.ibb.co/tMk7qz3J/Authorized-Access.png', url: 'https://rumble.com/embed/v772m6c/?pub=4pcu4u', meta: '2025 · Music Video · 2:13' },
+    { title: 'Those Who See — Part 1', thumb: 'https://i.ibb.co/39vXKxPW/Those-Who-See-part1.png', url: 'https://rumble.com/embed/v7734om/?pub=4pcu4u', meta: '2025 · Series · 3:26' },
+  ];
+
+  // Video durations in seconds (end-screen shows 10s before end)
+  const videoDurations = {
+    'https://rumble.com/embed/v7708xs/?pub=4pcu4u': 141,
+    'https://rumble.com/embed/v772m6c/?pub=4pcu4u': 133,
+    'https://rumble.com/embed/v7734om/?pub=4pcu4u': 206,
+  };
+
+  let endScreenTimer = null;
+
   function openModal(url, title, meta) {
     document.getElementById('modal-iframe').src = url;
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-meta').textContent = meta;
     document.getElementById('modal').classList.add('open');
+    document.getElementById('end-screen').style.display = 'none';
     document.body.style.overflow = 'hidden';
+
+    // Start end-screen countdown
+    clearTimeout(endScreenTimer);
+    const duration = videoDurations[url];
+    if (duration) {
+      const delay = Math.max((duration - 10) * 1000, 5000);
+      endScreenTimer = setTimeout(showEndScreen, delay);
+    }
+
+    // Populate end-screen with other videos (exclude current)
+    const grid = document.getElementById('end-screen-grid');
+    grid.innerHTML = '';
+    videoCatalog
+      .filter(v => v.url !== url)
+      .slice(0, 3)
+      .forEach(v => {
+        const card = document.createElement('div');
+        card.style.cssText = 'cursor:pointer;';
+        card.innerHTML = `
+          <div style="position:relative;aspect-ratio:16/9;overflow:hidden;margin-bottom:0.5rem;">
+            <img src="${v.thumb}" style="width:100%;height:100%;object-fit:cover;opacity:0.85;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <div style="width:36px;height:36px;background:rgba(200,169,110,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#080808"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:0.78rem;font-weight:600;color:var(--text);line-height:1.3;">${v.title}</div>
+          <div style="font-size:0.68rem;color:var(--muted);margin-top:0.2rem;">${v.meta}</div>`;
+        card.onclick = () => openModal(v.url, v.title, v.meta);
+        grid.appendChild(card);
+      });
+  }
+
+  function showEndScreen() {
+    document.getElementById('modal-iframe').src = '';
+    document.getElementById('end-screen').style.display = 'flex';
   }
 
   function closeModal() {
+    clearTimeout(endScreenTimer);
     document.getElementById('modal-iframe').src = '';
+    document.getElementById('end-screen').style.display = 'none';
     document.getElementById('modal').classList.remove('open');
     document.body.style.overflow = '';
   }
