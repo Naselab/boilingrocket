@@ -96,17 +96,17 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 60% 40%, rgba(200,169,110,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse at 20% 80%, rgba(192,57,43,0.06) 0%, transparent 50%),
-      linear-gradient(to bottom, transparent 30%, rgba(8,8,8,0.7) 70%, var(--bg) 100%);
+      radial-gradient(ellipse at 60% 40%, rgba(200,169,110,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(192,57,43,0.04) 0%, transparent 50%),
+      linear-gradient(to bottom, transparent 20%, rgba(8,8,8,0.5) 65%, var(--bg) 100%);
     z-index: 1;
   }
 
   .hero-bg-img {
     position: absolute;
     inset: 0;
-    background: url('https://i.ibb.co/p6THDkLX/The-simulation.png') center/cover no-repeat;
-    opacity: 0.18;
+    background: url('https://raw.githubusercontent.com/Naselab/boilingrocket/main/Untitled-1%20Firefly%20Upscaler%202x%20scale.png') center/cover no-repeat;
+    opacity: 0.42;
     z-index: 0;
   }
 
@@ -1385,7 +1385,7 @@
     { title: 'Those Who See — Part 1', thumb: 'https://i.ibb.co/39vXKxPW/Those-Who-See-part1.png', url: 'https://rumble.com/embed/v7734om/?pub=4pcu4u', meta: '2025 · Series · 3:26' },
   ];
 
-  // Video durations in seconds (end-screen shows 10s before end)
+  // Video durations in seconds
   const videoDurations = {
     'https://rumble.com/embed/v7708xs/?pub=4pcu4u': 141,
     'https://rumble.com/embed/v772m6c/?pub=4pcu4u': 133,
@@ -1393,6 +1393,8 @@
   };
 
   let endScreenTimer = null;
+  let countdownInterval = null;
+  let videoStartTime = null;
 
   function openModal(url, title, meta) {
     document.getElementById('modal-iframe').src = url;
@@ -1402,13 +1404,9 @@
     document.getElementById('end-screen').style.display = 'none';
     document.body.style.overflow = 'hidden';
 
-    // Start end-screen countdown
+    // Clear any existing timers
     clearTimeout(endScreenTimer);
-    const duration = videoDurations[url];
-    if (duration) {
-      const delay = Math.max((duration - 10) * 1000, 5000);
-      endScreenTimer = setTimeout(showEndScreen, delay);
-    }
+    clearInterval(countdownInterval);
 
     // Populate end-screen with other videos (exclude current)
     const grid = document.getElementById('end-screen-grid');
@@ -1433,15 +1431,26 @@
         card.onclick = () => openModal(v.url, v.title, v.meta);
         grid.appendChild(card);
       });
+
+    // Start timer — wait 3s for video to load, then count duration
+    const duration = videoDurations[url];
+    if (duration) {
+      const loadDelay = 3000;
+      const triggerAt = (duration - 8) * 1000; // show 8s before end
+      videoStartTime = Date.now();
+      endScreenTimer = setTimeout(showEndScreen, loadDelay + triggerAt);
+    }
   }
 
   function showEndScreen() {
+    clearInterval(countdownInterval);
     document.getElementById('modal-iframe').src = '';
     document.getElementById('end-screen').style.display = 'flex';
   }
 
   function closeModal() {
     clearTimeout(endScreenTimer);
+    clearInterval(countdownInterval);
     document.getElementById('modal-iframe').src = '';
     document.getElementById('end-screen').style.display = 'none';
     document.getElementById('modal').classList.remove('open');
