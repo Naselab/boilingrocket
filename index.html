@@ -1574,7 +1574,7 @@
     btn.innerHTML = 'Loading…';
     btn.disabled = true;
 
-    fetch('/.netlify/functions/subscribe', {
+    fetch('https://br-subscribe.shinomalf.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -1611,7 +1611,7 @@
       document.getElementById('email-capture-input').style.borderColor = 'rgba(192,57,43,0.6)';
       return;
     }
-    fetch('/.netlify/functions/subscribe', {
+    fetch('https://br-subscribe.shinomalf.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, group: '185394129199433480', first_video: pendingVideoTitle })
