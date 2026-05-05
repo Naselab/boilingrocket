@@ -14,7 +14,7 @@ exports.handler = async function(event) {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
-  const { email, group } = body;
+  const { email, group, first_video } = body;
   if (!email || !email.includes('@')) {
     return { statusCode: 400, body: 'Invalid email' };
   }
@@ -24,6 +24,21 @@ exports.handler = async function(event) {
     return { statusCode: 500, body: 'Server misconfiguration' };
   }
 
+  // Grab IP from Netlify/CDN headers
+  const ip = event.headers['x-forwarded-for']?.split(',')[0].trim()
+           || event.headers['client-ip']
+           || null;
+
+  const payload = {
+    email,
+    groups: [group || '185394129199433480'],
+    fields: {
+      ...(first_video && { first_video }),
+      ...(ip && { signup_ip: ip })
+    },
+    ip_address: ip || undefined
+  };
+
   try {
     const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
       method: 'POST',
@@ -31,10 +46,7 @@ exports.handler = async function(event) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`
       },
-      body: JSON.stringify({
-        email,
-        groups: [group || '185394129199433480']
-      })
+      body: JSON.stringify(payload)
     });
 
     const data = await response.json();
