@@ -105,7 +105,7 @@
   .hero-bg-img {
     position: absolute;
     inset: 0;
-    background: url('https://raw.githubusercontent.com/Naselab/boilingrocket/main/Untitled-1%20Firefly%20Upscaler%202x%20scale.png') center/cover no-repeat;
+    background: url('https://i.ibb.co/84fWvDtK/Untitled-1-Firefly-Upscaler-2x-scale.png') center/cover no-repeat;
     opacity: 0.42;
     z-index: 0;
   }
@@ -315,8 +315,8 @@
   .video-info { padding: 0.75rem 0 0; }
 
   .video-title {
-    font-size: 0.92rem;
-    font-weight: 500;
+    font-size: 1.05rem;
+    font-weight: 600;
     color: var(--text);
     margin-bottom: 0.25rem;
     transition: color 0.2s;
@@ -325,7 +325,7 @@
   .video-card:hover .video-title { color: var(--accent); }
 
   .video-meta {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     color: var(--muted);
     letter-spacing: 0.03em;
   }
@@ -899,6 +899,189 @@
     text-decoration: none;
   }
 
+  /* PREVIEW PANEL */
+  .preview-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 250;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .preview-overlay.open { display: flex; }
+
+  .preview-panel {
+    position: relative;
+    width: 100%;
+    max-width: 860px;
+    max-height: calc(100vh - 4rem);
+    background: var(--bg2);
+    border: 1px solid rgba(200,169,110,0.18);
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(300px, 1fr);
+    overflow: hidden;
+  }
+
+  .preview-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    z-index: 3;
+  }
+
+  .preview-panel-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    z-index: 4;
+  }
+  .preview-panel-close:hover { color: var(--text); }
+
+  .preview-panel-img {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    /* Fill the full panel height, never dictate it */
+    min-height: 0;
+    align-self: stretch;
+  }
+  .preview-panel-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.9;
+  }
+  .preview-panel-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 55%, var(--bg2) 100%);
+  }
+
+  .preview-panel-info {
+    padding: 2.5rem 2rem 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.9rem;
+    /* Scroll internally if content is taller than panel */
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  .preview-panel-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .preview-panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+
+  .preview-panel-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.75;
+    flex-shrink: 1;
+  }
+
+  .preview-panel-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .preview-watch-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: #080808;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+  }
+  .preview-watch-btn:hover { background: var(--accent2); }
+
+  .preview-subscribe-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--text);
+    padding: 0.7rem 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(240,236,228,0.18);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    width: 100%;
+  }
+  .preview-subscribe-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .preview-panel-fine {
+    font-size: 0.68rem;
+    color: var(--muted);
+    opacity: 0.7;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .preview-panel {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      max-height: calc(100vh - 2rem);
+    }
+    .preview-panel-img {
+      aspect-ratio: 16/9;
+      max-height: 200px;
+    }
+    .preview-panel-img-overlay {
+      background: linear-gradient(to bottom, transparent 50%, var(--bg2) 100%);
+    }
+    .preview-panel-info { padding: 1.25rem 1.5rem 1.5rem; }
+    .preview-panel-title { font-size: 1.6rem; }
+  }
+
   /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
@@ -948,72 +1131,55 @@
 <!-- CATALOG -->
 <section id="catalog">
   <div class="section-header">
-    <span class="section-title">Featured</span>
+    <span class="section-title">Catalog</span>
     <div class="section-line"></div>
   </div>
 
-  <div class="featured-grid" style="margin-bottom: 3rem;">
-    <div class="video-card featured-card" onclick="openEmailCapture('YOUR_BUNNY_EMBED_URL_1', 'Bodies', '2026 · Music Video · 3:57', 'A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn\'t training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.')">
+  <div class="video-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 3rem;">
+
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v770b54/?pub=4pcu4u', 'Bodies', '2026 · Music Video · 3:57', 'A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn\'t training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.', 'https://i.ibb.co/GQW1cyTH/Bodies.png', false)">
       <div class="video-thumb">
-        <img src="https://i.ibb.co/My6gkCm6/Bodies.png" alt="Bodies">
-        <div class="video-thumb-overlay">
-          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
+        <img src="https://i.ibb.co/V0Q5L7qc/bodies.png" alt="Bodies">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-new">New</span>
         <span class="video-duration">3:57</span>
       </div>
       <div class="video-info">
-        <div class="video-title" style="font-size: 1.05rem;">Bodies</div>
+        <div class="video-title">Bodies</div>
         <div class="video-meta">Music Video &nbsp;·&nbsp; 2026</div>
       </div>
     </div>
 
-    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-      <div class="video-card" onclick="openEmailCapture('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.')">
-        <div class="video-thumb">
-          <img src="https://i.ibb.co/p6THDkLX/The-simulation.png" alt="The Simulation">
-          <div class="video-thumb-overlay">
-            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-          </div>
-          <span class="video-tag tag-mv">Music Video</span>
-          <span class="video-duration">2:21</span>
-        </div>
-        <div class="video-info">
-          <div class="video-title">The Simulation</div>
-          <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
-        </div>
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.', 'https://i.ibb.co/5fF95cS/simulation.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/p6THDkLX/The-simulation.png" alt="The Simulation">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">2:21</span>
       </div>
-
-      <div class="video-card" onclick="openEmailCapture('YOUR_BUNNY_EMBED_URL_3', 'Saved', '2025 · Short Film · 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.')">
-        <div class="video-thumb">
-          <img src="https://i.ibb.co/dJrhJxQn/Saved.png" alt="Saved">
-          <div class="video-thumb-overlay">
-            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-          </div>
-          <span class="video-tag tag-film">Short Film</span>
-          <span class="video-duration">3:50</span>
-        </div>
-        <div class="video-info">
-          <div class="video-title">Saved</div>
-          <div class="video-meta">Short Film &nbsp;·&nbsp; 2025</div>
-        </div>
+      <div class="video-info">
+        <div class="video-title">The Simulation</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
       </div>
     </div>
-  </div>
 
-  <div class="section-header">
-    <span class="section-title">Also Free</span>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="video-grid" style="margin-bottom: 3rem; grid-template-columns: repeat(2, 1fr);">
-
-    <div class="video-card" onclick="openEmailCapture('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2025 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.')">
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772za6/?pub=4pcu4u', 'Saved', '2025 · Short Film · 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.', 'https://i.ibb.co/HT1q0L0W/Saved.png', false)">
       <div class="video-thumb">
-        <img src="https://i.ibb.co/tMk7qz3J/Authorized-Access.png" alt="Authorized Access">
-        <div class="video-thumb-overlay">
-          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
+        <img src="https://i.ibb.co/dJrhJxQn/Saved.png" alt="Saved">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-film">Short Film</span>
+        <span class="video-duration">3:50</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Saved</div>
+        <div class="video-meta">Short Film &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2025 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.', 'https://i.ibb.co/Q7c9c7Qg/Authorized-Access.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/M5NTMpsQ/authorized.png" alt="Authorized Access">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-mv">Music Video</span>
         <span class="video-duration">2:13</span>
       </div>
@@ -1023,12 +1189,10 @@
       </div>
     </div>
 
-    <div class="video-card" onclick="openEmailCapture('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.')">
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.', 'https://i.ibb.co/JRLzYbwc/Those-Who-See.png', false)">
       <div class="video-thumb">
         <img src="https://i.ibb.co/39vXKxPW/Those-Who-See-part1.png" alt="Those Who See Part 1">
-        <div class="video-thumb-overlay">
-          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-film">Series</span>
         <span class="video-duration">3:26</span>
       </div>
@@ -1038,45 +1202,39 @@
       </div>
     </div>
 
-  </div>
-
-  <div class="section-header">
-    <span class="section-title">Members Only</span>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="video-grid">
-
-    <div class="video-card" onclick="openSubModal('Starve')">
-      <div class="video-thumb">
-        <img src="https://i.ibb.co/3mzPzhG8/Starve.png" alt="Starve">
-        <div class="lock-overlay"><div class="lock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div></div>
-        <span class="video-tag tag-mv">Music Video</span>
-        <span class="video-duration">2:45</span>
-      </div>
-      <div class="video-info">
-        <div class="video-title">Starve</div>
-        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025 &nbsp;·&nbsp; <span style="color:var(--accent);font-size:0.7rem;letter-spacing:0.08em;">MEMBERS</span></div>
-      </div>
-    </div>
-
-    <div class="video-card" onclick="openSubModal('You Gotta Run Away')">
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v77660w/?pub=4pcu4u', 'You Gotta Run Away', '2025 · Music Video · 2:25', 'A high-octane music video about escape, speed, and the desperate need to leave everything behind.', 'https://i.ibb.co/yCz9kqj/You-Gotta-Run-Away.png', false)">
       <div class="video-thumb">
         <img src="https://i.ibb.co/99QWk5gF/You-Gotta-Run-Away.png" alt="You Gotta Run Away">
-        <div class="lock-overlay"><div class="lock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div></div>
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-mv">Music Video</span>
         <span class="video-duration">2:25</span>
       </div>
       <div class="video-info">
         <div class="video-title">You Gotta Run Away</div>
-        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025 &nbsp;·&nbsp; <span style="color:var(--accent);font-size:0.7rem;letter-spacing:0.08em;">MEMBERS</span></div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2025 · Music Video · 3:12', 'A cinematic music video exploring censorship, control, and the fight to be seen in a world that wants you silenced.', 'https://i.ibb.co/GQKYC6fT/Banned.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/7JdgPyDh/banned.png" alt="Banned">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">3:12</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Banned</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
       </div>
     </div>
 
   </div>
-</section>
 
-<!-- PRODUCTS -->
+  <div style="text-align:center;padding:3rem 0 1rem;">
+    <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.2em;color:var(--muted);opacity:0.5;">More Coming Soon</span>
+  </div>
+
+</section>
 <section id="products" style="background: var(--bg2); border-top: 1px solid var(--border);">
   <div class="section-header">
     <span class="section-title">Digital Products</span>
@@ -1223,6 +1381,32 @@
   <div class="footer-copy">&copy; 2026 Boiling Rocket. All rights reserved.</div>
 </footer>
 
+<!-- VIDEO PREVIEW PANEL -->
+<div class="preview-overlay" id="preview-overlay" onclick="closePreviewOnBg(event)">
+  <div class="preview-panel" id="preview-panel">
+    <button class="preview-panel-close" onclick="closePreview()">
+      <svg width="10" height="10" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Close
+    </button>
+    <div class="preview-panel-img">
+      <img id="preview-frame-img" src="" alt="">
+      <div class="preview-panel-img-overlay"></div>
+    </div>
+    <div class="preview-panel-info">
+      <div class="preview-panel-eyebrow" id="preview-meta">Meta</div>
+      <div class="preview-panel-title" id="preview-title">Title</div>
+      <div class="preview-panel-desc" id="preview-desc">Description</div>
+      <div class="preview-panel-actions">
+        <button class="preview-watch-btn" id="preview-watch-btn" onclick="previewWatchNow()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch Free
+        </button>
+      </div>
+      <div class="preview-panel-fine" id="preview-fine">Enter your email once — then watch everything, anytime.</div>
+    </div>
+  </div>
+</div>
+
 <!-- EMAIL CAPTURE MODAL (free videos) -->
 <div class="sub-modal-overlay" id="email-modal" onclick="closeEmailModalOnBg(event)">
   <div class="sub-modal">
@@ -1288,15 +1472,8 @@
       <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       Close
     </button>
-    <div class="modal-video" style="position:relative;">
+    <div class="modal-video">
       <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay"></iframe>
-      <!-- END SCREEN OVERLAY -->
-      <div id="end-screen" style="display:none;position:absolute;inset:0;background:rgba(8,8,8,0.96);z-index:10;flex-direction:column;align-items:center;justify-content:center;padding:2rem;">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.4rem;">WATCH NEXT</div>
-        <div style="font-size:0.75rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:2rem;">More from Boiling Rocket</div>
-        <div id="end-screen-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;width:100%;max-width:640px;"></div>
-        <button onclick="closeModal()" style="margin-top:2rem;background:none;border:1px solid rgba(200,169,110,0.3);color:var(--muted);font-family:'Outfit',sans-serif;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.6rem 1.5rem;cursor:pointer;">Close</button>
-      </div>
     </div>
     <div class="modal-info">
       <div>
@@ -1308,11 +1485,54 @@
 </div>
 
 <script>
-  // --- EMAIL CAPTURE MODAL (free videos) ---
+  // --- PREVIEW PANEL ---
   let pendingVideoUrl = '';
   let pendingVideoTitle = '';
   let pendingVideoMeta = '';
+  let pendingVideoDesc = '';
 
+  function openPreview(url, title, meta, desc, frameImg, locked) {
+    pendingVideoUrl = url;
+    pendingVideoTitle = title;
+    pendingVideoMeta = meta;
+    pendingVideoDesc = desc;
+
+    document.getElementById('preview-frame-img').src = frameImg;
+    document.getElementById('preview-frame-img').alt = title;
+    document.getElementById('preview-title').textContent = title;
+    document.getElementById('preview-meta').textContent = meta;
+    document.getElementById('preview-desc').textContent = desc;
+
+    const watchBtn = document.getElementById('preview-watch-btn');
+    const fine = document.getElementById('preview-fine');
+    const savedEmail = localStorage.getItem('br_email');
+
+    watchBtn.innerHTML = savedEmail
+      ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Watch Now'
+      : '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Watch Free';
+    fine.textContent = savedEmail
+      ? 'You\'re in — enjoy the full catalog.'
+      : 'Enter your email once — then watch everything, anytime.';
+
+    document.getElementById('preview-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePreview() {
+    document.getElementById('preview-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closePreviewOnBg(e) {
+    if (e.target === document.getElementById('preview-overlay')) closePreview();
+  }
+
+  function previewWatchNow() {
+    closePreview();
+    openEmailCapture(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta, pendingVideoDesc);
+  }
+
+  // --- EMAIL CAPTURE MODAL (free videos) ---
   function openEmailCapture(url, title, meta, desc) {
     pendingVideoUrl = url;
     pendingVideoTitle = title;
@@ -1378,81 +1598,16 @@
   }
 
 
-  // Video catalog for end-screen suggestions
-  const videoCatalog = [
-    { title: 'The Simulation', thumb: 'https://i.ibb.co/p6THDkLX/The-simulation.png', url: 'https://rumble.com/embed/v7708xs/?pub=4pcu4u', meta: '2025 · Music Video · 2:21' },
-    { title: 'Authorized Access', thumb: 'https://i.ibb.co/tMk7qz3J/Authorized-Access.png', url: 'https://rumble.com/embed/v772m6c/?pub=4pcu4u', meta: '2025 · Music Video · 2:13' },
-    { title: 'Those Who See — Part 1', thumb: 'https://i.ibb.co/39vXKxPW/Those-Who-See-part1.png', url: 'https://rumble.com/embed/v7734om/?pub=4pcu4u', meta: '2025 · Series · 3:26' },
-  ];
-
-  // Video durations in seconds
-  const videoDurations = {
-    'https://rumble.com/embed/v7708xs/?pub=4pcu4u': 141,
-    'https://rumble.com/embed/v772m6c/?pub=4pcu4u': 133,
-    'https://rumble.com/embed/v7734om/?pub=4pcu4u': 206,
-  };
-
-  let endScreenTimer = null;
-  let countdownInterval = null;
-  let videoStartTime = null;
-
   function openModal(url, title, meta) {
     document.getElementById('modal-iframe').src = url;
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-meta').textContent = meta;
     document.getElementById('modal').classList.add('open');
-    document.getElementById('end-screen').style.display = 'none';
     document.body.style.overflow = 'hidden';
-
-    // Clear any existing timers
-    clearTimeout(endScreenTimer);
-    clearInterval(countdownInterval);
-
-    // Populate end-screen with other videos (exclude current)
-    const grid = document.getElementById('end-screen-grid');
-    grid.innerHTML = '';
-    videoCatalog
-      .filter(v => v.url !== url)
-      .slice(0, 3)
-      .forEach(v => {
-        const card = document.createElement('div');
-        card.style.cssText = 'cursor:pointer;';
-        card.innerHTML = `
-          <div style="position:relative;aspect-ratio:16/9;overflow:hidden;margin-bottom:0.5rem;">
-            <img src="${v.thumb}" style="width:100%;height:100%;object-fit:cover;opacity:0.85;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85">
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-              <div style="width:36px;height:36px;background:rgba(200,169,110,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#080808"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-            </div>
-          </div>
-          <div style="font-size:0.78rem;font-weight:600;color:var(--text);line-height:1.3;">${v.title}</div>
-          <div style="font-size:0.68rem;color:var(--muted);margin-top:0.2rem;">${v.meta}</div>`;
-        card.onclick = () => openModal(v.url, v.title, v.meta);
-        grid.appendChild(card);
-      });
-
-    // Start timer — wait 3s for video to load, then count duration
-    const duration = videoDurations[url];
-    if (duration) {
-      const loadDelay = 3000;
-      const triggerAt = (duration - 8) * 1000; // show 8s before end
-      videoStartTime = Date.now();
-      endScreenTimer = setTimeout(showEndScreen, loadDelay + triggerAt);
-    }
-  }
-
-  function showEndScreen() {
-    clearInterval(countdownInterval);
-    document.getElementById('modal-iframe').src = '';
-    document.getElementById('end-screen').style.display = 'flex';
   }
 
   function closeModal() {
-    clearTimeout(endScreenTimer);
-    clearInterval(countdownInterval);
     document.getElementById('modal-iframe').src = '';
-    document.getElementById('end-screen').style.display = 'none';
     document.getElementById('modal').classList.remove('open');
     document.body.style.overflow = '';
   }
@@ -1491,7 +1646,7 @@
   }
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeModal(); closeSubModal(); }
+    if (e.key === 'Escape') { closeModal(); closeSubModal(); closePreview(); closeEmailModal(); }
   });
 
   function handleForm(e) {
