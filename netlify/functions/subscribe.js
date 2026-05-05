@@ -29,13 +29,32 @@ exports.handler = async function(event) {
            || event.headers['client-ip']
            || null;
 
+  // Geo-lookup using free ip-api.com (no API key needed, 45 req/min limit)
+  let city = null, country = null, timezone = null;
+  if (ip) {
+    try {
+      const geo = await fetch(`http://ip-api.com/json/${ip}?fields=city,country,timezone,status`);
+      const geoData = await geo.json();
+      if (geoData.status === 'success') {
+        city     = geoData.city     || null;
+        country  = geoData.country  || null;
+        timezone = geoData.timezone || null;
+      }
+    } catch {
+      // geo lookup failed — continue without it
+    }
+  }
+
   const payload = {
     email,
     groups: [group || '185394129199433480'],
     fields: {
       ...(first_video && { first_video }),
-      ...(ip && { signup_ip: ip })
+      ...(ip          && { signup_ip: ip }),
+      ...(city        && { city }),
+      ...(country     && { country }),
     },
+    ...(timezone && { timezone }),
     ip_address: ip || undefined
   };
 
