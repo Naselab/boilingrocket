@@ -915,12 +915,12 @@
   .preview-panel {
     position: relative;
     width: 100%;
-    max-width: 860px;
+    max-width: 620px;
     max-height: calc(100vh - 4rem);
     background: var(--bg2);
     border: 1px solid rgba(200,169,110,0.18);
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(300px, 1fr);
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
   }
 
@@ -931,6 +931,7 @@
     height: 2px;
     background: linear-gradient(to right, transparent, var(--accent), transparent);
     z-index: 3;
+    flex-shrink: 0;
   }
 
   .preview-panel-close {
@@ -938,7 +939,7 @@
     top: 1rem; right: 1rem;
     background: none;
     border: none;
-    color: var(--muted);
+    color: rgba(240,236,228,0.7);
     cursor: pointer;
     font-size: 0.75rem;
     font-family: 'Outfit', sans-serif;
@@ -949,37 +950,36 @@
     align-items: center;
     gap: 0.3rem;
     z-index: 4;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
   }
   .preview-panel-close:hover { color: var(--text); }
 
   .preview-panel-img {
     position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
     overflow: hidden;
     background: #000;
-    /* Fill the full panel height, never dictate it */
-    min-height: 0;
-    align-self: stretch;
+    flex-shrink: 0;
   }
   .preview-panel-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    opacity: 0.9;
+    opacity: 0.95;
   }
   .preview-panel-img-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, transparent 55%, var(--bg2) 100%);
+    background: linear-gradient(to bottom, transparent 55%, var(--bg2) 100%);
   }
 
   .preview-panel-info {
-    padding: 2.5rem 2rem 2rem 1.5rem;
+    padding: 1.5rem 2rem 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 0.9rem;
-    /* Scroll internally if content is taller than panel */
+    gap: 0.75rem;
     overflow-y: auto;
     min-height: 0;
   }
@@ -1015,6 +1015,7 @@
     gap: 0.6rem;
     margin-top: 0.25rem;
     flex-shrink: 0;
+    width: 100%;
   }
 
   .preview-watch-btn {
@@ -1065,21 +1066,47 @@
     flex-shrink: 0;
   }
 
-  @media (max-width: 640px) {
-    .preview-panel {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
-      max-height: calc(100vh - 2rem);
-    }
-    .preview-panel-img {
-      aspect-ratio: 16/9;
-      max-height: 200px;
-    }
-    .preview-panel-img-overlay {
-      background: linear-gradient(to bottom, transparent 50%, var(--bg2) 100%);
-    }
-    .preview-panel-info { padding: 1.25rem 1.5rem 1.5rem; }
-    .preview-panel-title { font-size: 1.6rem; }
+  .preview-gate-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0 0 0.6rem;
+    line-height: 1.5;
+  }
+
+  .preview-email-row {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .preview-email-row input {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.72rem 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .preview-email-row input:focus { border-color: var(--accent); }
+  .preview-email-row input.error { border-color: rgba(192,57,43,0.7); }
+
+  .preview-email-row .preview-watch-btn {
+    flex-shrink: 0;
+    width: auto;
+    padding: 0.72rem 1.2rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 420px) {
+    .preview-email-row { flex-direction: column; }
+    .preview-email-row .preview-watch-btn { width: 100%; }
+    .preview-overlay { padding: 0.75rem; }
+    .preview-panel-info { padding: 1rem 1rem 1.25rem; }
+    .preview-panel-title { font-size: 1.5rem; }
   }
 
   /* Scrollbar */
@@ -1217,7 +1244,7 @@
 
     <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2025 · Music Video · 3:12', 'A cinematic music video exploring censorship, control, and the fight to be seen in a world that wants you silenced.', 'https://i.ibb.co/GQKYC6fT/Banned.png', false)">
       <div class="video-thumb">
-        <img src="https://i.ibb.co/7JdgPyDh/banned.png" alt="Banned">
+        <img src="https://i.ibb.co/S4C69sZb/Banned-00-01-14-12-Still0604.png" alt="Banned">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-mv">Music Video</span>
         <span class="video-duration">3:12</span>
@@ -1299,23 +1326,10 @@
     <div class="about-text">
       <p class="eyebrow">About Boiling Rocket</p>
       <h2>Cinematic Worlds Built with AI</h2>
-      <p>Boiling Rocket is a one-person cinematic AI studio exploring the edge between artificial intelligence and emotional storytelling.</p>
-      <p>Every video is handcrafted — from the initial prompt architecture to the final color grade. No templates, no shortcuts. Just tools pushed to their limits in service of a vision.</p>
-      <p>The work sits at the intersection of music, cinema, and generative AI — for an audience that takes visual art seriously.</p>
-      <div class="stats-row">
-        <div>
-          <div class="stat-num">15+</div>
-          <div class="stat-label">Videos</div>
-        </div>
-        <div>
-          <div class="stat-num">4</div>
-          <div class="stat-label">Books</div>
-        </div>
-        <div>
-          <div class="stat-num">100%</div>
-          <div class="stat-label">Independent</div>
-        </div>
-      </div>
+      <p>Boiling Rocket started as a series of short films and music exploring AI, identity, and the systems shaping human behavior.</p>
+      <p>One of those films — <em>Perfect Companion</em> — reached millions of viewers before the entire channel disappeared during a moderation sweep, with no warning and no recovery.</p>
+      <p>That moment changed the direction of the project. Instead of relying on platforms that can remove everything overnight, this became a way to keep the work alive on more independent ground.</p>
+      <p>This site is the new base — where the films exist, where new ones are released, and where the project continues without depending on a single system.</p>
     </div>
   </div>
 </section>
@@ -1396,13 +1410,29 @@
       <div class="preview-panel-eyebrow" id="preview-meta">Meta</div>
       <div class="preview-panel-title" id="preview-title">Title</div>
       <div class="preview-panel-desc" id="preview-desc">Description</div>
-      <div class="preview-panel-actions">
-        <button class="preview-watch-btn" id="preview-watch-btn" onclick="previewWatchNow()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          Watch Free
-        </button>
+
+      <!-- NEW VISITOR: email input -->
+      <div class="preview-panel-actions" id="preview-email-gate">
+        <p class="preview-gate-label">Enter your email to watch — free, always.</p>
+        <div class="preview-email-row">
+          <input type="email" id="preview-email-input" placeholder="your@email.com" onkeydown="if(event.key==='Enter')submitPreviewEmail()">
+          <button class="preview-watch-btn" onclick="submitPreviewEmail()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Watch
+          </button>
+        </div>
+        <div class="preview-panel-fine">No spam — just new releases from Boiling Rocket. <a href="#contact" onclick="closePreview()" style="color:var(--accent);text-decoration:none;">Privacy</a></div>
       </div>
-      <div class="preview-panel-fine" id="preview-fine">Enter your email once — then watch everything, anytime.</div>
+
+      <!-- RETURNING VISITOR: direct watch -->
+      <div class="preview-panel-actions" id="preview-returning" style="display:none;">
+        <button class="preview-watch-btn" onclick="previewPlayNow()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch Now
+        </button>
+        <div class="preview-panel-fine" id="preview-fine">You're in — enjoy the full catalog.</div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1503,16 +1533,14 @@
     document.getElementById('preview-meta').textContent = meta;
     document.getElementById('preview-desc').textContent = desc;
 
-    const watchBtn = document.getElementById('preview-watch-btn');
-    const fine = document.getElementById('preview-fine');
     const savedEmail = localStorage.getItem('br_email');
+    document.getElementById('preview-email-gate').style.display = savedEmail ? 'none' : 'flex';
+    document.getElementById('preview-returning').style.display = savedEmail ? 'flex' : 'none';
 
-    watchBtn.innerHTML = savedEmail
-      ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Watch Now'
-      : '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Watch Free';
-    fine.textContent = savedEmail
-      ? 'You\'re in — enjoy the full catalog.'
-      : 'Enter your email once — then watch everything, anytime.';
+    if (!savedEmail) {
+      document.getElementById('preview-email-input').value = '';
+      document.getElementById('preview-email-input').classList.remove('error');
+    }
 
     document.getElementById('preview-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1527,29 +1555,45 @@
     if (e.target === document.getElementById('preview-overlay')) closePreview();
   }
 
-  function previewWatchNow() {
+  function previewPlayNow() {
     closePreview();
-    openEmailCapture(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta, pendingVideoDesc);
+    openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
   }
 
-  // --- EMAIL CAPTURE MODAL (free videos) ---
-  function openEmailCapture(url, title, meta, desc) {
-    pendingVideoUrl = url;
-    pendingVideoTitle = title;
-    pendingVideoMeta = meta;
-
-    // If email already saved, skip modal and play directly
-    const savedEmail = localStorage.getItem('br_email');
-    if (savedEmail) {
-      openModal(url, title, meta);
+  function submitPreviewEmail() {
+    const input = document.getElementById('preview-email-input');
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.classList.add('error');
+      input.focus();
       return;
     }
+    input.classList.remove('error');
 
-    document.getElementById('email-modal-video-title').textContent = title;
-    document.getElementById('email-modal-desc').textContent = desc;
-    document.getElementById('email-capture-input').value = '';
-    document.getElementById('email-modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
+    const btn = input.nextElementSibling;
+    btn.innerHTML = 'Loading…';
+    btn.disabled = true;
+
+    fetch('/.netlify/functions/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        group: '185394129199433480',
+        first_video: pendingVideoTitle
+      })
+    })
+    .finally(() => {
+      localStorage.setItem('br_email', email);
+      closePreview();
+      openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
+    });
+  }
+
+  // --- EMAIL CAPTURE MODAL — kept for legacy, no longer triggered from preview ---
+  function openEmailCapture(url, title, meta, desc) {
+    // Redirect to preview panel instead
+    openPreview(url, title, meta, desc, '', false);
   }
 
   function closeEmailModal() {
@@ -1567,32 +1611,12 @@
       document.getElementById('email-capture-input').style.borderColor = 'rgba(192,57,43,0.6)';
       return;
     }
-
-    const btn = document.querySelector('#email-modal .sub-btn');
-    btn.textContent = 'Subscribing...';
-    btn.style.opacity = '0.7';
-
-    // MailerLite subscription via Netlify serverless function (keeps API key off client)
     fetch('/.netlify/functions/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        group: '185394129199433480',
-        first_video: pendingVideoTitle
-      })
-    })
-    .then(res => {
+      body: JSON.stringify({ email, group: '185394129199433480', first_video: pendingVideoTitle })
+    }).finally(() => {
       localStorage.setItem('br_email', email);
-      btn.textContent = 'Watch';
-      btn.style.opacity = '1';
-      closeEmailModal();
-      openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
-    })
-    .catch(() => {
-      localStorage.setItem('br_email', email);
-      btn.textContent = 'Watch';
-      btn.style.opacity = '1';
       closeEmailModal();
       openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
     });
