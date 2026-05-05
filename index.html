@@ -1578,7 +1578,8 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: email,
-        group: '185394129199433480'
+        group: '185394129199433480',
+        first_video: pendingVideoTitle
       })
     })
     .then(res => {
