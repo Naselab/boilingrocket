@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -19,1120 +18,1118 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-–bg: #080808;
-–bg2: #111111;
-–bg3: #181818;
-–border: rgba(255,255,255,0.07);
-–text: #f0ece4;
-–muted: #888880;
-–accent: #c8a96e;
-–accent2: #e8c98e;
-–red: #c0392b;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-background: var(–bg);
-color: var(–text);
-font-family: ‘Outfit’, sans-serif;
-font-weight: 300;
-line-height: 1.6;
-overflow-x: hidden;
-}
-
-/* NAV */
-nav {
-position: fixed;
-top: 0; left: 0; right: 0;
-z-index: 100;
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 1.2rem 4rem;
-background: linear-gradient(to bottom, rgba(8,8,8,0.98) 0%, transparent 100%);
-backdrop-filter: blur(2px);
-}
-
-.logo {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 1.9rem;
-letter-spacing: 0.12em;
-color: var(–accent);
-text-decoration: none;
-}
-
-.logo span { color: var(–text); }
-
-nav ul {
-display: flex;
-gap: 2.5rem;
-list-style: none;
-}
-
-nav a {
-color: var(–muted);
-text-decoration: none;
-font-size: 0.82rem;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-transition: color 0.2s;
-}
-
-nav a:hover { color: var(–accent); }
-
-/* HERO */
-.hero {
-position: relative;
-height: 88vh;
-display: flex;
-align-items: flex-end;
-padding: 0 4rem 5rem;
-overflow: hidden;
-}
-
-.hero-bg {
-position: absolute;
-inset: 0;
-background:
-radial-gradient(ellipse at 60% 40%, rgba(200,169,110,0.05) 0%, transparent 60%),
-radial-gradient(ellipse at 20% 80%, rgba(192,57,43,0.04) 0%, transparent 50%),
-linear-gradient(to bottom, transparent 20%, rgba(8,8,8,0.5) 65%, var(–bg) 100%);
-z-index: 1;
-}
-
-.hero-bg-img {
-position: absolute;
-inset: 0;
-background: url(‘https://i.ibb.co/84fWvDtK/Untitled-1-Firefly-Upscaler-2x-scale.png’) center/cover no-repeat;
-opacity: 0.42;
-z-index: 0;
-}
-
-.hero-content {
-position: relative;
-z-index: 2;
-max-width: 700px;
-}
-
-.hero-eyebrow {
-font-size: 0.94rem;
-font-weight: 600;
-letter-spacing: 0.25em;
-text-transform: uppercase;
-color: var(–accent);
-margin-bottom: 1rem;
-}
-
-.hero h1 {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(4.5rem, 9vw, 7.8rem);
-line-height: 0.95;
-letter-spacing: 0.04em;
-color: var(–text);
-margin-bottom: 1.2rem;
-}
-
-.hero h1 em {
-font-style: normal;
-color: var(–accent);
-}
-
-.hero p {
-font-size: 1.3rem;
-color: var(–muted);
-max-width: 480px;
-margin-bottom: 2rem;
-line-height: 1.7;
-}
-
-.btn-primary {
-display: inline-flex;
-align-items: center;
-gap: 0.6rem;
-background: var(–accent);
-color: #080808;
-padding: 0.75rem 1.8rem;
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.82rem;
-font-weight: 600;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-text-decoration: none;
-border: none;
-cursor: pointer;
-transition: background 0.2s, transform 0.15s;
-}
-
-.btn-primary:hover { background: var(–accent2); transform: translateY(-1px); }
-
-.btn-ghost {
-display: inline-flex;
-align-items: center;
-gap: 0.6rem;
-background: transparent;
-color: var(–text);
-padding: 0.75rem 1.8rem;
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.82rem;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-text-decoration: none;
-border: 1px solid rgba(240,236,228,0.2);
-cursor: pointer;
-transition: border-color 0.2s, color 0.2s;
-margin-left: 1rem;
-}
-
-.btn-ghost:hover { border-color: var(–accent); color: var(–accent); }
-
-/* SECTIONS */
-section {
-padding: 5rem 4rem;
-}
-
-.section-header {
-display: flex;
-align-items: baseline;
-gap: 1.5rem;
-margin-bottom: 2.5rem;
-}
-
-.section-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 1.6rem;
-letter-spacing: 0.1em;
-color: var(–text);
-}
-
-.section-line {
-flex: 1;
-height: 1px;
-background: var(–border);
-}
-
-.section-link {
-font-size: 0.75rem;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-color: var(–accent);
-text-decoration: none;
-}
-
-/* VIDEO GRID */
-.video-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-gap: 1.5rem;
-}
-
-.video-card {
-position: relative;
-cursor: pointer;
-group: true;
-}
-
-.video-thumb {
-position: relative;
-aspect-ratio: 16/9;
-overflow: hidden;
-background: var(–bg3);
-border-radius: 8px;
-}
-
-.video-thumb img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-transition: transform 0.5s ease, opacity 0.3s;
-opacity: 0.85;
-}
-
-.video-card:hover .video-thumb img {
-transform: scale(1.05);
-opacity: 1;
-}
-
-.video-thumb-overlay {
-position: absolute;
-inset: 0;
-background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 50%);
-opacity: 0;
-transition: opacity 0.3s;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
-.video-card:hover .video-thumb-overlay { opacity: 1; }
-
-.play-btn {
-width: 54px;
-height: 54px;
-border-radius: 50%;
-background: rgba(200,169,110,0.9);
-display: flex;
-align-items: center;
-justify-content: center;
-transform: scale(0.8);
-transition: transform 0.2s;
-}
-
-.video-card:hover .play-btn { transform: scale(1); }
-
-.play-btn svg { width: 20px; height: 20px; fill: #080808; margin-left: 3px; }
-
-.video-duration {
-position: absolute;
-bottom: 0.5rem;
-right: 0.5rem;
-background: rgba(8,8,8,0.85);
-color: var(–text);
-font-size: 0.72rem;
-font-weight: 500;
-padding: 0.15rem 0.4rem;
-letter-spacing: 0.05em;
-}
-
-.video-tag {
-position: absolute;
-top: 0.6rem;
-left: 0.6rem;
-font-size: 0.65rem;
-font-weight: 600;
-letter-spacing: 0.12em;
-text-transform: uppercase;
-padding: 0.2rem 0.5rem;
-}
-
-.tag-mv { background: var(–accent); color: #080808; }
-.tag-film { background: var(–red); color: #fff; }
-.tag-new { background: #1a6b3a; color: #a8f0c0; }
-
-.video-info { padding: 0.75rem 0 0; }
-
-.video-title {
-font-size: 1.05rem;
-font-weight: 600;
-color: var(–text);
-margin-bottom: 0.25rem;
-transition: color 0.2s;
-}
-
-.video-card:hover .video-title { color: var(–accent); }
-
-.video-meta {
-font-size: 0.85rem;
-color: var(–muted);
-letter-spacing: 0.03em;
-}
-
-/* FEATURED (large card) */
-.featured-grid {
-display: grid;
-grid-template-columns: 1.8fr 1fr;
-gap: 1.5rem;
-align-items: stretch;
-}
-
-.featured-card {
-position: relative;
-cursor: pointer;
-overflow: hidden;
-display: flex;
-flex-direction: column;
-}
-
-.featured-card .video-thumb {
-flex: 1;
-aspect-ratio: unset;
-min-height: 0;
-}
-
-.featured-card .video-thumb img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-}
-
-/* PRODUCTS */
-.products-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-gap: 1.5rem;
-}
-
-.product-card {
-background: var(–bg2);
-border: 1px solid var(–border);
-padding: 1.5rem;
-transition: border-color 0.2s, transform 0.2s;
-}
-
-.product-card:hover {
-border-color: rgba(200,169,110,0.3);
-transform: translateY(-2px);
-}
-
-.product-icon {
-width: 40px;
-height: 40px;
-background: rgba(200,169,110,0.1);
-display: flex;
-align-items: center;
-justify-content: center;
-margin-bottom: 1rem;
-}
-
-.product-icon svg { width: 20px; height: 20px; stroke: var(–accent); fill: none; stroke-width: 1.5; }
-
-.product-card h3 {
-font-size: 0.95rem;
-font-weight: 500;
-color: var(–text);
-margin-bottom: 0.5rem;
-}
-
-.product-card p {
-font-size: 0.8rem;
-color: var(–muted);
-line-height: 1.6;
-margin-bottom: 1.2rem;
-}
-
-.product-price {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 1.4rem;
-letter-spacing: 0.08em;
-color: var(–accent);
-margin-bottom: 1rem;
-}
-
-.btn-small {
-display: inline-block;
-font-size: 0.72rem;
-font-weight: 600;
-letter-spacing: 0.12em;
-text-transform: uppercase;
-color: var(–accent);
-text-decoration: none;
-border: 1px solid rgba(200,169,110,0.35);
-padding: 0.45rem 1rem;
-transition: background 0.2s, color 0.2s;
-}
-
-.btn-small:hover { background: var(–accent); color: #080808; }
-
-/* ABOUT */
-.about-grid {
-display: grid;
-grid-template-columns: 1fr;
-gap: 2rem;
-align-items: center;
-max-width: 800px;
-}
-
-.about-img-wrap {
-position: relative;
-max-width: 300px;
-margin-left: auto;
-display: none;
-}
-
-.about-img-wrap::before {
-content: ‘’;
-position: absolute;
-inset: -12px;
-border: 1px solid rgba(200,169,110,0.2);
-pointer-events: none;
-}
-
-.about-img {
-width: 100%;
-aspect-ratio: 1/1;
-object-fit: cover;
-display: block;
-filter: grayscale(30%);
-}
-
-.about-text .eyebrow {
-font-size: 0.72rem;
-font-weight: 600;
-letter-spacing: 0.25em;
-text-transform: uppercase;
-color: var(–accent);
-margin-bottom: 1rem;
-}
-
-.about-text h2 {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(2.5rem, 4vw, 3.5rem);
-letter-spacing: 0.06em;
-line-height: 1;
-margin-bottom: 1.5rem;
-}
-
-.about-text p {
-font-size: 0.95rem;
-color: var(–muted);
-line-height: 1.8;
-margin-bottom: 1rem;
-}
-
-.stats-row {
-display: flex;
-gap: 3rem;
-margin-top: 2.5rem;
-padding-top: 2rem;
-border-top: 1px solid var(–border);
-}
-
-.stat-num {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 2.2rem;
-letter-spacing: 0.06em;
-color: var(–accent);
-}
-
-.stat-label {
-font-size: 0.75rem;
-color: var(–muted);
-text-transform: uppercase;
-letter-spacing: 0.1em;
-}
-
-/* CONTACT */
-#contact {
-background: var(–bg2);
-border-top: 1px solid var(–border);
-border-bottom: 1px solid var(–border);
-}
-
-.contact-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 5rem;
-align-items: start;
-}
-
-.contact-left h2 {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(2rem, 3.5vw, 3rem);
-letter-spacing: 0.06em;
-line-height: 1;
-margin-bottom: 1.2rem;
-}
-
-.contact-left p {
-font-size: 0.9rem;
-color: var(–muted);
-line-height: 1.8;
-margin-bottom: 2rem;
-}
-
-.contact-detail {
-display: flex;
-flex-direction: column;
-gap: 0.3rem;
-margin-bottom: 1.5rem;
-}
-
-.contact-detail-label {
-font-size: 0.7rem;
-font-weight: 600;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-color: var(–accent);
-}
-
-.contact-detail-value {
-font-size: 0.9rem;
-color: var(–text);
-}
-
-.contact-form { display: flex; flex-direction: column; gap: 1rem; }
-
-.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-
-.form-group label {
-font-size: 0.72rem;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-color: var(–muted);
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-background: var(–bg3);
-border: 1px solid var(–border);
-color: var(–text);
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.88rem;
-padding: 0.75rem 1rem;
-outline: none;
-transition: border-color 0.2s;
-resize: none;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-border-color: rgba(200,169,110,0.5);
-}
-
-.form-group select { appearance: none; cursor: pointer; }
-.form-group textarea { height: 120px; }
-
-/* FOOTER */
-footer {
-padding: 3rem 4rem;
-display: flex;
-align-items: center;
-justify-content: space-between;
-border-top: 1px solid var(–border);
-}
-
-.footer-logo {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 1.4rem;
-letter-spacing: 0.12em;
-color: var(–accent);
-}
-
-.social-links {
-display: flex;
-gap: 1.5rem;
-}
-
-.social-links a {
-font-size: 0.75rem;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-color: var(–muted);
-text-decoration: none;
-transition: color 0.2s;
-}
-
-.social-links a:hover { color: var(–accent); }
-
-.footer-copy {
-font-size: 0.75rem;
-color: var(–muted);
-}
-
-/* MODAL */
-.modal-overlay {
-display: none;
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.92);
-z-index: 200;
-align-items: center;
-justify-content: center;
-padding: 2rem;
-}
-
-.modal-overlay.open { display: flex; }
-
-.modal {
-position: relative;
-width: 100%;
-max-width: 900px;
-background: var(–bg2);
-border: 1px solid var(–border);
-}
-
-.modal-close {
-position: absolute;
-top: -2.5rem;
-right: 0;
-background: none;
-border: none;
-color: var(–muted);
-font-size: 0.8rem;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-cursor: pointer;
-display: flex;
-align-items: center;
-gap: 0.4rem;
-font-family: ‘Outfit’, sans-serif;
-}
-
-.modal-close:hover { color: var(–text); }
-
-.modal-video {
-aspect-ratio: 16/9;
-width: 100%;
-background: #000;
-}
-
-.modal-video iframe {
-width: 100%;
-height: 100%;
-border: none;
-display: block;
-}
-
-.modal-info {
-padding: 1.5rem;
-display: flex;
-justify-content: space-between;
-align-items: flex-start;
-}
-
-.modal-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 1.5rem;
-letter-spacing: 0.08em;
-margin-bottom: 0.3rem;
-}
-
-.modal-meta { font-size: 0.8rem; color: var(–muted); }
-
-/* LOCK OVERLAY */
-.lock-overlay {
-position: absolute;
-inset: 0;
-background: rgba(8,8,8,0.55);
-display: flex;
-align-items: center;
-justify-content: center;
-z-index: 2;
-transition: background 0.3s;
-}
-
-.video-card:hover .lock-overlay { background: rgba(8,8,8,0.35); }
-
-.lock-icon {
-width: 42px;
-height: 42px;
-border-radius: 50%;
-border: 1.5px solid rgba(200,169,110,0.6);
-display: flex;
-align-items: center;
-justify-content: center;
-backdrop-filter: blur(4px);
-background: rgba(8,8,8,0.5);
-transition: border-color 0.2s, transform 0.2s;
-}
-
-.video-card:hover .lock-icon {
-border-color: var(–accent);
-transform: scale(1.08);
-}
-
-.lock-icon svg { width: 16px; height: 16px; stroke: var(–accent); fill: none; stroke-width: 2; }
-
-/* SUBSCRIBE MODAL */
-.sub-modal-overlay {
-display: none;
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.88);
-z-index: 300;
-align-items: center;
-justify-content: center;
-padding: 2rem;
-}
-
-.sub-modal-overlay.open { display: flex; }
-
-.sub-modal {
-background: var(–bg2);
-border: 1px solid rgba(200,169,110,0.2);
-max-width: 480px;
-width: 100%;
-padding: 3rem;
-position: relative;
-text-align: center;
-}
-
-.sub-modal::before {
-content: ‘’;
-position: absolute;
-top: 0; left: 0; right: 0;
-height: 2px;
-background: linear-gradient(to right, transparent, var(–accent), transparent);
-}
-
-.sub-modal-close {
-position: absolute;
-top: 1rem; right: 1rem;
-background: none;
-border: none;
-color: var(–muted);
-cursor: pointer;
-font-size: 0.75rem;
-font-family: ‘Outfit’, sans-serif;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-display: flex;
-align-items: center;
-gap: 0.3rem;
-}
-
-.sub-modal-close:hover { color: var(–text); }
-
-.sub-modal-lock {
-width: 56px;
-height: 56px;
-border-radius: 50%;
-border: 1px solid rgba(200,169,110,0.3);
-display: flex;
-align-items: center;
-justify-content: center;
-margin: 0 auto 1.5rem;
-}
-
-.sub-modal-lock svg { width: 22px; height: 22px; stroke: var(–accent); fill: none; stroke-width: 1.5; }
-
-.sub-modal h2 {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 2rem;
-letter-spacing: 0.1em;
-color: var(–text);
-margin-bottom: 0.75rem;
-}
-
-.sub-modal-video-title {
-font-size: 0.8rem;
-color: var(–accent);
-letter-spacing: 0.1em;
-text-transform: uppercase;
-margin-bottom: 1.2rem;
-font-weight: 500;
-}
-
-.sub-modal p {
-font-size: 0.88rem;
-color: var(–muted);
-line-height: 1.7;
-margin-bottom: 2rem;
-}
-
-.sub-plans {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 0.75rem;
-margin-bottom: 1.5rem;
-}
-
-.sub-plan {
-border: 1px solid var(–border);
-padding: 1rem;
-cursor: pointer;
-transition: border-color 0.2s, background 0.2s;
-position: relative;
-}
-
-.sub-plan:hover { border-color: rgba(200,169,110,0.4); }
-
-.sub-plan.selected {
-border-color: var(–accent);
-background: rgba(200,169,110,0.05);
-}
-
-.sub-plan-price {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 1.6rem;
-letter-spacing: 0.06em;
-color: var(–text);
-}
-
-.sub-plan-period {
-font-size: 0.7rem;
-color: var(–muted);
-text-transform: uppercase;
-letter-spacing: 0.1em;
-margin-bottom: 0.3rem;
-}
-
-.sub-plan-save {
-font-size: 0.65rem;
-font-weight: 600;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-color: #1a6b3a;
-background: rgba(26,107,58,0.15);
-padding: 0.15rem 0.4rem;
-display: inline-block;
-margin-top: 0.3rem;
-}
-
-.sub-btn {
-display: block;
-width: 100%;
-background: var(–accent);
-color: #080808;
-padding: 0.9rem;
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.82rem;
-font-weight: 700;
-letter-spacing: 0.12em;
-text-transform: uppercase;
-text-decoration: none;
-border: none;
-cursor: pointer;
-transition: background 0.2s;
-margin-bottom: 1rem;
-}
-
-.sub-btn:hover { background: var(–accent2); }
-
-.sub-modal-fine {
-font-size: 0.72rem;
-color: var(–muted);
-}
-
-.sub-modal-fine a {
-color: var(–accent);
-text-decoration: none;
-}
-
-/* PREVIEW PANEL */
-.preview-overlay {
-display: none;
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.88);
-z-index: 250;
-align-items: center;
-justify-content: center;
-padding: 2rem;
-}
-.preview-overlay.open { display: flex; }
-
-.preview-panel {
-position: relative;
-width: 100%;
-max-width: 620px;
-max-height: calc(100vh - 4rem);
-background: var(–bg2);
-border: 1px solid rgba(200,169,110,0.18);
-display: flex;
-flex-direction: column;
-overflow: hidden;
-}
-
-.preview-panel::before {
-content: ‘’;
-position: absolute;
-top: 0; left: 0; right: 0;
-height: 2px;
-background: linear-gradient(to right, transparent, var(–accent), transparent);
-z-index: 3;
-flex-shrink: 0;
-}
-
-.preview-panel-close {
-position: absolute;
-top: 1rem; right: 1rem;
-background: none;
-border: none;
-color: rgba(240,236,228,0.7);
-cursor: pointer;
-font-size: 0.75rem;
-font-family: ‘Outfit’, sans-serif;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-display: flex;
-align-items: center;
-gap: 0.3rem;
-z-index: 4;
-text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-}
-.preview-panel-close:hover { color: var(–text); }
-
-.preview-panel-img {
-position: relative;
-width: 100%;
-aspect-ratio: 16/9;
-overflow: hidden;
-background: #000;
-flex-shrink: 0;
-}
-.preview-panel-img img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-opacity: 0.95;
-}
-.preview-panel-img-overlay {
-position: absolute;
-inset: 0;
-background: linear-gradient(to bottom, transparent 55%, var(–bg2) 100%);
-}
-
-.preview-panel-info {
-padding: 1.5rem 2rem 2rem;
-display: flex;
-flex-direction: column;
-gap: 0.75rem;
-overflow-y: auto;
-min-height: 0;
-}
-
-.preview-panel-eyebrow {
-font-size: 0.68rem;
-font-weight: 600;
-letter-spacing: 0.2em;
-text-transform: uppercase;
-color: var(–accent);
-flex-shrink: 0;
-}
-
-.preview-panel-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 2rem;
-letter-spacing: 0.06em;
-line-height: 1;
-color: var(–text);
-flex-shrink: 0;
-}
-
-.preview-panel-desc {
-font-size: 0.82rem;
-color: var(–muted);
-line-height: 1.75;
-flex-shrink: 1;
-}
-
-.preview-panel-actions {
-display: flex;
-flex-direction: column;
-gap: 0.6rem;
-margin-top: 0.25rem;
-flex-shrink: 0;
-width: 100%;
-}
-
-.preview-watch-btn {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 0.5rem;
-background: var(–accent);
-color: #080808;
-padding: 0.75rem 1.5rem;
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.8rem;
-font-weight: 700;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-border: none;
-cursor: pointer;
-transition: background 0.2s;
-width: 100%;
-}
-.preview-watch-btn:hover { background: var(–accent2); }
-
-.preview-subscribe-btn {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 0.5rem;
-background: transparent;
-color: var(–text);
-padding: 0.7rem 1.5rem;
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.78rem;
-font-weight: 500;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-border: 1px solid rgba(240,236,228,0.18);
-cursor: pointer;
-transition: border-color 0.2s, color 0.2s;
-width: 100%;
-}
-.preview-subscribe-btn:hover { border-color: var(–accent); color: var(–accent); }
-
-.preview-panel-fine {
-font-size: 0.68rem;
-color: var(–muted);
-opacity: 0.7;
-text-align: center;
-flex-shrink: 0;
-}
-
-.preview-gate-label {
-font-size: 0.78rem;
-color: var(–muted);
-margin: 0 0 0.6rem;
-line-height: 1.5;
-}
-
-.preview-email-row {
-display: flex;
-gap: 0.5rem;
-width: 100%;
-}
-
-.preview-email-row input {
-flex: 1;
-min-width: 0;
-background: var(–bg3);
-border: 1px solid var(–border);
-color: var(–text);
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.85rem;
-padding: 0.72rem 0.9rem;
-outline: none;
-transition: border-color 0.2s;
-}
-.preview-email-row input:focus { border-color: var(–accent); }
-.preview-email-row input.error { border-color: rgba(192,57,43,0.7); }
-
-.preview-email-row .preview-watch-btn {
-flex-shrink: 0;
-width: auto;
-padding: 0.72rem 1.2rem;
-white-space: nowrap;
-}
-
-@media (max-width: 420px) {
-.preview-email-row { flex-direction: column; }
-.preview-email-row .preview-watch-btn { width: 100%; }
-.preview-overlay { padding: 0.75rem; }
-.preview-panel-info { padding: 1rem 1rem 1.25rem; }
-.preview-panel-title { font-size: 1.5rem; }
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(–bg); }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-
-@media (max-width: 768px) {
-nav { padding: 1rem 1.5rem; }
-nav ul { display: none; }
-.hero { padding: 0 1.5rem 3rem; height: auto; padding-top: 7rem; }
-section { padding: 3rem 1.5rem; }
-.featured-grid { grid-template-columns: 1fr; }
-.about-grid { grid-template-columns: 1fr; }
-.contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
-}
+  :root {
+    --bg: #080808;
+    --bg2: #111111;
+    --bg3: #181818;
+    --border: rgba(255,255,255,0.07);
+    --text: #f0ece4;
+    --muted: #888880;
+    --accent: #c8a96e;
+    --accent2: #e8c98e;
+    --red: #c0392b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.98) 0%, transparent 100%);
+    backdrop-filter: blur(2px);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--text); }
+
+  nav ul {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 88vh;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 4rem 5rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 60% 40%, rgba(200,169,110,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(192,57,43,0.04) 0%, transparent 50%),
+      linear-gradient(to bottom, transparent 20%, rgba(8,8,8,0.5) 65%, var(--bg) 100%);
+    z-index: 1;
+  }
+
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    background: url('https://i.ibb.co/84fWvDtK/Untitled-1-Firefly-Upscaler-2x-scale.png') center/cover no-repeat;
+    opacity: 0.42;
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.94rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4.5rem, 9vw, 7.8rem);
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero p {
+    font-size: 1.3rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--accent);
+    color: #080808;
+    padding: 0.75rem 1.8rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    color: var(--text);
+    padding: 0.75rem 1.8rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(240,236,228,0.2);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    margin-left: 1rem;
+  }
+
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SECTIONS */
+  section {
+    padding: 5rem 4rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-link {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* VIDEO GRID */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .video-card {
+    position: relative;
+    cursor: pointer;
+    group: true;
+  }
+
+  .video-thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--bg3);
+    border-radius: 8px;
+  }
+
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease, opacity 0.3s;
+    opacity: 0.85;
+  }
+
+  .video-card:hover .video-thumb img {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  .video-thumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-card:hover .video-thumb-overlay { opacity: 1; }
+
+  .play-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: rgba(200,169,110,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.8);
+    transition: transform 0.2s;
+  }
+
+  .video-card:hover .play-btn { transform: scale(1); }
+
+  .play-btn svg { width: 20px; height: 20px; fill: #080808; margin-left: 3px; }
+
+  .video-duration {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    background: rgba(8,8,8,0.85);
+    color: var(--text);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.15rem 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  .video-tag {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .tag-mv { background: var(--accent); color: #080808; }
+  .tag-film { background: var(--red); color: #fff; }
+  .tag-new { background: #1a6b3a; color: #a8f0c0; }
+
+  .video-info { padding: 0.75rem 0 0; }
+
+  .video-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+    transition: color 0.2s;
+  }
+
+  .video-card:hover .video-title { color: var(--accent); }
+
+  .video-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+
+  /* FEATURED (large card) */
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .featured-card {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-card .video-thumb {
+    flex: 1;
+    aspect-ratio: unset;
+    min-height: 0;
+  }
+
+  .featured-card .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* PRODUCTS */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .product-card:hover {
+    border-color: rgba(200,169,110,0.3);
+    transform: translateY(-2px);
+  }
+
+  .product-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(200,169,110,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .product-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+
+  .product-card h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .product-card p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+
+  .product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .btn-small {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid rgba(200,169,110,0.35);
+    padding: 0.45rem 1rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .btn-small:hover { background: var(--accent); color: #080808; }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    max-width: 800px;
+  }
+
+  .about-img-wrap {
+    position: relative;
+    max-width: 300px;
+    margin-left: auto;
+    display: none;
+  }
+
+  .about-img-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border: 1px solid rgba(200,169,110,0.2);
+    pointer-events: none;
+  }
+
+  .about-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(30%);
+  }
+
+  .about-text .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .about-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 3rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin-bottom: 1.2rem;
+  }
+
+  .contact-left p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .contact-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-detail-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .contact-detail-value {
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .form-group label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: rgba(200,169,110,0.5);
+  }
+
+  .form-group select { appearance: none; cursor: pointer; }
+  .form-group textarea { height: 120px; }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .social-links a {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .social-links a:hover { color: var(--accent); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: -2.5rem;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .modal-close:hover { color: var(--text); }
+
+  .modal-video {
+    aspect-ratio: 16/9;
+    width: 100%;
+    background: #000;
+  }
+
+  .modal-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .modal-info {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-meta { font-size: 0.8rem; color: var(--muted); }
+
+  /* LOCK OVERLAY */
+  .lock-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(8,8,8,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background 0.3s;
+  }
+
+  .video-card:hover .lock-overlay { background: rgba(8,8,8,0.35); }
+
+  .lock-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(200,169,110,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    background: rgba(8,8,8,0.5);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .video-card:hover .lock-icon {
+    border-color: var(--accent);
+    transform: scale(1.08);
+  }
+
+  .lock-icon svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; }
+
+  /* SUBSCRIBE MODAL */
+  .sub-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .sub-modal-overlay.open { display: flex; }
+
+  .sub-modal {
+    background: var(--bg2);
+    border: 1px solid rgba(200,169,110,0.2);
+    max-width: 480px;
+    width: 100%;
+    padding: 3rem;
+    position: relative;
+    text-align: center;
+  }
+
+  .sub-modal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+  }
+
+  .sub-modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .sub-modal-close:hover { color: var(--text); }
+
+  .sub-modal-lock {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,110,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+
+  .sub-modal-lock svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+
+  .sub-modal h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .sub-modal-video-title {
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    font-weight: 500;
+  }
+
+  .sub-modal p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .sub-plans {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-plan {
+    border: 1px solid var(--border);
+    padding: 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .sub-plan:hover { border-color: rgba(200,169,110,0.4); }
+
+  .sub-plan.selected {
+    border-color: var(--accent);
+    background: rgba(200,169,110,0.05);
+  }
+
+  .sub-plan-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    color: var(--text);
+  }
+
+  .sub-plan-period {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .sub-plan-save {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1a6b3a;
+    background: rgba(26,107,58,0.15);
+    padding: 0.15rem 0.4rem;
+    display: inline-block;
+    margin-top: 0.3rem;
+  }
+
+  .sub-btn {
+    display: block;
+    width: 100%;
+    background: var(--accent);
+    color: #080808;
+    padding: 0.9rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 1rem;
+  }
+
+  .sub-btn:hover { background: var(--accent2); }
+
+  .sub-modal-fine {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .sub-modal-fine a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* PREVIEW PANEL */
+  .preview-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 250;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .preview-overlay.open { display: flex; }
+
+  .preview-panel {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    max-height: calc(100vh - 4rem);
+    background: var(--bg2);
+    border: 1px solid rgba(200,169,110,0.18);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .preview-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    z-index: 3;
+    flex-shrink: 0;
+  }
+
+  .preview-panel-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none;
+    border: none;
+    color: rgba(240,236,228,0.7);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    z-index: 4;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  }
+  .preview-panel-close:hover { color: var(--text); }
+
+  .preview-panel-img {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #000;
+    flex-shrink: 0;
+  }
+  .preview-panel-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.95;
+  }
+  .preview-panel-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 55%, var(--bg2) 100%);
+  }
+
+  .preview-panel-info {
+    padding: 1.5rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  .preview-panel-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .preview-panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+
+  .preview-panel-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.75;
+    flex-shrink: 1;
+  }
+
+  .preview-panel-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  .preview-watch-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: #080808;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+  }
+  .preview-watch-btn:hover { background: var(--accent2); }
+
+  .preview-subscribe-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--text);
+    padding: 0.7rem 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(240,236,228,0.18);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    width: 100%;
+  }
+  .preview-subscribe-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .preview-panel-fine {
+    font-size: 0.68rem;
+    color: var(--muted);
+    opacity: 0.7;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .preview-gate-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0 0 0.6rem;
+    line-height: 1.5;
+  }
+
+  .preview-email-row {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .preview-email-row input {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.72rem 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .preview-email-row input:focus { border-color: var(--accent); }
+  .preview-email-row input.error { border-color: rgba(192,57,43,0.7); }
+
+  .preview-email-row .preview-watch-btn {
+    flex-shrink: 0;
+    width: auto;
+    padding: 0.72rem 1.2rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 420px) {
+    .preview-email-row { flex-direction: column; }
+    .preview-email-row .preview-watch-btn { width: 100%; }
+    .preview-overlay { padding: 0.75rem; }
+    .preview-panel-info { padding: 1rem 1rem 1.25rem; }
+    .preview-panel-title { font-size: 1.5rem; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { padding: 0 1.5rem 3rem; height: auto; padding-top: 7rem; }
+    section { padding: 3rem 1.5rem; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+  }
 </style>
-
 </head>
 <body>
 
 <!-- NAV -->
-
 <nav>
   <a href="#" class="logo">Boiling<span>Rocket</span></a>
   <ul>
@@ -1144,7 +1141,6 @@ footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 
 </nav>
 
 <!-- HERO -->
-
 <section class="hero" id="home">
   <div class="hero-bg-img"></div>
   <div class="hero-bg"></div>
@@ -1161,7 +1157,6 @@ footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 
 </section>
 
 <!-- CATALOG -->
-
 <section id="catalog">
   <div class="section-header">
     <span class="section-title">Catalog</span>
@@ -1170,98 +1165,96 @@ footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 
 
   <div class="video-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 3rem;">
 
-```
-<div class="video-card" onclick="openPreview('https://rumble.com/embed/v770b54/?pub=4pcu4u', 'Bodies', '2026 · Music Video · 3:57', 'A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn\'t training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.', 'https://i.ibb.co/GQW1cyTH/Bodies.png', false)">
-  <div class="video-thumb">
-    <img src="https://i.ibb.co/V0Q5L7qc/bodies.png" alt="Bodies">
-    <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-    <span class="video-tag tag-new">New</span>
-    <span class="video-duration">3:57</span>
-  </div>
-  <div class="video-info">
-    <div class="video-title">Bodies</div>
-    <div class="video-meta">Music Video &nbsp;·&nbsp; 2026</div>
-  </div>
-</div>
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v770b54/?pub=4pcu4u', 'Bodies', '2026 · Music Video · 3:57', 'A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn\'t training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.', 'https://i.ibb.co/GQW1cyTH/Bodies.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/V0Q5L7qc/bodies.png" alt="Bodies">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-new">New</span>
+        <span class="video-duration">3:57</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Bodies</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2026</div>
+      </div>
+    </div>
 
-<div class="video-card" onclick="openPreview('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.', 'https://i.ibb.co/5fF95cS/simulation.png', false)">
-  <div class="video-thumb">
-    <img src="https://i.ibb.co/p6THDkLX/The-simulation.png" alt="The Simulation">
-    <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-    <span class="video-tag tag-mv">Music Video</span>
-    <span class="video-duration">2:21</span>
-  </div>
-  <div class="video-info">
-    <div class="video-title">The Simulation</div>
-    <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
-  </div>
-</div>
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.', 'https://i.ibb.co/5fF95cS/simulation.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/p6THDkLX/The-simulation.png" alt="The Simulation">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">2:21</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">The Simulation</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
 
-<div class="video-card" onclick="openPreview('https://rumble.com/embed/v772za6/?pub=4pcu4u', 'Saved', '2025 · Short Film · 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.', 'https://i.ibb.co/HT1q0L0W/Saved.png', false)">
-  <div class="video-thumb">
-    <img src="https://i.ibb.co/dJrhJxQn/Saved.png" alt="Saved">
-    <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-    <span class="video-tag tag-film">Short Film</span>
-    <span class="video-duration">3:50</span>
-  </div>
-  <div class="video-info">
-    <div class="video-title">Saved</div>
-    <div class="video-meta">Short Film &nbsp;·&nbsp; 2025</div>
-  </div>
-</div>
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772za6/?pub=4pcu4u', 'Saved', '2025 · Short Film · 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.', 'https://i.ibb.co/HT1q0L0W/Saved.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/dJrhJxQn/Saved.png" alt="Saved">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-film">Short Film</span>
+        <span class="video-duration">3:50</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Saved</div>
+        <div class="video-meta">Short Film &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
 
-<div class="video-card" onclick="openPreview('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2025 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.', 'https://i.ibb.co/Q7c9c7Qg/Authorized-Access.png', false)">
-  <div class="video-thumb">
-    <img src="https://i.ibb.co/M5NTMpsQ/authorized.png" alt="Authorized Access">
-    <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-    <span class="video-tag tag-mv">Music Video</span>
-    <span class="video-duration">2:13</span>
-  </div>
-  <div class="video-info">
-    <div class="video-title">Authorized Access</div>
-    <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
-  </div>
-</div>
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2025 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.', 'https://i.ibb.co/Q7c9c7Qg/Authorized-Access.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/M5NTMpsQ/authorized.png" alt="Authorized Access">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">2:13</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Authorized Access</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
 
-<div class="video-card" onclick="openPreview('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.', 'https://i.ibb.co/JRLzYbwc/Those-Who-See.png', false)">
-  <div class="video-thumb">
-    <img src="https://i.ibb.co/39vXKxPW/Those-Who-See-part1.png" alt="Those Who See Part 1">
-    <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-    <span class="video-tag tag-film">Series</span>
-    <span class="video-duration">3:26</span>
-  </div>
-  <div class="video-info">
-    <div class="video-title">Those Who See — Part 1: Arrival</div>
-    <div class="video-meta">Series &nbsp;·&nbsp; 2025</div>
-  </div>
-</div>
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.', 'https://i.ibb.co/JRLzYbwc/Those-Who-See.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/39vXKxPW/Those-Who-See-part1.png" alt="Those Who See Part 1">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-film">Series</span>
+        <span class="video-duration">3:26</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Those Who See — Part 1: Arrival</div>
+        <div class="video-meta">Series &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
 
-<div class="video-card" onclick="openPreview('https://rumble.com/embed/v77660w/?pub=4pcu4u', 'You Gotta Run Away', '2025 · Music Video · 2:25', 'A high-octane music video about escape, speed, and the desperate need to leave everything behind.', 'https://i.ibb.co/yCz9kqj/You-Gotta-Run-Away.png', false)">
-  <div class="video-thumb">
-    <img src="https://i.ibb.co/99QWk5gF/You-Gotta-Run-Away.png" alt="You Gotta Run Away">
-    <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-    <span class="video-tag tag-mv">Music Video</span>
-    <span class="video-duration">2:25</span>
-  </div>
-  <div class="video-info">
-    <div class="video-title">You Gotta Run Away</div>
-    <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
-  </div>
-</div>
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v77660w/?pub=4pcu4u', 'You Gotta Run Away', '2025 · Music Video · 2:25', 'A high-octane music video about escape, speed, and the desperate need to leave everything behind.', 'https://i.ibb.co/yCz9kqj/You-Gotta-Run-Away.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/99QWk5gF/You-Gotta-Run-Away.png" alt="You Gotta Run Away">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">2:25</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">You Gotta Run Away</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
 
-<div class="video-card" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2025 · Music Video · 3:12', 'A cinematic music video exploring censorship, control, and the fight to be seen in a world that wants you silenced.', 'https://i.ibb.co/GQKYC6fT/Banned.png', false)">
-  <div class="video-thumb">
-    <img src="https://i.ibb.co/S4C69sZb/Banned-00-01-14-12-Still0604.png" alt="Banned">
-    <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-    <span class="video-tag tag-mv">Music Video</span>
-    <span class="video-duration">3:12</span>
-  </div>
-  <div class="video-info">
-    <div class="video-title">Banned</div>
-    <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
-  </div>
-</div>
-```
+    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2025 · Music Video · 3:12', 'A cinematic music video exploring censorship, control, and the fight to be seen in a world that wants you silenced.', 'https://i.ibb.co/GQKYC6fT/Banned.png', false)">
+      <div class="video-thumb">
+        <img src="https://i.ibb.co/S4C69sZb/Banned-00-01-14-12-Still0604.png" alt="Banned">
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="video-tag tag-mv">Music Video</span>
+        <span class="video-duration">3:12</span>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Banned</div>
+        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+      </div>
+    </div>
 
   </div>
 
@@ -1279,53 +1272,50 @@ footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 
 
   <div class="products-grid">
 
-```
-<div class="product-card">
-  <div class="product-icon">
-    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-  </div>
-  <h3>The Augmented Mind</h3>
-  <p>Using AI without losing yourself. A five-phase framework for creative humans navigating an AI-saturated world.</p>
-  <div class="product-price">$19</div>
-  <a href="https://boilingrocket.gumroad.com/l/kpakqm" class="btn-small" target="_blank">Get it →</a>
-</div>
+    <div class="product-card">
+      <div class="product-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <h3>The Augmented Mind</h3>
+      <p>Using AI without losing yourself. A five-phase framework for creative humans navigating an AI-saturated world.</p>
+      <div class="product-price">$19</div>
+      <a href="https://boilingrocket.gumroad.com/l/kpakqm" class="btn-small" target="_blank">Get it →</a>
+    </div>
 
-<div class="product-card">
-  <div class="product-icon">
-    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-  </div>
-  <h3>The Muse Protocol</h3>
-  <p>A deep guide to building AI companions on Nomi AI. Archetypes, Persona DNA system, and advanced prompting.</p>
-  <div class="product-price">$24</div>
-  <a href="https://boilingrocket.gumroad.com/l/wyqbsr" class="btn-small" target="_blank">Get it →</a>
-</div>
+    <div class="product-card">
+      <div class="product-icon">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <h3>The Muse Protocol</h3>
+      <p>A deep guide to building AI companions on Nomi AI. Archetypes, Persona DNA system, and advanced prompting.</p>
+      <div class="product-price">$24</div>
+      <a href="https://boilingrocket.gumroad.com/l/wyqbsr" class="btn-small" target="_blank">Get it →</a>
+    </div>
 
-<div class="product-card">
-  <div class="product-icon">
-    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-  </div>
-  <h3>The Digital Legacy</h3>
-  <p>Preserve your life and digital identity. A practical guide for building a lasting digital presence and archive.</p>
-  <div class="product-price">$17</div>
-  <a href="https://YOUR-GUMROAD-LINK" class="btn-small" style="opacity:0.5;cursor:default;border-color:rgba(200,169,110,0.15);">Coming Soon</a>
-</div>
+    <div class="product-card">
+      <div class="product-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      </div>
+      <h3>The Digital Legacy</h3>
+      <p>Preserve your life and digital identity. A practical guide for building a lasting digital presence and archive.</p>
+      <div class="product-price">$17</div>
+      <a href="https://YOUR-GUMROAD-LINK" class="btn-small" style="opacity:0.5;cursor:default;border-color:rgba(200,169,110,0.15);">Coming Soon</a>
+    </div>
 
-<div class="product-card">
-  <div class="product-icon">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-  </div>
-  <h3>Future-Proof</h3>
-  <p>The friendly tech guide for navigating AI tools. Written for curious minds who want clarity, not overwhelm.</p>
-  <div class="product-price">$14</div>
-  <a href="https://YOUR-GUMROAD-LINK" class="btn-small" style="opacity:0.5;cursor:default;border-color:rgba(200,169,110,0.15);">Coming Soon</a>
-</div>
-```
+    <div class="product-card">
+      <div class="product-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <h3>Future-Proof</h3>
+      <p>The friendly tech guide for navigating AI tools. Written for curious minds who want clarity, not overwhelm.</p>
+      <div class="product-price">$14</div>
+      <a href="https://YOUR-GUMROAD-LINK" class="btn-small" style="opacity:0.5;cursor:default;border-color:rgba(200,169,110,0.15);">Coming Soon</a>
+    </div>
 
   </div>
 </section>
 
 <!-- ABOUT -->
-
 <section id="about">
   <div class="about-grid">
     <div class="about-img-wrap">
@@ -1346,60 +1336,55 @@ footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 
 </section>
 
 <!-- CONTACT -->
-
 <section id="contact">
   <div class="contact-grid">
     <div class="contact-left">
       <h2>Work Together</h2>
       <p>Available for brand sponsorships, creative collaborations, and licensing. Reach out and let's talk.</p>
 
-```
-  <div class="contact-detail">
-    <span class="contact-detail-label">For Sponsorships</span>
-    <span class="contact-detail-value">contact@boilingrocket.com</span>
-  </div>
-  <div class="contact-detail">
-    <span class="contact-detail-label">Digital Products</span>
-    <span class="contact-detail-value">boilingrocket.gumroad.com</span>
-  </div>
-  <div class="contact-detail">
-    <span class="contact-detail-label">Music</span>
-    <span class="contact-detail-value">Spotify — Boiling Rocket</span>
-  </div>
-</div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">For Sponsorships</span>
+        <span class="contact-detail-value">contact@boilingrocket.com</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Digital Products</span>
+        <span class="contact-detail-value">boilingrocket.gumroad.com</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Music</span>
+        <span class="contact-detail-value">Spotify — Boiling Rocket</span>
+      </div>
+    </div>
 
-<form class="contact-form" name="contact" method="POST" onsubmit="handleForm(event)">
-  <input type="hidden" name="bot-field" style="display:none">
-  <div class="form-group">
-    <label>Your Name</label>
-    <input type="text" name="name" placeholder="Full name" required>
-  </div>
-  <div class="form-group">
-    <label>Email</label>
-    <input type="email" name="email" placeholder="you@company.com" required>
-  </div>
-  <div class="form-group">
-    <label>Enquiry Type</label>
-    <select name="enquiry">
-      <option>Brand Sponsorship</option>
-      <option>Creative Collaboration</option>
-      <option>Licensing</option>
-      <option>Other</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label>Message</label>
-    <textarea name="message" placeholder="Tell me about your project or brand..." required></textarea>
-  </div>
-  <button type="submit" class="btn-primary" style="align-self: flex-start;">Send Message</button>
-</form>
-```
-
+    <form class="contact-form" name="contact" method="POST" onsubmit="handleForm(event)">
+      <input type="hidden" name="bot-field" style="display:none">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" name="name" placeholder="Full name" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="you@company.com" required>
+      </div>
+      <div class="form-group">
+        <label>Enquiry Type</label>
+        <select name="enquiry">
+          <option>Brand Sponsorship</option>
+          <option>Creative Collaboration</option>
+          <option>Licensing</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea name="message" placeholder="Tell me about your project or brand..." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="align-self: flex-start;">Send Message</button>
+    </form>
   </div>
 </section>
 
 <!-- FOOTER -->
-
 <footer>
   <div class="footer-logo">Boiling Rocket</div>
   <div class="social-links">
@@ -1411,7 +1396,6 @@ footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 
 </footer>
 
 <!-- VIDEO PREVIEW PANEL -->
-
 <div class="preview-overlay" id="preview-overlay" onclick="closePreviewOnBg(event)">
   <div class="preview-panel" id="preview-panel">
     <button class="preview-panel-close" onclick="closePreview()">
@@ -1427,37 +1411,33 @@ footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 
       <div class="preview-panel-title" id="preview-title">Title</div>
       <div class="preview-panel-desc" id="preview-desc">Description</div>
 
-```
-  <!-- NEW VISITOR: email input -->
-  <div class="preview-panel-actions" id="preview-email-gate">
-    <p class="preview-gate-label">Enter your email to watch — free, always.</p>
-    <div class="preview-email-row">
-      <input type="email" id="preview-email-input" placeholder="your@email.com" onkeydown="if(event.key==='Enter')submitPreviewEmail()">
-      <button class="preview-watch-btn" onclick="submitPreviewEmail()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        Watch
-      </button>
+      <!-- NEW VISITOR: email input -->
+      <div class="preview-panel-actions" id="preview-email-gate">
+        <p class="preview-gate-label">Enter your email to watch — free, always.</p>
+        <div class="preview-email-row">
+          <input type="email" id="preview-email-input" placeholder="your@email.com" onkeydown="if(event.key==='Enter')submitPreviewEmail()">
+          <button class="preview-watch-btn" onclick="submitPreviewEmail()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Watch
+          </button>
+        </div>
+        <div class="preview-panel-fine">No spam — just new releases from Boiling Rocket. <a href="#contact" onclick="closePreview()" style="color:var(--accent);text-decoration:none;">Privacy</a></div>
+      </div>
+
+      <!-- RETURNING VISITOR: direct watch -->
+      <div class="preview-panel-actions" id="preview-returning" style="display:none;">
+        <button class="preview-watch-btn" onclick="previewPlayNow()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch Now
+        </button>
+        <div class="preview-panel-fine" id="preview-fine">You're in — enjoy the full catalog.</div>
+      </div>
+
     </div>
-    <div class="preview-panel-fine">No spam — just new releases from Boiling Rocket. <a href="#contact" onclick="closePreview()" style="color:var(--accent);text-decoration:none;">Privacy</a></div>
-  </div>
-
-  <!-- RETURNING VISITOR: direct watch -->
-  <div class="preview-panel-actions" id="preview-returning" style="display:none;">
-    <button class="preview-watch-btn" onclick="previewPlayNow()">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-      Watch Now
-    </button>
-    <div class="preview-panel-fine" id="preview-fine">You're in — enjoy the full catalog.</div>
-  </div>
-
-</div>
-```
-
   </div>
 </div>
 
 <!-- EMAIL CAPTURE MODAL (free videos) -->
-
 <div class="sub-modal-overlay" id="email-modal" onclick="closeEmailModalOnBg(event)">
   <div class="sub-modal">
     <button class="sub-modal-close" onclick="closeEmailModal()">
@@ -1480,7 +1460,6 @@ footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 
 </div>
 
 <!-- SUBSCRIBE MODAL -->
-
 <div class="sub-modal-overlay" id="sub-modal" onclick="closeSubModalOnBg(event)">
   <div class="sub-modal">
     <button class="sub-modal-close" onclick="closeSubModal()">
@@ -1494,33 +1473,29 @@ footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 
     <h2>Unlock Full Catalog</h2>
     <p>Get unlimited access to all music videos and short films — including new releases the moment they drop.</p>
 
-```
-<div class="sub-plans">
-  <div class="sub-plan" id="plan-monthly" onclick="selectPlan('monthly')">
-    <div class="sub-plan-period">Monthly</div>
-    <div class="sub-plan-price">$7</div>
-    <div style="font-size:0.7rem;color:var(--muted);margin-top:0.2rem;">per month</div>
-  </div>
-  <div class="sub-plan selected" id="plan-yearly" onclick="selectPlan('yearly')">
-    <div class="sub-plan-period">Yearly</div>
-    <div class="sub-plan-price">$49</div>
-    <div style="font-size:0.7rem;color:var(--muted);margin-top:0.2rem;">per year</div>
-    <div class="sub-plan-save">Save 40%</div>
-  </div>
-</div>
+    <div class="sub-plans">
+      <div class="sub-plan" id="plan-monthly" onclick="selectPlan('monthly')">
+        <div class="sub-plan-period">Monthly</div>
+        <div class="sub-plan-price">$7</div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:0.2rem;">per month</div>
+      </div>
+      <div class="sub-plan selected" id="plan-yearly" onclick="selectPlan('yearly')">
+        <div class="sub-plan-period">Yearly</div>
+        <div class="sub-plan-price">$49</div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:0.2rem;">per year</div>
+        <div class="sub-plan-save">Save 40%</div>
+      </div>
+    </div>
 
-<a href="https://boilingrocket.gumroad.com/l/nsddb" id="sub-btn" class="sub-btn" target="_blank">Subscribe &amp; Watch Now</a>
+    <a href="https://boilingrocket.gumroad.com/l/nsddb" id="sub-btn" class="sub-btn" target="_blank">Subscribe &amp; Watch Now</a>
 
-<div class="sub-modal-fine">
-  Already a member? <a href="members-vault.html">Access your catalog →</a>
-</div>
-```
-
+    <div class="sub-modal-fine">
+      Already a member? <a href="members-vault.html">Access your catalog →</a>
+    </div>
   </div>
 </div>
 
 <!-- VIDEO MODAL -->
-
 <div class="modal-overlay" id="modal" onclick="closeModalOnBg(event)">
   <div class="modal" id="modal-box">
     <button class="modal-close" onclick="closeModal()">
