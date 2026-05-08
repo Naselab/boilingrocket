@@ -430,10 +430,9 @@
   /* ABOUT */
   .about-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: center;
-    max-width: 800px;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: stretch;
   }
 
   .about-img-wrap {
@@ -588,6 +587,114 @@
 
   .form-group select { appearance: none; cursor: pointer; }
   .form-group textarea { height: 120px; }
+
+  /* SUPPORT SIDEBAR CARD */
+  .support-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 2rem 1.8rem;
+    position: relative;
+    transition: border-color 0.4s;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .support-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200,169,110,0.45), transparent);
+  }
+
+  .support-card:hover {
+    border-color: rgba(200,169,110,0.2);
+  }
+
+  .support-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    opacity: 0.75;
+  }
+
+  .support-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .support-card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 1.6rem;
+  }
+
+  .btn-support {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: transparent;
+    color: var(--accent);
+    padding: 0.72rem 1.4rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(200,169,110,0.35);
+    transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-support:hover {
+    background: rgba(200,169,110,0.08);
+    border-color: var(--accent);
+    color: var(--accent2);
+    transform: translateY(-1px);
+  }
+
+  .support-fine {
+    font-size: 0.65rem;
+    color: var(--muted);
+    opacity: 0.45;
+    margin-top: 1rem;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+  }
+
+  #about {
+    padding: 0;
+  }
+
+  .about-left {
+    padding: 5rem 4rem;
+  }
+
+  .about-right {
+    background: var(--bg2);
+    border-left: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 4rem;
+  }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-left { padding: 3rem 1.5rem; }
+    .about-right { border-left: none; border-top: 1px solid var(--border); padding: 3rem 1.5rem; }
+    .support-card { top: 0; }
+  }
 
   /* FOOTER */
   footer {
@@ -1337,19 +1444,27 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
-    <div class="about-img-wrap">
-      <!-- Replace with your actual photo or a brand image -->
-      <div class="about-img" style="background:var(--bg3);display:flex;align-items:center;justify-content:center;">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(200,169,110,0.2)" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    <div class="about-left">
+      <div class="about-text">
+        <p class="eyebrow">About Boiling Rocket</p>
+        <h2>Cinematic Worlds Built with AI</h2>
+        <p>Boiling Rocket started as a series of short films and music exploring AI, identity, and the systems shaping human behavior.</p>
+        <p>One of those films — <em>Perfect Companion</em> — reached millions of viewers before the entire channel disappeared during a moderation sweep, with no warning and no recovery.</p>
+        <p>That moment changed the direction of the project. Instead of relying on platforms that can remove everything overnight, this became a way to keep the work alive on more independent ground.</p>
+        <p>This site is the new base — where the films exist, where new ones are released, and where the project continues without depending on a single system.</p>
       </div>
     </div>
-    <div class="about-text">
-      <p class="eyebrow">About Boiling Rocket</p>
-      <h2>Cinematic Worlds Built with AI</h2>
-      <p>Boiling Rocket started as a series of short films and music exploring AI, identity, and the systems shaping human behavior.</p>
-      <p>One of those films — <em>Perfect Companion</em> — reached millions of viewers before the entire channel disappeared during a moderation sweep, with no warning and no recovery.</p>
-      <p>That moment changed the direction of the project. Instead of relying on platforms that can remove everything overnight, this became a way to keep the work alive on more independent ground.</p>
-      <p>This site is the new base — where the films exist, where new ones are released, and where the project continues without depending on a single system.</p>
+    <div class="about-right">
+      <div class="support-card">
+        <div class="support-eyebrow">Support the Work</div>
+        <h3>Keep It Going</h3>
+        <p>Every film here is made independently — no studio, no platform safety net. If you'd like to be part of keeping it going, this is how.</p>
+        <a href="https://www.buymeacoffee.com/boilingrocket" target="_blank" rel="noopener" class="btn-support">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          Support the Project
+        </a>
+        <div class="support-fine">No subscription. No pressure. Every contribution goes directly into production.</div>
+      </div>
     </div>
   </div>
 </section>
