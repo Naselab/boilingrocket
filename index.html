@@ -9,6 +9,7 @@
 <meta property="og:title" content="Boiling Rocket — Cinematic AI Music Videos & Short Films">
 <meta property="og:description" content="Handcrafted music videos and short films exploring the dark intersection of technology, identity, and human transformation.">
 <meta property="og:type" content="website">
+<link rel="preload" as="image" href="/images/hero_bg.webp" fetchpriority="high">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,7 +105,7 @@
   .hero-bg-img {
     position: absolute;
     inset: 0;
-    background: url('/images/hero_bg.jpg') center/cover no-repeat;
+    background: url('/images/hero_bg.webp') center/cover no-repeat, url('/images/hero_bg.jpg') center/cover no-repeat;
     opacity: 0.42;
     z-index: 0;
   }
@@ -1547,7 +1548,7 @@
 
       <!-- NEW VISITOR: email input -->
       <div class="preview-panel-actions" id="preview-email-gate">
-        <p class="preview-gate-label">Enter your email to watch — free, always.</p>
+        <p class="preview-gate-label">These films aren't on YouTube anymore. Enter your email to watch — and get notified when new ones drop.</p>
         <div class="preview-email-row">
           <input type="email" id="preview-email-input" placeholder="your@email.com" onkeydown="if(event.key==='Enter')submitPreviewEmail()">
           <button class="preview-watch-btn" onclick="submitPreviewEmail()">
@@ -1584,7 +1585,7 @@
     <div class="sub-modal-video-title" id="email-modal-video-title">Free Video</div>
     <h2>Watch Free</h2>
     <p id="email-modal-desc" style="font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;text-align:left;"></p>
-    <p style="margin-bottom:1rem;">Enter your email to watch. No spam — just new releases and updates from Boiling Rocket.</p>
+    <p style="margin-bottom:1rem;">These films aren't on YouTube anymore. Enter your email to watch — and get notified when new ones drop.</p>
     <div style="display:flex;gap:0.5rem;margin-bottom:1rem;">
       <input type="email" id="email-capture-input" placeholder="your@email.com" style="flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-size:0.88rem;padding:0.75rem 1rem;outline:none;">
       <button onclick="submitEmailCapture()" class="sub-btn" style="width:auto;padding:0.75rem 1.5rem;margin:0;">Watch</button>
@@ -1655,6 +1656,10 @@
   let pendingVideoMeta = '';
   let pendingVideoDesc = '';
 
+  function _beacon(name, data) {
+    try { window.cfBeacon && window.cfBeacon.push({ type: 'event', name, data }); } catch(e) {}
+  }
+
   function openPreview(url, title, meta, desc, frameImg, locked) {
     pendingVideoUrl = url;
     pendingVideoTitle = title;
@@ -1667,17 +1672,35 @@
     document.getElementById('preview-meta').textContent = meta;
     document.getElementById('preview-desc').textContent = desc;
 
+    // Track video click
+    _beacon('video_click', { title });
+
     const savedEmail = localStorage.getItem('br_email');
-    document.getElementById('preview-email-gate').style.display = savedEmail ? 'none' : 'flex';
+
+    // 2nd-click gate: count clicks, show gate only on 2nd+
+    let clickCount = parseInt(localStorage.getItem('br_click_count') || '0', 10);
+    clickCount++;
+    localStorage.setItem('br_click_count', clickCount);
+
+    const showGate = !savedEmail && clickCount >= 2;
+
+    document.getElementById('preview-email-gate').style.display = showGate ? 'flex' : 'none';
     document.getElementById('preview-returning').style.display = savedEmail ? 'flex' : 'none';
 
-    if (!savedEmail) {
+    if (showGate) {
+      _beacon('email_gate_shown', { title, click_count: clickCount });
       document.getElementById('preview-email-input').value = '';
       document.getElementById('preview-email-input').classList.remove('error');
     }
 
     document.getElementById('preview-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
+
+    // First click: no gate, play directly
+    if (!savedEmail && clickCount < 2) {
+      closePreview();
+      openModal(url, title, meta);
+    }
   }
 
   function closePreview() {
@@ -1718,6 +1741,7 @@
       })
     })
     .finally(() => {
+      _beacon('email_gate_submitted', { title: pendingVideoTitle });
       localStorage.setItem('br_email', email);
       closePreview();
       openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
@@ -1764,6 +1788,7 @@
     document.getElementById('modal').classList.add('open');
     document.body.style.overflow = 'hidden';
     try { window.cfBeacon && window.cfBeacon.push({ type: 'event', name: 'video_play', data: { title: title } }); } catch(e) {}
+    _beacon('video_play', { title });
   }
 
   function closeModal() {
