@@ -14,8 +14,19 @@
 <link rel="apple-touch-icon" href="/images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
 <style>
+  /* Font fallback metrics — prevents CLS on hero paragraph */
+  @font-face {
+    font-family: 'Outfit Fallback';
+    src: local('Arial');
+    size-adjust: 97%;
+    ascent-override: 96%;
+    descent-override: 22%;
+    line-gap-override: 0%;
+  }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -35,7 +46,7 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Outfit', 'Outfit Fallback', sans-serif;
     font-weight: 300;
     line-height: 1.6;
     overflow-x: hidden;
@@ -141,6 +152,7 @@
 
   .hero p {
     font-size: 1.3rem;
+    font-family: 'Outfit', 'Outfit Fallback', sans-serif;
     color: var(--muted);
     max-width: 480px;
     margin-bottom: 2rem;
