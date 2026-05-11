@@ -116,7 +116,7 @@
   .hero-bg-img {
     position: absolute;
     inset: 0;
-    background: url('/images/hero_bg.webp') center/cover no-repeat, url('/images/hero_bg.jpg') center/cover no-repeat;
+    background: url('/images/hero_bg.webp') center/cover no-repeat;
     opacity: 0.42;
     z-index: 0;
   }
@@ -1706,9 +1706,10 @@
     localStorage.setItem('br_click_count', clickCount);
 
     const showGate = !savedEmail && clickCount >= 2;
+    const showWatch = savedEmail || clickCount < 2;
 
     document.getElementById('preview-email-gate').style.display = showGate ? 'flex' : 'none';
-    document.getElementById('preview-returning').style.display = savedEmail ? 'flex' : 'none';
+    document.getElementById('preview-returning').style.display = showWatch ? 'flex' : 'none';
 
     if (showGate) {
       _beacon('email_gate_shown', { title, click_count: clickCount });
@@ -1718,12 +1719,6 @@
 
     document.getElementById('preview-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
-
-    // First click: no gate, play directly
-    if (!savedEmail && clickCount < 2) {
-      closePreview();
-      openModal(url, title, meta);
-    }
   }
 
   function closePreview() {
