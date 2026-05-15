@@ -1234,6 +1234,78 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
+  /* ── ANIMATIONS ──────────────────────────────────────── */
+
+  /* Hero load-in stagger */
+  .hero-eyebrow {
+    animation: fadeUp 0.8s ease both;
+    animation-delay: 0.1s;
+  }
+  .hero h1 {
+    animation: fadeUp 0.9s ease both;
+    animation-delay: 0.25s;
+  }
+  .hero-content > p {
+    animation: fadeUp 0.9s ease both;
+    animation-delay: 0.4s;
+  }
+  .hero-content .btn-primary,
+  .hero-content .btn-ghost {
+    animation: fadeUp 0.8s ease both;
+    animation-delay: 0.55s;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll fade-in for page elements */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Section headers */
+  .section-header {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .section-header.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Thumbnail hover lift + glow */
+  .video-card { transition: transform 0.25s ease; }
+  .video-card:hover { transform: translateY(-4px); }
+  .video-thumb { transition: box-shadow 0.3s ease; }
+  .video-card:hover .video-thumb {
+    box-shadow: 0 8px 32px rgba(200,169,110,0.13);
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in, .section-header,
+    .hero-eyebrow, .hero h1,
+    .hero-content > p,
+    .hero-content .btn-primary,
+    .hero-content .btn-ghost {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .video-card:hover { transform: none; }
+  }
+
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
     nav ul { display: none; }
@@ -1285,7 +1357,7 @@
 
   <div class="video-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 3rem;">
 
-    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v77fh5a/?pub=4pcu4u', 'Who Is Thinking', '2026 · Documentary · 4:21', 'What happens when intelligence becomes optional? AI can amplify creativity, accelerate learning, and help us solve problems faster than ever before. But there\'s another side to that evolution: the moment we stop struggling to think for ourselves.', '/images/WhoIsThinking.webp', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77fh5a/?pub=4pcu4u', 'Who Is Thinking', '2026 · Documentary · 4:21', 'What happens when intelligence becomes optional? AI can amplify creativity, accelerate learning, and help us solve problems faster than ever before. But there\'s another side to that evolution: the moment we stop struggling to think for ourselves.', '/images/WhoIsThinking.webp', false)">
       <div class="video-thumb">
         <img src="/images/WhoIsThinking_THUMB.webp" alt="Who Is Thinking">
         <div class="video-thumb-overlay"></div>
@@ -1296,7 +1368,7 @@
         <div class="video-meta">2026 · Documentary · 4:21</div>
       </div>
     </div>
-    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v770b54/?pub=4pcu4u', 'Bodies', '2026 · Music Video · 3:57', 'A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn\'t training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.', '/images/Bodies.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v770b54/?pub=4pcu4u', 'Bodies', '2026 · Music Video · 3:57', 'A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn\'t training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.', '/images/Bodies.jpg', false)">
       <div class="video-thumb">
         <img src="/images/bodies_THUMB.jpg" alt="Bodies">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1309,7 +1381,7 @@
       </div>
     </div>
 
-    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.', '/images/simulation.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.', '/images/simulation.jpg', false)">
       <div class="video-thumb">
         <img src="/images/TheSimulation_THUMB.jpg" alt="The Simulation">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1322,7 +1394,7 @@
       </div>
     </div>
 
-    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772za6/?pub=4pcu4u', 'Saved', '2025 · Short Film · 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.', '/images/Saved.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772za6/?pub=4pcu4u', 'Saved', '2025 · Short Film · 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.', '/images/Saved.jpg', false)">
       <div class="video-thumb">
         <img src="/images/Saved_THUMB.jpg" alt="Saved">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1335,7 +1407,7 @@
       </div>
     </div>
 
-    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2026 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.', '/images/AuthorizedAccess.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2026 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.', '/images/AuthorizedAccess.jpg', false)">
       <div class="video-thumb">
         <img src="/images/authorized_THUMB.jpg" alt="Authorized Access">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1348,7 +1420,7 @@
       </div>
     </div>
 
-    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.', '/images/ThoseWhoSee.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.', '/images/ThoseWhoSee.jpg', false)">
       <div class="video-thumb">
         <img src="/images/ThoseWhoSee_part1_THUMB.jpg" alt="Those Who See Part 1">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1361,7 +1433,7 @@
       </div>
     </div>
 
-    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v77660w/?pub=4pcu4u', 'You Gotta Run Away', '2025 · Music Video · 2:25', 'A high-octane music video about escape, speed, and the desperate need to leave everything behind.', '/images/YouGottaRunAway.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77660w/?pub=4pcu4u', 'You Gotta Run Away', '2025 · Music Video · 2:25', 'A high-octane music video about escape, speed, and the desperate need to leave everything behind.', '/images/YouGottaRunAway.jpg', false)">
       <div class="video-thumb">
         <img src="/images/YouGottaRunAway_THUMB.jpg" alt="You Gotta Run Away">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1375,7 +1447,7 @@
     </div>
 
 
-    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v776hne/?pub=4pcu4u', 'Perfect Companion', '2024 · Music Video · 3:12', 'The video that started it all. Perfect Companion reached millions of viewers before the entire channel was removed overnight without warning. This is where Boiling Rocket began.', '/images/PerfectCompanion.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v776hne/?pub=4pcu4u', 'Perfect Companion', '2024 · Music Video · 3:12', 'The video that started it all. Perfect Companion reached millions of viewers before the entire channel was removed overnight without warning. This is where Boiling Rocket began.', '/images/PerfectCompanion.jpg', false)">
       <div class="video-thumb">
         <img src="/images/PerfectCompanion_THUMB.jpg" alt="Perfect Companion">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1388,7 +1460,7 @@
       </div>
     </div>
 
-    <div class="video-card" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2026 · Music Video · 3:12', 'A man trades his physical reality for a virtual world of connection and escape. But in a digital paradise, “forever” is just a monthly fee. As his real life withers, he discovers the cost of living in a world he doesn’t own. Your life is a service. Your heart is a rental. What happens when the subscription expires?', '/images/Banned.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2026 · Music Video · 3:12', 'A man trades his physical reality for a virtual world of connection and escape. But in a digital paradise, “forever” is just a monthly fee. As his real life withers, he discovers the cost of living in a world he doesn’t own. Your life is a service. Your heart is a rental. What happens when the subscription expires?', '/images/Banned.jpg', false)">
       <div class="video-thumb">
         <img src="/images/Banned_THUMB.jpg" alt="Banned">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1403,11 +1475,11 @@
 
   </div>
 
-  <div style="text-align:center;padding:3rem 0 1rem;">
+  <div class="fade-in" style="text-align:center;padding:3rem 0 1rem;">
     <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.2em;color:var(--muted);opacity:0.5;">More Coming Soon</span>
   </div>
 
-  <div style="margin-top:3rem;">
+  <div class="fade-in" style="margin-top:3rem;">
     <div class="section-header">
       <span class="section-title">Music on Spotify</span>
       <div class="section-line"></div>
@@ -1426,7 +1498,7 @@
 
   <div class="products-grid">
 
-    <div class="product-card">
+    <div class="product-card fade-in">
       <div class="product-icon">
         <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
       </div>
@@ -1435,7 +1507,7 @@
       <a href="https://boilingrocket.gumroad.com/l/kpakqm" class="btn-small" target="_blank">Get it →</a>
     </div>
 
-    <div class="product-card">
+    <div class="product-card fade-in">
       <div class="product-icon">
         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </div>
@@ -1444,7 +1516,7 @@
       <a href="https://boilingrocket.gumroad.com/l/wyqbsr" class="btn-small" target="_blank">Get it →</a>
     </div>
 
-    <div class="product-card">
+    <div class="product-card fade-in">
       <div class="product-icon">
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
       </div>
@@ -1453,7 +1525,7 @@
       <a href="https://YOUR-GUMROAD-LINK" class="btn-small" style="opacity:0.5;cursor:default;border-color:rgba(200,169,110,0.15);">Coming Soon</a>
     </div>
 
-    <div class="product-card">
+    <div class="product-card fade-in">
       <div class="product-icon">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       </div>
@@ -1468,7 +1540,7 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
-    <div class="about-left">
+    <div class="about-left fade-in">
       <div class="about-text">
         <p class="eyebrow">About Boiling Rocket</p>
         <h2>Cinematic Worlds Built with AI</h2>
@@ -1478,7 +1550,7 @@
         <p>This site is the new base — where the films exist, where new ones are released, and where the project continues without depending on a single system.</p>
       </div>
     </div>
-    <div class="about-right">
+    <div class="about-right fade-in">
       <div class="support-card">
         <div class="support-eyebrow">Support the Work</div>
         <h3>Keep It Going</h3>
@@ -1496,7 +1568,7 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-grid">
-    <div class="contact-left">
+    <div class="contact-left fade-in">
       <h2>Work Together</h2>
       <p>Available for brand sponsorships, creative collaborations, and licensing. Reach out and let's talk.</p>
 
@@ -1514,7 +1586,7 @@
       </div>
     </div>
 
-    <form class="contact-form" name="contact" method="POST" onsubmit="handleForm(event)">
+    <form class="contact-form fade-in" name="contact" method="POST" onsubmit="handleForm(event)">
       <input type="hidden" name="bot-field" style="display:none">
       <div class="form-group">
         <label>Your Name</label>
@@ -1904,6 +1976,25 @@
       a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
     });
   });
+
+  // Scroll fade-in
+  (function() {
+    const targets = document.querySelectorAll('.fade-in, .section-header');
+    if (!targets.length) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // stagger siblings by their index within parent
+          const siblings = Array.from(entry.target.parentElement.querySelectorAll('.fade-in'));
+          const idx = siblings.indexOf(entry.target);
+          entry.target.style.transitionDelay = idx > 0 ? (idx * 80) + 'ms' : '0ms';
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(el => observer.observe(el));
+  })();
 </script>
 
 </body>
