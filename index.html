@@ -207,8 +207,8 @@
 
   .section-header {
     display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 1rem;
     margin-bottom: 2.5rem;
   }
 
@@ -217,12 +217,43 @@
     font-size: 1.6rem;
     letter-spacing: 0.1em;
     color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    white-space: nowrap;
   }
 
-  .section-line-REPLACED {
+  .section-code {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    opacity: 0.7;
+    border: none;
+    border-left: 2px solid var(--accent);
+    padding: 0.1rem 0 0.1rem 0.5rem;
+    display: inline-block;
+    position: relative;
+    top: -1px;
+  }
+
+  .section-line {
     flex: 1;
     height: 1px;
     background: var(--border);
+    position: relative;
+  }
+
+  .section-meta {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.4;
+    white-space: nowrap;
   }
 
   .section-link {
@@ -253,7 +284,6 @@
     overflow: hidden;
     background: var(--bg3);
     border-radius: 16px;
-    z-index: 1;
   }
 
   .video-thumb img {
@@ -326,7 +356,7 @@
   .tag-film { background: var(--red); color: #fff; }
   .tag-new { background: #1a6b3a; color: #a8f0c0; }
 
-  .video-info { padding: 0.75rem 0 0; position: relative; z-index: 1; }
+  /* .video-info overridden below in magazine upgrades */
 
   .video-title {
     font-size: 1.05rem;
@@ -712,11 +742,7 @@
 
   /* FOOTER */
   footer {
-    padding: 3rem 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid var(--border);
+    /* layout handled by .footer-top / .footer-main / .footer-bottom */
   }
 
   .footer-logo {
@@ -1316,172 +1342,73 @@
     .featured-grid { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; }
     .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+    footer { flex-direction: column; }
   }
 
-  /* ── CYBERPUNK MAGAZINE UPGRADES ─────────────────────── */
-
-  /* 1. HAZARD-STRIPE DIVIDER — replaces section-line */
-  .section-line {
-    flex: 1;
-    height: 12px;
-    background:
-      repeating-linear-gradient(
-        -55deg,
-        transparent,
-        transparent 6px,
-        rgba(200,169,110,0.09) 6px,
-        rgba(200,169,110,0.09) 12px
-      );
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    position: relative;
+  /* ── CARD INDEX NUMBER ───────────────────────────────── */
+  .video-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.75rem 0 0;
   }
 
-  /* 2. VIDEO CARD NUMBERING */
-  .video-card[data-index] {
-    overflow: visible;
-  }
-  .video-card[data-index]::after {
-    content: attr(data-index);
-    position: absolute;
-    top: -1.2rem;
-    right: 0.2rem;
+  .video-index {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 4.5rem;
+    font-size: 4rem;
     line-height: 1;
-    color: rgba(255,255,255,0.055);
-    letter-spacing: -0.04em;
-    pointer-events: none;
-    z-index: 0;
-    user-select: none;
-  }
-
-  /* 3. HERO HUD MICRO-LABELS */
-  .hero-hud {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .hud-label {
-    position: absolute;
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(200,169,110,0.45);
-    font-family: 'Outfit', sans-serif;
-    line-height: 1.4;
-    animation: fadeUp 1s ease both;
-  }
-
-  .hud-label::before {
-    content: '▸ ';
-    opacity: 0.6;
-  }
-
-  .hud-issue   { top: 12%; right: 4rem; animation-delay: 0.7s; }
-  .hud-sector  { top: 22%; right: 4rem; animation-delay: 0.85s; }
-  .hud-year    { bottom: 28%; left: 4rem; animation-delay: 0.9s; }
-  .hud-coords  { bottom: 22%; left: 4rem; animation-delay: 1.05s; }
-  .hud-format  { top: 12%; left: 4rem; animation-delay: 0.75s; }
-
-  .hud-label .hud-value {
-    display: block;
-    color: rgba(240,236,228,0.25);
-    font-size: 0.58rem;
-    letter-spacing: 0.12em;
-    font-weight: 400;
-  }
-
-  /* 4. SECTION HEADER — MASTHEAD STYLE */
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-    position: relative;
-  }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
     color: var(--text);
+    opacity: 0.2;
+    flex-shrink: 0;
+    user-select: none;
+    margin-top: -0.15rem;
+  }
+
+  .video-info-text {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    white-space: nowrap;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.25rem;
   }
-
-  .section-title::before {
-    content: attr(data-code);
-    font-size: 0.58rem;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    color: var(--accent);
-    opacity: 0.65;
-    border: 1px solid rgba(200,169,110,0.25);
-    padding: 0.15rem 0.45rem;
-    display: none;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
-  }
-
-  [data-code].section-title::before {
-    display: inline-block;
-  }
-
-  .section-meta {
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    opacity: 0.45;
-    white-space: nowrap;
-    font-family: 'Outfit', sans-serif;
-  }
-
-  /* 5. DENSE FOOTER */
+  /* ── DENSE FOOTER ────────────────────────────────────── */
   footer {
     padding: 0;
     border-top: 1px solid var(--border);
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
   }
 
   .footer-top {
-    padding: 1.2rem 4rem;
+    padding: 1rem 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 2rem;
     border-bottom: 1px solid var(--border);
     background: repeating-linear-gradient(
       -55deg,
       transparent,
-      transparent 8px,
-      rgba(200,169,110,0.03) 8px,
-      rgba(200,169,110,0.03) 16px
+      transparent 10px,
+      rgba(255,255,255,0.015) 10px,
+      rgba(255,255,255,0.015) 20px
     );
   }
 
   .footer-main {
-    padding: 2rem 4rem;
+    padding: 3rem 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 3rem;
   }
 
   .footer-bottom {
-    padding: 0.9rem 4rem;
+    padding: 1rem 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 2rem;
     border-top: 1px solid var(--border);
     background: var(--bg2);
   }
@@ -1489,7 +1416,7 @@
   .footer-spec {
     font-size: 0.58rem;
     font-weight: 600;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted);
     opacity: 0.35;
@@ -1498,8 +1425,8 @@
 
   .footer-spec-row {
     display: flex;
-    gap: 2.5rem;
-    align-items: center;
+    gap: 3.5rem;
+    align-items: flex-start;
   }
 
   .footer-spec-item {
@@ -1509,7 +1436,7 @@
   }
 
   .footer-spec-item .spec-key {
-    font-size: 0.5rem;
+    font-size: 0.48rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
@@ -1523,54 +1450,18 @@
     opacity: 0.55;
   }
 
-  /* 6. VERTICAL SIDE LABEL */
-  .vertical-label {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%) rotate(-90deg);
-    transform-origin: center center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.62rem;
-    letter-spacing: 0.3em;
-    color: rgba(200,169,110,0.22);
-    text-transform: uppercase;
-    white-space: nowrap;
-    z-index: 50;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  @media (min-width: 1280px) {
-    .vertical-label { display: block; }
-  }
-
-  /* Mobile overrides for new footer */
   @media (max-width: 768px) {
-    .footer-top,
-    .footer-main,
-    .footer-bottom {
-      padding: 1.2rem 1.5rem;
+    .footer-top, .footer-main, .footer-bottom {
+      padding: 1rem 1.5rem;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.75rem;
       text-align: center;
     }
-    .footer-spec-row { flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
-    .hud-issue, .hud-sector { right: 1.5rem; }
-    .hud-year, .hud-coords, .hud-format { left: 1.5rem; }
-  }
-
-  /* Reduced motion: disable hud animations */
-  @media (prefers-reduced-motion: reduce) {
-    .hud-label { animation: none !important; opacity: 1 !important; }
+    .footer-spec-row { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
   }
 </style>
 </head>
 <body>
-
-<!-- VERTICAL SIDE LABEL -->
-<div class="vertical-label">Visual Journal &nbsp;/&nbsp; Issue 01 &nbsp;·&nbsp; Boiling Rocket &nbsp;·&nbsp; EST. 2024</div>
 
 <!-- NAV -->
 <nav>
@@ -1587,14 +1478,6 @@
 <section class="hero" id="home">
   <div class="hero-bg-img"></div>
   <div class="hero-bg"></div>
-  <!-- HUD MICRO-LABELS -->
-  <div class="hero-hud" aria-hidden="true">
-    <div class="hud-label hud-format">Visual Format<span class="hud-value">Cinematic · AI-Rendered</span></div>
-    <div class="hud-label hud-issue">Issue No.<span class="hud-value">01 / 2026</span></div>
-    <div class="hud-label hud-sector">Sector Code<span class="hud-value">BR-CIN-07</span></div>
-    <div class="hud-label hud-year">Established<span class="hud-value">2024 · Montréal</span></div>
-    <div class="hud-label hud-coords">Coordinates<span class="hud-value">45.5017° N · 73.5673° W</span></div>
-  </div>
   <div class="hero-content">
     <p class="hero-eyebrow">Cinematic AI &mdash; Music Videos &amp; Short Films</p>
     <h1>Where <em>AI</em><br>Meets<br>Bold Cinema</h1>
@@ -1610,25 +1493,28 @@
 <!-- CATALOG -->
 <section id="catalog">
   <div class="section-header">
-    <span class="section-title" data-code="CAT-01">Catalog</span>
+    <span class="section-title"><span class="section-code">CAT-01</span>Catalog</span>
     <div class="section-line"></div>
     <span class="section-meta">9 Entries · 2024–2026</span>
   </div>
 
   <div class="video-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 3rem;">
 
-    <div class="video-card fade-in" data-index="01" onclick="openPreview('https://rumble.com/embed/v77fh5a/?pub=4pcu4u', 'Who Is Thinking', '2026 · Documentary · 4:21', 'What happens when intelligence becomes optional? AI can amplify creativity, accelerate learning, and help us solve problems faster than ever before. But there\'s another side to that evolution: the moment we stop struggling to think for ourselves.', '/images/WhoIsThinking.webp', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77fh5a/?pub=4pcu4u', 'Who Is Thinking', '2026 · Documentary · 4:21', 'What happens when intelligence becomes optional? AI can amplify creativity, accelerate learning, and help us solve problems faster than ever before. But there\'s another side to that evolution: the moment we stop struggling to think for ourselves.', '/images/WhoIsThinking.webp', false)">
       <div class="video-thumb">
         <img src="/images/WhoIsThinking_THUMB.webp" alt="Who Is Thinking">
         <div class="video-thumb-overlay"></div>
         <div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
       </div>
       <div class="video-info">
-        <div class="video-title">Who Is Thinking</div>
-        <div class="video-meta">2026 · Documentary · 4:21</div>
+        <div class="video-index">01</div>
+        <div class="video-info-text">
+          <div class="video-title">Who Is Thinking</div>
+          <div class="video-meta">2026 · Documentary · 4:21</div>
+        </div>
       </div>
     </div>
-    <div class="video-card fade-in" data-index="02" onclick="openPreview('https://rumble.com/embed/v770b54/?pub=4pcu4u', 'Bodies', '2026 · Music Video · 3:57', 'A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn\'t training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.', '/images/Bodies.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v770b54/?pub=4pcu4u', 'Bodies', '2026 · Music Video · 3:57', 'A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn\'t training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.', '/images/Bodies.jpg', false)">
       <div class="video-thumb">
         <img src="/images/bodies_THUMB.jpg" alt="Bodies">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1636,12 +1522,15 @@
         <span class="video-duration">3:57</span>
       </div>
       <div class="video-info">
-        <div class="video-title">Bodies</div>
-        <div class="video-meta">Music Video &nbsp;·&nbsp; 2026</div>
+        <div class="video-index">02</div>
+        <div class="video-info-text">
+          <div class="video-title">Bodies</div>
+          <div class="video-meta">Music Video &nbsp;·&nbsp; 2026</div>
+        </div>
       </div>
     </div>
 
-    <div class="video-card fade-in" data-index="03" onclick="openPreview('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.', '/images/simulation.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.', '/images/simulation.jpg', false)">
       <div class="video-thumb">
         <img src="/images/TheSimulation_THUMB.jpg" alt="The Simulation">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1649,12 +1538,15 @@
         <span class="video-duration">2:21</span>
       </div>
       <div class="video-info">
-        <div class="video-title">The Simulation</div>
-        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+        <div class="video-index">03</div>
+        <div class="video-info-text">
+          <div class="video-title">The Simulation</div>
+          <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+        </div>
       </div>
     </div>
 
-    <div class="video-card fade-in" data-index="04" onclick="openPreview('https://rumble.com/embed/v772za6/?pub=4pcu4u', 'Saved', '2025 · Short Film · 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.', '/images/Saved.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772za6/?pub=4pcu4u', 'Saved', '2025 · Short Film · 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.', '/images/Saved.jpg', false)">
       <div class="video-thumb">
         <img src="/images/Saved_THUMB.jpg" alt="Saved">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1662,12 +1554,15 @@
         <span class="video-duration">3:50</span>
       </div>
       <div class="video-info">
-        <div class="video-title">Saved</div>
-        <div class="video-meta">Short Film &nbsp;·&nbsp; 2025</div>
+        <div class="video-index">04</div>
+        <div class="video-info-text">
+          <div class="video-title">Saved</div>
+          <div class="video-meta">Short Film &nbsp;·&nbsp; 2025</div>
+        </div>
       </div>
     </div>
 
-    <div class="video-card fade-in" data-index="05" onclick="openPreview('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2026 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.', '/images/AuthorizedAccess.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2026 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.', '/images/AuthorizedAccess.jpg', false)">
       <div class="video-thumb">
         <img src="/images/authorized_THUMB.jpg" alt="Authorized Access">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1675,12 +1570,15 @@
         <span class="video-duration">2:13</span>
       </div>
       <div class="video-info">
-        <div class="video-title">Authorized Access</div>
-        <div class="video-meta">Music Video &nbsp;·&nbsp; 2026</div>
+        <div class="video-index">05</div>
+        <div class="video-info-text">
+          <div class="video-title">Authorized Access</div>
+          <div class="video-meta">Music Video &nbsp;·&nbsp; 2026</div>
+        </div>
       </div>
     </div>
 
-    <div class="video-card fade-in" data-index="06" onclick="openPreview('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.', '/images/ThoseWhoSee.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.', '/images/ThoseWhoSee.jpg', false)">
       <div class="video-thumb">
         <img src="/images/ThoseWhoSee_part1_THUMB.jpg" alt="Those Who See Part 1">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1688,12 +1586,15 @@
         <span class="video-duration">3:26</span>
       </div>
       <div class="video-info">
-        <div class="video-title">Those Who See — Part 1: Arrival</div>
-        <div class="video-meta">Series &nbsp;·&nbsp; 2025</div>
+        <div class="video-index">06</div>
+        <div class="video-info-text">
+          <div class="video-title">Those Who See — Part 1: Arrival</div>
+          <div class="video-meta">Series &nbsp;·&nbsp; 2025</div>
+        </div>
       </div>
     </div>
 
-    <div class="video-card fade-in" data-index="07" onclick="openPreview('https://rumble.com/embed/v77660w/?pub=4pcu4u', 'You Gotta Run Away', '2025 · Music Video · 2:25', 'A high-octane music video about escape, speed, and the desperate need to leave everything behind.', '/images/YouGottaRunAway.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77660w/?pub=4pcu4u', 'You Gotta Run Away', '2025 · Music Video · 2:25', 'A high-octane music video about escape, speed, and the desperate need to leave everything behind.', '/images/YouGottaRunAway.jpg', false)">
       <div class="video-thumb">
         <img src="/images/YouGottaRunAway_THUMB.jpg" alt="You Gotta Run Away">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1701,13 +1602,16 @@
         <span class="video-duration">2:25</span>
       </div>
       <div class="video-info">
-        <div class="video-title">You Gotta Run Away</div>
-        <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+        <div class="video-index">07</div>
+        <div class="video-info-text">
+          <div class="video-title">You Gotta Run Away</div>
+          <div class="video-meta">Music Video &nbsp;·&nbsp; 2025</div>
+        </div>
       </div>
     </div>
 
 
-    <div class="video-card fade-in" data-index="08" onclick="openPreview('https://rumble.com/embed/v776hne/?pub=4pcu4u', 'Perfect Companion', '2024 · Music Video · 3:12', 'The video that started it all. Perfect Companion reached millions of viewers before the entire channel was removed overnight without warning. This is where Boiling Rocket began.', '/images/PerfectCompanion.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v776hne/?pub=4pcu4u', 'Perfect Companion', '2024 · Music Video · 3:12', 'The video that started it all. Perfect Companion reached millions of viewers before the entire channel was removed overnight without warning. This is where Boiling Rocket began.', '/images/PerfectCompanion.jpg', false)">
       <div class="video-thumb">
         <img src="/images/PerfectCompanion_THUMB.jpg" alt="Perfect Companion">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1715,12 +1619,15 @@
         <span class="video-duration">3:12</span>
       </div>
       <div class="video-info">
-        <div class="video-title">Perfect Companion</div>
-        <div class="video-meta">Music Video &nbsp;·&nbsp; 2024</div>
+        <div class="video-index">08</div>
+        <div class="video-info-text">
+          <div class="video-title">Perfect Companion</div>
+          <div class="video-meta">Music Video &nbsp;·&nbsp; 2024</div>
+        </div>
       </div>
     </div>
 
-    <div class="video-card fade-in" data-index="09" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2026 · Music Video · 3:12', 'A man trades his physical reality for a virtual world of connection and escape. But in a digital paradise, “forever” is just a monthly fee. As his real life withers, he discovers the cost of living in a world he doesn’t own. Your life is a service. Your heart is a rental. What happens when the subscription expires?', '/images/Banned.jpg', false)">
+    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2026 · Music Video · 3:12', 'A man trades his physical reality for a virtual world of connection and escape. But in a digital paradise, “forever” is just a monthly fee. As his real life withers, he discovers the cost of living in a world he doesn’t own. Your life is a service. Your heart is a rental. What happens when the subscription expires?', '/images/Banned.jpg', false)">
       <div class="video-thumb">
         <img src="/images/Banned_THUMB.jpg" alt="Banned">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -1728,8 +1635,11 @@
         <span class="video-duration">3:12</span>
       </div>
       <div class="video-info">
-        <div class="video-title">Banned</div>
-        <div class="video-meta">Music Video &nbsp;·&nbsp; 2026</div>
+        <div class="video-index">09</div>
+        <div class="video-info-text">
+          <div class="video-title">Banned</div>
+          <div class="video-meta">Music Video &nbsp;·&nbsp; 2026</div>
+        </div>
       </div>
     </div>
 
@@ -1741,7 +1651,7 @@
 
   <div class="fade-in" style="margin-top:3rem;">
     <div class="section-header">
-      <span class="section-title" data-code="AUD-02">Music on Spotify</span>
+      <span class="section-title"><span class="section-code">AUD-02</span>Music on Spotify</span>
       <div class="section-line"></div>
       <a href="https://open.spotify.com/artist/4H0t0xJIkQg2STG2kJ7PNe" class="section-link" target="_blank">Open in Spotify →</a>
     </div>
@@ -1751,7 +1661,7 @@
 </section>
 <section id="products" style="background: var(--bg2); border-top: 1px solid var(--border);">
   <div class="section-header">
-    <span class="section-title" data-code="PRD-03">Digital Products</span>
+    <span class="section-title"><span class="section-code">PRD-03</span>Digital Products</span>
     <div class="section-line"></div>
     <a href="https://boilingrocket.gumroad.com" class="section-link" target="_blank">View on Gumroad →</a>
   </div>
@@ -1876,13 +1786,11 @@
 
 <!-- FOOTER -->
 <footer>
-  <!-- Hazard stripe bar -->
   <div class="footer-top">
     <div class="footer-spec">Boiling Rocket &nbsp;·&nbsp; Visual Journal &nbsp;·&nbsp; Issue 01</div>
     <div class="footer-spec">BR-CIN-SPEC-2026 &nbsp;·&nbsp; Format: AI-Rendered Cinematic &nbsp;·&nbsp; Build v2.1.0</div>
     <div class="footer-spec">45.5017°N &nbsp;73.5673°W &nbsp;·&nbsp; QC-CA</div>
   </div>
-  <!-- Main footer row -->
   <div class="footer-main">
     <div class="footer-logo">Boiling Rocket</div>
     <div class="social-links">
@@ -1905,10 +1813,9 @@
       </div>
     </div>
   </div>
-  <!-- Bottom spec bar -->
   <div class="footer-bottom">
     <div class="footer-copy">&copy; 2026 Boiling Rocket. All rights reserved.</div>
-    <div class="footer-spec">Transmission: boilingrocket.com &nbsp;·&nbsp; Stack: HTML/CSS/CF-Pages &nbsp;·&nbsp; Uplink: Cloudflare</div>
+    <div class="footer-spec">Transmission: boilingrocket.com &nbsp;·&nbsp; Stack: HTML / CF-Pages &nbsp;·&nbsp; Uplink: Cloudflare</div>
     <div class="footer-spec">Signal Active</div>
   </div>
 </footer>
