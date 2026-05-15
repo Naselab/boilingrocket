@@ -178,15 +178,21 @@
     100% { text-shadow: none; transform: translate(0); opacity: 1; }
   }
 
+  /* h1 starts invisible; JS adds .h1-loaded after delay to play fadeUp once.
+     After that, JS replaces it with .h1-done so hover never replays fadeUp. */
   .hero h1 {
-    animation: fadeUp 0.9s ease forwards;
-    animation-delay: 0.25s;
     opacity: 0;
-  }
-
-  .hero h1:hover {
-    animation: glitch 0.4s ease forwards;
     cursor: default;
+  }
+  .hero h1.h1-loaded {
+    animation: fadeUp 0.9s ease forwards;
+  }
+  .hero h1.h1-done {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hero h1.h1-done:hover {
+    animation: glitch 0.4s ease forwards;
     opacity: 1;
   }
 
@@ -2211,28 +2217,59 @@
     });
   });
 
-  // Scroll fade-in
+  // ── Hero h1: play fadeUp once, then lock visible so hover glitch works cleanly
+  (function() {
+    const h1 = document.querySelector('.hero h1');
+    if (!h1) return;
+    // Add .h1-loaded after the intended delay to start fadeUp
+    setTimeout(() => {
+      h1.classList.add('h1-loaded');
+      // Once fadeUp finishes, swap to .h1-done (plain visible, no animation)
+      // so that :hover glitch never re-triggers fadeUp on mouseout
+      h1.addEventListener('animationend', function onEnd() {
+        h1.classList.remove('h1-loaded');
+        h1.classList.add('h1-done');
+        h1.removeEventListener('animationend', onEnd);
+      });
+    }, 250);
+  })();
+
+  // ── Scroll fade-in: thumbnails start invisible and only reveal on scroll ──
   (function() {
     const targets = document.querySelectorAll('.fade-in, .section-header');
     if (!targets.length) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          // For video cards, stagger by their position in the grid (column index)
-          if (el.classList.contains('fade-in')) {
-            const siblings = Array.from(el.parentElement.querySelectorAll('.fade-in'));
-            const idx = siblings.indexOf(el);
-            // Stagger by column position within the current visual row (4 cols)
-            const colIdx = idx % 4;
-            el.style.transitionDelay = (colIdx * 90) + 'ms';
+
+    // Wait for first user scroll before activating the observer.
+    // This guarantees elements in the initial viewport stay hidden until the
+    // user actually scrolls down — giving a clean "reveal on scroll" effect.
+    let scrolled = false;
+    let observer;
+
+    function buildObserver() {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            if (el.classList.contains('fade-in')) {
+              const siblings = Array.from(el.parentElement.querySelectorAll('.fade-in'));
+              const idx = siblings.indexOf(el);
+              const colIdx = idx % 4;
+              el.style.transitionDelay = (colIdx * 90) + 'ms';
+            }
+            el.classList.add('visible');
+            observer.unobserve(el);
           }
-          el.classList.add('visible');
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
-    targets.forEach(el => observer.observe(el));
+        });
+      }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+      targets.forEach(el => observer.observe(el));
+    }
+
+    window.addEventListener('scroll', function onFirstScroll() {
+      if (scrolled) return;
+      scrolled = true;
+      window.removeEventListener('scroll', onFirstScroll);
+      buildObserver();
+    }, { passive: true });
   })();
 </script>
 
