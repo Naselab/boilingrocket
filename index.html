@@ -150,6 +150,46 @@
     color: var(--accent);
   }
 
+  /* SCAN LINE */
+  .scan-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(200, 169, 110, 0.15);
+    z-index: 9999;
+    pointer-events: none;
+    animation: scan 6s linear infinite;
+  }
+
+  @keyframes scan {
+    0%   { top: -2px; }
+    100% { top: 100%; }
+  }
+
+  /* GLITCH HOVER — hero H1 only */
+  @keyframes glitch {
+    0%   { text-shadow: 2px 0 var(--accent); transform: translate(0); opacity: 1; }
+    20%  { text-shadow: -2px 0 rgba(192,57,43,0.8); transform: translate(-2px, 1px); opacity: 1; }
+    40%  { text-shadow: 2px 0 var(--accent); transform: translate(2px, -1px); opacity: 1; }
+    60%  { text-shadow: -2px 0 rgba(192,57,43,0.8); transform: translate(0); opacity: 1; }
+    80%  { text-shadow: 1px 0 var(--accent); transform: translate(1px, 1px); opacity: 1; }
+    100% { text-shadow: none; transform: translate(0); opacity: 1; }
+  }
+
+  .hero h1 {
+    animation: fadeUp 0.9s ease forwards;
+    animation-delay: 0.25s;
+    opacity: 0;
+  }
+
+  .hero h1:hover {
+    animation: glitch 0.4s ease forwards;
+    cursor: default;
+    opacity: 1;
+  }
+
   .hero p {
     font-size: 1.3rem;
     font-family: 'Outfit', 'Outfit Fallback', sans-serif;
@@ -1268,10 +1308,6 @@
     animation: fadeUp 0.8s ease both;
     animation-delay: 0.1s;
   }
-  .hero h1 {
-    animation: fadeUp 0.9s ease both;
-    animation-delay: 0.25s;
-  }
   .hero-content > p {
     animation: fadeUp 0.9s ease both;
     animation-delay: 0.4s;
@@ -1463,6 +1499,9 @@
 </head>
 <body>
 
+<!-- SCAN LINE -->
+<div class="scan-line" aria-hidden="true"></div>
+
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">Boiling<span>Rocket</span></a>
@@ -1498,7 +1537,7 @@
     <span class="section-meta">9 Entries · 2024–2026</span>
   </div>
 
-  <div class="video-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 3rem;">
+  <div class="video-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 3rem;">
 
     <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77fh5a/?pub=4pcu4u', 'Who Is Thinking', '2026 · Documentary · 4:21', 'What happens when intelligence becomes optional? AI can amplify creativity, accelerate learning, and help us solve problems faster than ever before. But there\'s another side to that evolution: the moment we stop struggling to think for ourselves.', '/images/WhoIsThinking.webp', false)">
       <div class="video-thumb">
@@ -2177,17 +2216,22 @@
     const targets = document.querySelectorAll('.fade-in, .section-header');
     if (!targets.length) return;
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // stagger siblings by their index within parent
-          const siblings = Array.from(entry.target.parentElement.querySelectorAll('.fade-in'));
-          const idx = siblings.indexOf(entry.target);
-          entry.target.style.transitionDelay = idx > 0 ? (idx * 80) + 'ms' : '0ms';
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+          const el = entry.target;
+          // For video cards, stagger by their position in the grid (column index)
+          if (el.classList.contains('fade-in')) {
+            const siblings = Array.from(el.parentElement.querySelectorAll('.fade-in'));
+            const idx = siblings.indexOf(el);
+            // Stagger by column position within the current visual row (4 cols)
+            const colIdx = idx % 4;
+            el.style.transitionDelay = (colIdx * 90) + 'ms';
+          }
+          el.classList.add('visible');
+          observer.unobserve(el);
         }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
     targets.forEach(el => observer.observe(el));
   })();
 </script>
