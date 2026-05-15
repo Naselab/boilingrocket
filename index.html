@@ -1332,8 +1332,8 @@
   /* Scroll fade-in for page elements */
   .fade-in {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
     will-change: opacity, transform;
   }
   .fade-in.visible {
@@ -2234,42 +2234,41 @@
     }, 250);
   })();
 
-  // ── Scroll fade-in: thumbnails start invisible and only reveal on scroll ──
+  // ── Scroll fade-in: cards reveal as they enter the viewport on scroll ──────
   (function() {
-    const targets = document.querySelectorAll('.fade-in, .section-header');
-    if (!targets.length) return;
+    const cards   = document.querySelectorAll('.fade-in');
+    const headers = document.querySelectorAll('.section-header');
+    if (!cards.length && !headers.length) return;
 
-    // Wait for first user scroll before activating the observer.
-    // This guarantees elements in the initial viewport stay hidden until the
-    // user actually scrolls down — giving a clean "reveal on scroll" effect.
-    let scrolled = false;
-    let observer;
+    // Assign stagger delays up front based on grid column (4-col grid)
+    cards.forEach((el, i) => {
+      const colIdx = i % 4;
+      el.style.transitionDelay = (colIdx * 120) + 'ms';
+    });
 
-    function buildObserver() {
-      observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            if (el.classList.contains('fade-in')) {
-              const siblings = Array.from(el.parentElement.querySelectorAll('.fade-in'));
-              const idx = siblings.indexOf(el);
-              const colIdx = idx % 4;
-              el.style.transitionDelay = (colIdx * 90) + 'ms';
-            }
-            el.classList.add('visible');
-            observer.unobserve(el);
-          }
-        });
-      }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-      targets.forEach(el => observer.observe(el));
+    function revealInView() {
+      const viewBottom = window.scrollY + window.innerHeight;
+
+      cards.forEach(el => {
+        if (el.classList.contains('visible')) return;
+        const elTop = el.getBoundingClientRect().top + window.scrollY;
+        // Only reveal when the card top is at least 80px above the viewport bottom
+        if (elTop < viewBottom - 80) {
+          el.classList.add('visible');
+        }
+      });
+
+      headers.forEach(el => {
+        if (el.classList.contains('visible')) return;
+        const elTop = el.getBoundingClientRect().top + window.scrollY;
+        if (elTop < viewBottom - 60) {
+          el.classList.add('visible');
+        }
+      });
     }
 
-    window.addEventListener('scroll', function onFirstScroll() {
-      if (scrolled) return;
-      scrolled = true;
-      window.removeEventListener('scroll', onFirstScroll);
-      buildObserver();
-    }, { passive: true });
+    // Only trigger on scroll — nothing reveals on page load
+    window.addEventListener('scroll', revealInView, { passive: true });
   })();
 </script>
 
