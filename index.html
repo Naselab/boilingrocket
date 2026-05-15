@@ -1332,13 +1332,16 @@
   /* Scroll fade-in for page elements */
   .fade-in {
     opacity: 0;
+    visibility: hidden;
     transform: translateY(40px);
-    transition: opacity 1s ease, transform 1s ease;
+    transition: opacity 1s ease, transform 1s ease, visibility 0s linear 1s;
     will-change: opacity, transform;
   }
   .fade-in.visible {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
+    transition: opacity 1s ease, transform 1s ease, visibility 0s linear 0s;
   }
 
   /* Section headers */
@@ -1362,7 +1365,9 @@
 
   /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .fade-in, .section-header,
+    /* Only disable animations/transitions — do NOT force opacity:1 on .fade-in,
+       that would bypass the scroll reveal entirely */
+    .section-header,
     .hero-eyebrow, .hero h1,
     .hero-content > p,
     .hero-content .btn-primary,
@@ -1370,6 +1375,10 @@
       animation: none !important;
       opacity: 1 !important;
       transform: none !important;
+      transition: none !important;
+    }
+    /* For .fade-in: skip transitions but still require JS to mark visible */
+    .fade-in {
       transition: none !important;
     }
     .video-card:hover { transform: none; }
@@ -2234,40 +2243,36 @@
     }, 250);
   })();
 
-  // ── Scroll fade-in: cards reveal as they enter the viewport on scroll ──────
+  // ── Scroll fade-in: cards reveal only when scrolled into view ───────────────
   (function() {
-    const cards   = document.querySelectorAll('.fade-in');
-    const headers = document.querySelectorAll('.section-header');
-    if (!cards.length && !headers.length) return;
-
-    // Assign stagger delays up front based on grid column (4-col grid)
-    cards.forEach((el, i) => {
-      const colIdx = i % 4;
-      el.style.transitionDelay = (colIdx * 120) + 'ms';
-    });
+    // Use getBoundingClientRect on scroll — no IntersectionObserver (fires on load)
+    // Nothing is revealed until the user scrolls.
 
     function revealInView() {
-      const viewBottom = window.scrollY + window.innerHeight;
+      const vh = window.innerHeight;
 
-      cards.forEach(el => {
-        if (el.classList.contains('visible')) return;
-        const elTop = el.getBoundingClientRect().top + window.scrollY;
-        // Only reveal when the card top is at least 80px above the viewport bottom
-        if (elTop < viewBottom - 80) {
+      document.querySelectorAll('.fade-in:not(.visible)').forEach(function(el) {
+        const rect = el.getBoundingClientRect();
+        // Card must have scrolled to within 120px of the bottom of the screen
+        if (rect.top < vh - 120) {
           el.classList.add('visible');
         }
       });
 
-      headers.forEach(el => {
-        if (el.classList.contains('visible')) return;
-        const elTop = el.getBoundingClientRect().top + window.scrollY;
-        if (elTop < viewBottom - 60) {
+      document.querySelectorAll('.section-header:not(.visible)').forEach(function(el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < vh - 80) {
           el.classList.add('visible');
         }
       });
     }
 
-    // Only trigger on scroll — nothing reveals on page load
+    // Stagger video cards by column position in a 4-col grid
+    document.querySelectorAll('.video-grid .fade-in').forEach(function(el, i) {
+      el.style.transitionDelay = (i % 4) * 120 + 'ms';
+    });
+
+    // ONLY on scroll — never on load
     window.addEventListener('scroll', revealInView, { passive: true });
   })();
 </script>
