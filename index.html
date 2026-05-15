@@ -253,6 +253,7 @@
     overflow: hidden;
     background: var(--bg3);
     border-radius: 16px;
+    z-index: 1;
   }
 
   .video-thumb img {
@@ -325,7 +326,7 @@
   .tag-film { background: var(--red); color: #fff; }
   .tag-new { background: #1a6b3a; color: #a8f0c0; }
 
-  .video-info { padding: 0.75rem 0 0; }
+  .video-info { padding: 0.75rem 0 0; position: relative; z-index: 1; }
 
   .video-title {
     font-size: 1.05rem;
@@ -1338,15 +1339,18 @@
   }
 
   /* 2. VIDEO CARD NUMBERING */
-  .video-card[data-index]::before {
+  .video-card[data-index] {
+    overflow: visible;
+  }
+  .video-card[data-index]::after {
     content: attr(data-index);
     position: absolute;
-    top: -0.15rem;
-    right: -0.4rem;
+    top: -1.2rem;
+    right: 0.2rem;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem;
+    font-size: 4.5rem;
     line-height: 1;
-    color: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.055);
     letter-spacing: -0.04em;
     pointer-events: none;
     z-index: 0;
@@ -1422,10 +1426,14 @@
     opacity: 0.65;
     border: 1px solid rgba(200,169,110,0.25);
     padding: 0.15rem 0.45rem;
-    display: inline-block;
+    display: none;
     vertical-align: middle;
     position: relative;
     top: -1px;
+  }
+
+  [data-code].section-title::before {
+    display: inline-block;
   }
 
   .section-meta {
@@ -2057,4 +2065,225 @@
     clickCount++;
     localStorage.setItem('br_click_count', clickCount);
 
-    const showGate = !savedEmai
+    const showGate = !savedEmail && clickCount >= 2;
+    const showWatch = savedEmail || clickCount < 2;
+
+    document.getElementById('preview-email-gate').style.display = showGate ? 'flex' : 'none';
+    document.getElementById('preview-returning').style.display = showWatch ? 'flex' : 'none';
+
+    if (showGate) {
+      _beacon('email_gate_shown', { title, click_count: clickCount });
+      document.getElementById('preview-email-input').value = '';
+      document.getElementById('preview-email-input').classList.remove('error');
+    }
+
+    document.getElementById('preview-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePreview() {
+    document.getElementById('preview-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closePreviewOnBg(e) {
+    if (e.target === document.getElementById('preview-overlay')) closePreview();
+  }
+
+  function previewPlayNow() {
+    closePreview();
+    openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
+  }
+
+  function submitPreviewEmail() {
+    const input = document.getElementById('preview-email-input');
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.classList.add('error');
+      input.focus();
+      return;
+    }
+    input.classList.remove('error');
+
+    const btn = input.nextElementSibling;
+    btn.innerHTML = 'Loading…';
+    btn.disabled = true;
+
+    fetch('https://br-subscribe.shinomalf.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        group: '185394129199433480',
+        first_video: pendingVideoTitle
+      })
+    })
+    .finally(() => {
+      _beacon('email_gate_submitted', { title: pendingVideoTitle });
+      localStorage.setItem('br_email', email);
+      closePreview();
+      openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
+    });
+  }
+
+  // --- EMAIL CAPTURE MODAL — kept for legacy, no longer triggered from preview ---
+  function openEmailCapture(url, title, meta, desc) {
+    // Redirect to preview panel instead
+    openPreview(url, title, meta, desc, '', false);
+  }
+
+  function closeEmailModal() {
+    document.getElementById('email-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeEmailModalOnBg(e) {
+    if (e.target === document.getElementById('email-modal')) closeEmailModal();
+  }
+
+  function submitEmailCapture() {
+    const email = document.getElementById('email-capture-input').value;
+    if (!email || !email.includes('@')) {
+      document.getElementById('email-capture-input').style.borderColor = 'rgba(192,57,43,0.6)';
+      return;
+    }
+    fetch('https://br-subscribe.shinomalf.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, group: '185394129199433480', first_video: pendingVideoTitle })
+    }).finally(() => {
+      localStorage.setItem('br_email', email);
+      closeEmailModal();
+      openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
+    });
+  }
+
+
+  function openModal(url, title, meta) {
+    document.getElementById('modal-iframe').src = url;
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-meta').textContent = meta;
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    try { window.cfBeacon && window.cfBeacon.push({ type: 'event', name: 'video_play', data: { title: title } }); } catch(e) {}
+    _beacon('video_play', { title });
+  }
+
+  function closeModal() {
+    document.getElementById('modal-iframe').src = '';
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOnBg(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  // --- SUBSCRIBE MODAL (locked videos) ---
+  const gumroadMonthly = 'https://boilingrocket.gumroad.com/l/zuzvds';
+  const gumroadYearly  = 'https://boilingrocket.gumroad.com/l/nsddb';
+  let currentPlan = 'yearly';
+
+  function openSubModal(videoTitle) {
+    document.getElementById('sub-modal-video-title').textContent = videoTitle || 'Members Only';
+    document.getElementById('sub-btn').href = gumroadYearly;
+    selectPlan('yearly');
+    document.getElementById('sub-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSubModal() {
+    document.getElementById('sub-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeSubModalOnBg(e) {
+    if (e.target === document.getElementById('sub-modal')) closeSubModal();
+  }
+
+  function selectPlan(plan) {
+    currentPlan = plan;
+    document.getElementById('plan-monthly').classList.toggle('selected', plan === 'monthly');
+    document.getElementById('plan-yearly').classList.toggle('selected', plan === 'yearly');
+    document.getElementById('sub-btn').href = plan === 'monthly' ? gumroadMonthly : gumroadYearly;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal(); closeSubModal(); closePreview(); closeEmailModal(); }
+  });
+
+  function handleForm(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending...';
+    btn.style.opacity = '0.7';
+
+    fetch('https://br-contact.shinomalf.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        btn.textContent = 'Message Sent ✓';
+        btn.style.background = '#1a6b3a';
+        btn.style.color = '#a8f0c0';
+        btn.style.opacity = '1';
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = 'Send Message';
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 4000);
+      } else {
+        throw new Error('Server error');
+      }
+    })
+    .catch(() => {
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#1a6b3a';
+      btn.style.color = '#a8f0c0';
+      btn.style.opacity = '1';
+      form.reset();
+      setTimeout(() => {
+        btn.textContent = 'Send Message';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 4000);
+    });
+  }
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+
+  // Scroll fade-in
+  (function() {
+    const targets = document.querySelectorAll('.fade-in, .section-header');
+    if (!targets.length) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // stagger siblings by their index within parent
+          const siblings = Array.from(entry.target.parentElement.querySelectorAll('.fade-in'));
+          const idx = siblings.indexOf(entry.target);
+          entry.target.style.transitionDelay = idx > 0 ? (idx * 80) + 'ms' : '0ms';
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(el => observer.observe(el));
+  })();
+</script>
+
+</body>
+</html>
