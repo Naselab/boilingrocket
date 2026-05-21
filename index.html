@@ -150,23 +150,6 @@
     color: var(--accent);
   }
 
-  /* SCAN LINE */
-  .scan-line {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: rgba(200, 169, 110, 0.15);
-    z-index: 9999;
-    pointer-events: none;
-    animation: scan 6s linear infinite;
-  }
-
-  @keyframes scan {
-    0%   { top: -2px; }
-    100% { top: 100%; }
-  }
 
   /* GLITCH HOVER — hero H1 only */
   @keyframes glitch {
@@ -1514,9 +1497,6 @@
 </head>
 <body>
 
-<!-- SCAN LINE -->
-<div class="scan-line" aria-hidden="true"></div>
-
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">Boiling<span>Rocket</span></a>
@@ -1557,8 +1537,7 @@
     <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77fh5a/?pub=4pcu4u', 'Who Is Thinking', '2026 · Documentary · 4:21', 'What happens when intelligence becomes optional? AI can amplify creativity, accelerate learning, and help us solve problems faster than ever before. But there\'s another side to that evolution: the moment we stop struggling to think for ourselves.', '/images/WhoIsThinking.webp', false)">
       <div class="video-thumb">
         <img src="/images/WhoIsThinking_THUMB.webp" alt="Who Is Thinking">
-        <div class="video-thumb-overlay"></div>
-        <div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+        <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
       </div>
       <div class="video-info">
         <div class="video-index">01</div>
