@@ -9,24 +9,23 @@
 <meta property="og:title" content="Boiling Rocket — Cinematic AI Music Videos & Short Films">
 <meta property="og:description" content="Handcrafted music videos and short films exploring the dark intersection of technology, identity, and human transformation.">
 <meta property="og:type" content="website">
+
+<!-- Preload critical assets -->
 <link rel="preload" as="image" href="/images/hero_bg.webp" fetchpriority="high">
-<link rel="icon" type="image/png" href="/images/favicon.png">
-<link rel="apple-touch-icon" href="/images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://rumble.com">
+<link rel="preconnect" href="https://open.spotify.com">
+<link rel="preconnect" href="https://br-subscribe.shinomalf.workers.dev">
+
+<link rel="icon" type="image/png" href="/images/favicon.png">
+<link rel="apple-touch-icon" href="/images/favicon.png">
+
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
-<style>
-  /* Font fallback metrics — prevents CLS on hero paragraph */
-  @font-face {
-    font-family: 'Outfit Fallback';
-    src: local('Arial');
-    size-adjust: 97%;
-    ascent-override: 96%;
-    descent-override: 22%;
-    line-gap-override: 0%;
-  }
 
+<style>
+  /* ── RESET & ROOT ─────────────────────────────────────── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -41,18 +40,28 @@
     --red: #c0392b;
   }
 
-  html { scroll-behavior: smooth; }
+  /* Font fallback metrics — prevents CLS on Bebas Neue */
+  @font-face {
+    font-family: 'Outfit Fallback';
+    src: local('Arial');
+    size-adjust: 97%;
+    ascent-override: 96%;
+    descent-override: 22%;
+    line-gap-override: 0%;
+  }
 
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Outfit', 'Outfit Fallback', sans-serif;
+    font-family: 'Outfit', 'Outfit Fallback', system-ui, -apple-system, sans-serif;
     font-weight: 300;
     line-height: 1.6;
     overflow-x: hidden;
   }
 
-  /* NAV */
+  html { scroll-behavior: smooth; }
+
+  /* ── NAV ──────────────────────────────────────────────── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -66,7 +75,7 @@
   }
 
   .logo {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif;
     font-size: 1.9rem;
     letter-spacing: 0.12em;
     color: var(--accent);
@@ -75,11 +84,7 @@
 
   .logo span { color: var(--text); }
 
-  nav ul {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
+  nav ul { display: flex; gap: 2.5rem; list-style: none; }
 
   nav a {
     color: var(--muted);
@@ -93,7 +98,7 @@
 
   nav a:hover { color: var(--accent); }
 
-  /* HERO */
+  /* ── HERO ─────────────────────────────────────────────── */
   .hero {
     position: relative;
     height: 88vh;
@@ -137,51 +142,47 @@
   }
 
   .hero h1 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif;
     font-size: clamp(4.5rem, 9vw, 7.8rem);
     line-height: 0.95;
     letter-spacing: 0.04em;
     color: var(--text);
     margin-bottom: 1.2rem;
-  }
-
-  .hero h1 em {
-    font-style: normal;
-    color: var(--accent);
-  }
-
-
-  /* GLITCH HOVER — hero H1 only */
-  @keyframes glitch {
-    0%   { text-shadow: 2px 0 var(--accent); transform: translate(0); opacity: 1; }
-    20%  { text-shadow: -2px 0 rgba(192,57,43,0.8); transform: translate(-2px, 1px); opacity: 1; }
-    40%  { text-shadow: 2px 0 var(--accent); transform: translate(2px, -1px); opacity: 1; }
-    60%  { text-shadow: -2px 0 rgba(192,57,43,0.8); transform: translate(0); opacity: 1; }
-    80%  { text-shadow: 1px 0 var(--accent); transform: translate(1px, 1px); opacity: 1; }
-    100% { text-shadow: none; transform: translate(0); opacity: 1; }
-  }
-
-  /* h1 starts invisible; JS adds .h1-loaded after delay to play fadeUp once.
-     After that, JS replaces it with .h1-done so hover never replays fadeUp. */
-  .hero h1 {
-    opacity: 0;
+    /*
+      FIX: opacity is 1 by default — LCP element is immediately visible to the
+      browser so Google's LCP clock fires on first paint, not after the JS runs.
+      The glitch hover animation still works on .h1-done via JS.
+    */
+    opacity: 1;
     cursor: default;
   }
-  .hero h1.h1-loaded {
-    animation: fadeUp 0.9s ease forwards;
+
+  .hero h1 em { font-style: normal; color: var(--accent); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-  .hero h1.h1-done {
-    opacity: 1;
-    transform: translateY(0);
+
+  @keyframes glitch {
+    0%   { text-shadow: 2px 0 var(--accent); transform: translate(0); }
+    20%  { text-shadow: -2px 0 rgba(192,57,43,0.8); transform: translate(-2px, 1px); }
+    40%  { text-shadow: 2px 0 var(--accent); transform: translate(2px, -1px); }
+    60%  { text-shadow: -2px 0 rgba(192,57,43,0.8); transform: translate(0); }
+    80%  { text-shadow: 1px 0 var(--accent); transform: translate(1px, 1px); }
+    100% { text-shadow: none; transform: translate(0); }
   }
-  .hero h1.h1-done:hover {
+
+  /*
+    The JS-managed class .h1-ready is added after the first rAF tick,
+    enabling hover glitch without ever hiding the element from LCP.
+  */
+  .hero h1.h1-ready:hover {
     animation: glitch 0.4s ease forwards;
-    opacity: 1;
   }
 
   .hero p {
     font-size: 1.3rem;
-    font-family: 'Outfit', 'Outfit Fallback', sans-serif;
     color: var(--muted);
     max-width: 480px;
     margin-bottom: 2rem;
@@ -229,20 +230,23 @@
 
   .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* SECTIONS */
-  section {
-    padding: 5rem 4rem;
-  }
+  /* ── SECTIONS ─────────────────────────────────────────── */
+  section { padding: 5rem 4rem; }
 
   .section-header {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
   }
 
+  .section-header.visible { opacity: 1; transform: translateY(0); }
+
   .section-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif;
     font-size: 1.6rem;
     letter-spacing: 0.1em;
     color: var(--text);
@@ -259,7 +263,6 @@
     letter-spacing: 0.18em;
     color: var(--accent);
     opacity: 0.7;
-    border: none;
     border-left: 2px solid var(--accent);
     padding: 0.1rem 0 0.1rem 0.5rem;
     display: inline-block;
@@ -267,15 +270,9 @@
     top: -1px;
   }
 
-  .section-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-    position: relative;
-  }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
 
   .section-meta {
-    font-family: 'Outfit', sans-serif;
     font-size: 0.6rem;
     font-weight: 600;
     letter-spacing: 0.16em;
@@ -294,7 +291,7 @@
     text-decoration: none;
   }
 
-  /* VIDEO GRID */
+  /* ── VIDEO GRID ───────────────────────────────────────── */
   .video-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -304,8 +301,11 @@
   .video-card {
     position: relative;
     cursor: pointer;
-    group: true;
+    /* No will-change here — only applied on hover via JS to save GPU memory */
+    transition: transform 0.25s ease;
   }
+
+  .video-card:hover { transform: translateY(-4px); }
 
   .video-thumb {
     position: relative;
@@ -313,6 +313,11 @@
     overflow: hidden;
     background: var(--bg3);
     border-radius: 16px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .video-card:hover .video-thumb {
+    box-shadow: 0 8px 32px rgba(200,169,110,0.13);
   }
 
   .video-thumb img {
@@ -324,10 +329,7 @@
     opacity: 0.85;
   }
 
-  .video-card:hover .video-thumb img {
-    transform: scale(1.05);
-    opacity: 1;
-  }
+  .video-card:hover .video-thumb img { transform: scale(1.05); opacity: 1; }
 
   .video-thumb-overlay {
     position: absolute;
@@ -338,6 +340,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* pointer-events:none so the card's click handler fires cleanly */
+    pointer-events: none;
   }
 
   .video-card:hover .video-thumb-overlay { opacity: 1; }
@@ -381,11 +385,34 @@
     padding: 0.2rem 0.5rem;
   }
 
-  .tag-mv { background: var(--accent); color: #080808; }
+  .tag-mv  { background: var(--accent); color: #080808; }
   .tag-film { background: var(--red); color: #fff; }
-  .tag-new { background: #1a6b3a; color: #a8f0c0; }
+  .tag-new  { background: #1a6b3a; color: #a8f0c0; }
 
-  /* .video-info overridden below in magazine upgrades */
+  .video-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.75rem 0 0;
+  }
+
+  .video-index {
+    font-family: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif;
+    font-size: 4rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    opacity: 0.2;
+    flex-shrink: 0;
+    user-select: none;
+    margin-top: -0.15rem;
+  }
+
+  .video-info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
 
   .video-title {
     font-size: 1.05rem;
@@ -397,42 +424,9 @@
 
   .video-card:hover .video-title { color: var(--accent); }
 
-  .video-meta {
-    font-size: 0.85rem;
-    color: var(--muted);
-    letter-spacing: 0.03em;
-  }
+  .video-meta { font-size: 0.85rem; color: var(--muted); letter-spacing: 0.03em; }
 
-  /* FEATURED (large card) */
-  .featured-grid {
-    display: grid;
-    grid-template-columns: 1.8fr 1fr;
-    gap: 1.5rem;
-    align-items: stretch;
-  }
-
-  .featured-card {
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .featured-card .video-thumb {
-    flex: 1;
-    aspect-ratio: unset;
-    min-height: 0;
-  }
-
-  .featured-card .video-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* PRODUCTS */
+  /* ── PRODUCTS ─────────────────────────────────────────── */
   .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -446,44 +440,20 @@
     transition: border-color 0.2s, transform 0.2s;
   }
 
-  .product-card:hover {
-    border-color: rgba(200,169,110,0.3);
-    transform: translateY(-2px);
-  }
+  .product-card:hover { border-color: rgba(200,169,110,0.3); transform: translateY(-2px); }
 
   .product-icon {
-    width: 40px;
-    height: 40px;
+    width: 40px; height: 40px;
     background: rgba(200,169,110,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     margin-bottom: 1rem;
   }
 
   .product-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
 
-  .product-card h3 {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-  }
+  .product-card h3 { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
 
-  .product-card p {
-    font-size: 0.8rem;
-    color: var(--muted);
-    line-height: 1.6;
-    margin-bottom: 1.2rem;
-  }
-
-  .product-price {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
+  .product-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem; }
 
   .btn-small {
     display: inline-block;
@@ -500,35 +470,20 @@
 
   .btn-small:hover { background: var(--accent); color: #080808; }
 
-  /* ABOUT */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    align-items: stretch;
-  }
+  /* ── ABOUT ────────────────────────────────────────────── */
+  #about { padding: 0; }
 
-  .about-img-wrap {
-    position: relative;
-    max-width: 300px;
-    margin-left: auto;
-    display: none;
-  }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
 
-  .about-img-wrap::before {
-    content: '';
-    position: absolute;
-    inset: -12px;
-    border: 1px solid rgba(200,169,110,0.2);
-    pointer-events: none;
-  }
+  .about-left  { padding: 5rem 4rem; }
 
-  .about-img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    display: block;
-    filter: grayscale(30%);
+  .about-right {
+    background: var(--bg2);
+    border-left: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 4rem;
   }
 
   .about-text .eyebrow {
@@ -541,55 +496,96 @@
   }
 
   .about-text h2 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif;
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     letter-spacing: 0.06em;
     line-height: 1;
     margin-bottom: 1.5rem;
   }
 
-  .about-text p {
-    font-size: 0.95rem;
-    color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 1rem;
-  }
+  .about-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
 
-  .stats-row {
-    display: flex;
-    gap: 3rem;
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
-    letter-spacing: 0.06em;
-    color: var(--accent);
-  }
-
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* CONTACT */
-  #contact {
+  /* ── SUPPORT CARD ─────────────────────────────────────── */
+  .support-card {
     background: var(--bg2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
+    padding: 2rem 1.8rem;
+    position: relative;
+    transition: border-color 0.4s;
+    width: 100%;
+    max-width: 360px;
   }
 
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
+  .support-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200,169,110,0.45), transparent);
   }
+
+  .support-card:hover { border-color: rgba(200,169,110,0.2); }
+
+  .support-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    opacity: 0.75;
+  }
+
+  .support-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .support-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.6rem; }
+
+  .btn-support {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    background: transparent;
+    color: var(--accent);
+    padding: 0.72rem 1.4rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(200,169,110,0.35);
+    transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s;
+    width: 100%;
+  }
+
+  .btn-support:hover {
+    background: rgba(200,169,110,0.08);
+    border-color: var(--accent);
+    color: var(--accent2);
+    transform: translateY(-1px);
+  }
+
+  .support-fine {
+    font-size: 0.65rem;
+    color: var(--muted);
+    opacity: 0.45;
+    margin-top: 1rem;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+  }
+
+  /* ── CONTACT ──────────────────────────────────────────── */
+  #contact { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
 
   .contact-left h2 {
     font-family: 'Bebas Neue', sans-serif;
@@ -599,19 +595,9 @@
     margin-bottom: 1.2rem;
   }
 
-  .contact-left p {
-    font-size: 0.9rem;
-    color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 2rem;
-  }
+  .contact-left p { font-size: 0.9rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
 
-  .contact-detail {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    margin-bottom: 1.5rem;
-  }
+  .contact-detail { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1.5rem; }
 
   .contact-detail-label {
     font-size: 0.7rem;
@@ -621,10 +607,7 @@
     color: var(--accent);
   }
 
-  .contact-detail-value {
-    font-size: 0.9rem;
-    color: var(--text);
-  }
+  .contact-detail-value { font-size: 0.9rem; color: var(--text); }
 
   .contact-form { display: flex; flex-direction: column; gap: 1rem; }
 
@@ -654,137 +637,48 @@
 
   .form-group input:focus,
   .form-group textarea:focus,
-  .form-group select:focus {
-    border-color: rgba(200,169,110,0.5);
-  }
+  .form-group select:focus { border-color: rgba(200,169,110,0.5); }
 
   .form-group select { appearance: none; cursor: pointer; }
   .form-group textarea { height: 120px; }
 
-  /* SUPPORT SIDEBAR CARD */
-  .support-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 2rem 1.8rem;
-    position: relative;
-    transition: border-color 0.4s;
-    width: 100%;
-    max-width: 360px;
-  }
+  /* ── FOOTER ───────────────────────────────────────────── */
+  footer { padding: 0; border-top: 1px solid var(--border); display: flex; flex-direction: column; }
 
-  .support-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(200,169,110,0.45), transparent);
-  }
-
-  .support-card:hover {
-    border-color: rgba(200,169,110,0.2);
-  }
-
-  .support-eyebrow {
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
-    opacity: 0.75;
-  }
-
-  .support-card h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 0.08em;
-    color: var(--text);
-    margin-bottom: 1rem;
-    line-height: 1;
-  }
-
-  .support-card p {
-    font-size: 0.82rem;
-    color: var(--muted);
-    line-height: 1.85;
-    margin-bottom: 1.6rem;
-  }
-
-  .btn-support {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    background: transparent;
-    color: var(--accent);
-    padding: 0.72rem 1.4rem;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid rgba(200,169,110,0.35);
-    transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .btn-support:hover {
-    background: rgba(200,169,110,0.08);
-    border-color: var(--accent);
-    color: var(--accent2);
-    transform: translateY(-1px);
-  }
-
-  .support-fine {
-    font-size: 0.65rem;
-    color: var(--muted);
-    opacity: 0.45;
-    margin-top: 1rem;
-    letter-spacing: 0.03em;
-    line-height: 1.6;
-  }
-
-  #about {
-    padding: 0;
-  }
-
-  .about-left {
-    padding: 5rem 4rem;
-  }
-
-  .about-right {
-    background: var(--bg2);
-    border-left: 1px solid var(--border);
+  .footer-top {
+    padding: 1rem 4rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 5rem 4rem;
+    justify-content: space-between;
+    gap: 2rem;
+    border-bottom: 1px solid var(--border);
+    background: repeating-linear-gradient(
+      -55deg, transparent, transparent 10px,
+      rgba(255,255,255,0.015) 10px, rgba(255,255,255,0.015) 20px
+    );
   }
 
-  @media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr; }
-    .about-left { padding: 3rem 1.5rem; }
-    .about-right { border-left: none; border-top: 1px solid var(--border); padding: 3rem 1.5rem; }
-    .support-card { top: 0; }
-  }
-
-  /* FOOTER */
-  footer {
-    /* layout handled by .footer-top / .footer-main / .footer-bottom */
-  }
-
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-  }
-
-  .social-links {
+  .footer-main {
+    padding: 3rem 4rem;
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
   }
+
+  .footer-bottom {
+    padding: 1rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.12em; color: var(--accent); }
+
+  .social-links { display: flex; gap: 1.5rem; }
 
   .social-links a {
     font-size: 0.75rem;
@@ -798,12 +692,27 @@
 
   .social-links a:hover { color: var(--accent); }
 
-  .footer-copy {
-    font-size: 0.75rem;
+  .footer-copy { font-size: 0.75rem; color: var(--muted); }
+
+  .footer-spec {
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--muted);
+    opacity: 0.35;
+    font-family: 'Outfit', sans-serif;
   }
 
-  /* MODAL */
+  .footer-spec-row { display: flex; gap: 3.5rem; align-items: flex-start; }
+
+  .footer-spec-item { display: flex; flex-direction: column; gap: 0.15rem; }
+
+  .footer-spec-item .spec-key { font-size: 0.48rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); opacity: 0.5; }
+
+  .footer-spec-item .spec-val { font-size: 0.6rem; letter-spacing: 0.1em; color: var(--muted); opacity: 0.55; }
+
+  /* ── MODAL ────────────────────────────────────────────── */
   .modal-overlay {
     display: none;
     position: fixed;
@@ -817,98 +726,170 @@
 
   .modal-overlay.open { display: flex; }
 
-  .modal {
-    position: relative;
-    width: 100%;
-    max-width: 900px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-  }
+  .modal { position: relative; width: 100%; max-width: 900px; background: var(--bg2); border: 1px solid var(--border); }
 
   .modal-close {
     position: absolute;
-    top: -2.5rem;
-    right: 0;
-    background: none;
-    border: none;
+    top: -2.5rem; right: 0;
+    background: none; border: none;
     color: var(--muted);
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
+    display: flex; align-items: center; gap: 0.4rem;
     font-family: 'Outfit', sans-serif;
   }
 
   .modal-close:hover { color: var(--text); }
 
-  .modal-video {
-    aspect-ratio: 16/9;
-    width: 100%;
-    background: #000;
-  }
+  .modal-video { aspect-ratio: 16/9; width: 100%; background: #000; }
 
-  .modal-video iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-  }
+  .modal-video iframe { width: 100%; height: 100%; border: none; display: block; }
 
-  .modal-info {
-    padding: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
+  .modal-info { padding: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; }
 
-  .modal-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.3rem;
-  }
+  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
 
   .modal-meta { font-size: 0.8rem; color: var(--muted); }
 
-  /* LOCK OVERLAY */
-  .lock-overlay {
+  /* ── PREVIEW PANEL ────────────────────────────────────── */
+  .preview-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 250;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .preview-overlay.open { display: flex; }
+
+  .preview-panel {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    max-height: calc(100vh - 4rem);
+    background: var(--bg2);
+    border: 1px solid rgba(200,169,110,0.18);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .preview-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    z-index: 3;
+  }
+
+  .preview-panel-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none; border: none;
+    color: rgba(240,236,228,0.7);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.3rem;
+    z-index: 4;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  }
+
+  .preview-panel-close:hover { color: var(--text); }
+
+  .preview-panel-img {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #000;
+    flex-shrink: 0;
+  }
+
+  .preview-panel-img img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.95; }
+
+  .preview-panel-img-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(8,8,8,0.55);
+    background: linear-gradient(to bottom, transparent 55%, var(--bg2) 100%);
+  }
+
+  .preview-panel-info {
+    padding: 1.5rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  .preview-panel-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+
+  .preview-panel-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.06em; line-height: 1; color: var(--text); }
+
+  .preview-panel-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.75; }
+
+  .preview-panel-actions { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.25rem; width: 100%; }
+
+  .preview-watch-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
-    transition: background 0.3s;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: #080808;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
   }
 
-  .video-card:hover .lock-overlay { background: rgba(8,8,8,0.35); }
+  .preview-watch-btn:hover { background: var(--accent2); }
 
-  .lock-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(200,169,110,0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-    background: rgba(8,8,8,0.5);
-    transition: border-color 0.2s, transform 0.2s;
+  .preview-gate-label { font-size: 0.78rem; color: var(--muted); margin: 0 0 0.6rem; line-height: 1.5; }
+
+  .preview-email-row { display: flex; gap: 0.5rem; width: 100%; }
+
+  .preview-email-row input {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.72rem 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
   }
 
-  .video-card:hover .lock-icon {
-    border-color: var(--accent);
-    transform: scale(1.08);
+  .preview-email-row input:focus { border-color: var(--accent); }
+  .preview-email-row input.error { border-color: rgba(192,57,43,0.7); }
+
+  .preview-email-row .preview-watch-btn {
+    flex-shrink: 0;
+    width: auto;
+    padding: 0.72rem 1.2rem;
+    white-space: nowrap;
   }
 
-  .lock-icon svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; }
+  .preview-panel-fine { font-size: 0.68rem; color: var(--muted); opacity: 0.7; text-align: center; }
 
-  /* SUBSCRIBE MODAL */
+  /* ── SUBSCRIBE MODAL ──────────────────────────────────── */
   .sub-modal-overlay {
     display: none;
     position: fixed;
@@ -943,8 +924,7 @@
   .sub-modal-close {
     position: absolute;
     top: 1rem; right: 1rem;
-    background: none;
-    border: none;
+    background: none; border: none;
     color: var(--muted);
     cursor: pointer;
     font-size: 0.75rem;
@@ -952,112 +932,49 @@
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
+    display: flex; align-items: center; gap: 0.3rem;
   }
 
   .sub-modal-close:hover { color: var(--text); }
 
   .sub-modal-lock {
-    width: 56px;
-    height: 56px;
+    width: 56px; height: 56px;
     border-radius: 50%;
     border: 1px solid rgba(200,169,110,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     margin: 0 auto 1.5rem;
   }
 
   .sub-modal-lock svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
 
-  .sub-modal h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0.1em;
-    color: var(--text);
-    margin-bottom: 0.75rem;
-  }
+  .sub-modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.1em; color: var(--text); margin-bottom: 0.75rem; }
 
-  .sub-modal-video-title {
-    font-size: 0.8rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 1.2rem;
-    font-weight: 500;
-  }
+  .sub-modal-video-title { font-size: 0.8rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.2rem; font-weight: 500; }
 
-  .sub-modal p {
-    font-size: 0.88rem;
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 2rem;
-  }
+  .sub-modal p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
 
-  .sub-plans {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
+  .sub-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem; }
 
-  .sub-plan {
-    border: 1px solid var(--border);
-    padding: 1rem;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    position: relative;
-  }
+  .sub-plan { border: 1px solid var(--border); padding: 1rem; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
 
   .sub-plan:hover { border-color: rgba(200,169,110,0.4); }
 
-  .sub-plan.selected {
-    border-color: var(--accent);
-    background: rgba(200,169,110,0.05);
-  }
+  .sub-plan.selected { border-color: var(--accent); background: rgba(200,169,110,0.05); }
 
-  .sub-plan-price {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 0.06em;
-    color: var(--text);
-  }
+  .sub-plan-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; color: var(--text); }
 
-  .sub-plan-period {
-    font-size: 0.7rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.3rem;
-  }
+  .sub-plan-period { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
 
-  .sub-plan-save {
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #1a6b3a;
-    background: rgba(26,107,58,0.15);
-    padding: 0.15rem 0.4rem;
-    display: inline-block;
-    margin-top: 0.3rem;
-  }
+  .sub-plan-save { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #1a6b3a; background: rgba(26,107,58,0.15); padding: 0.15rem 0.4rem; display: inline-block; margin-top: 0.3rem; }
 
   .sub-btn {
-    display: block;
-    width: 100%;
-    background: var(--accent);
-    color: #080808;
+    display: block; width: 100%;
+    background: var(--accent); color: #080808;
     padding: 0.9rem;
     font-family: 'Outfit', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: none;
+    font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border: none;
     cursor: pointer;
     transition: background 0.2s;
     margin-bottom: 1rem;
@@ -1065,234 +982,29 @@
 
   .sub-btn:hover { background: var(--accent2); }
 
-  .sub-modal-fine {
-    font-size: 0.72rem;
-    color: var(--muted);
+  .sub-modal-fine { font-size: 0.72rem; color: var(--muted); }
+  .sub-modal-fine a { color: var(--accent); text-decoration: none; }
+
+  /* ── SCROLL FADE-IN ───────────────────────────────────── */
+  .fade-in {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(40px);
+    transition: opacity 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+                transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+                visibility 0s linear 0.6s;
   }
 
-  .sub-modal-fine a {
-    color: var(--accent);
-    text-decoration: none;
+  .fade-in.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+                transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+                visibility 0s linear 0s;
   }
 
-  /* PREVIEW PANEL */
-  .preview-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.88);
-    z-index: 250;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
-  .preview-overlay.open { display: flex; }
-
-  .preview-panel {
-    position: relative;
-    width: 100%;
-    max-width: 620px;
-    max-height: calc(100vh - 4rem);
-    background: var(--bg2);
-    border: 1px solid rgba(200,169,110,0.18);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .preview-panel::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(to right, transparent, var(--accent), transparent);
-    z-index: 3;
-    flex-shrink: 0;
-  }
-
-  .preview-panel-close {
-    position: absolute;
-    top: 1rem; right: 1rem;
-    background: none;
-    border: none;
-    color: rgba(240,236,228,0.7);
-    cursor: pointer;
-    font-size: 0.75rem;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    z-index: 4;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-  }
-  .preview-panel-close:hover { color: var(--text); }
-
-  .preview-panel-img {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    background: #000;
-    flex-shrink: 0;
-  }
-  .preview-panel-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    opacity: 0.95;
-  }
-  .preview-panel-img-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, transparent 55%, var(--bg2) 100%);
-  }
-
-  .preview-panel-info {
-    padding: 1.5rem 2rem 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    overflow-y: auto;
-    min-height: 0;
-  }
-
-  .preview-panel-eyebrow {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    flex-shrink: 0;
-  }
-
-  .preview-panel-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0.06em;
-    line-height: 1;
-    color: var(--text);
-    flex-shrink: 0;
-  }
-
-  .preview-panel-desc {
-    font-size: 0.82rem;
-    color: var(--muted);
-    line-height: 1.75;
-    flex-shrink: 1;
-  }
-
-  .preview-panel-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    margin-top: 0.25rem;
-    flex-shrink: 0;
-    width: 100%;
-  }
-
-  .preview-watch-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: var(--accent);
-    color: #080808;
-    padding: 0.75rem 1.5rem;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s;
-    width: 100%;
-  }
-  .preview-watch-btn:hover { background: var(--accent2); }
-
-  .preview-subscribe-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: transparent;
-    color: var(--text);
-    padding: 0.7rem 1.5rem;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: 1px solid rgba(240,236,228,0.18);
-    cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
-    width: 100%;
-  }
-  .preview-subscribe-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-  .preview-panel-fine {
-    font-size: 0.68rem;
-    color: var(--muted);
-    opacity: 0.7;
-    text-align: center;
-    flex-shrink: 0;
-  }
-
-  .preview-gate-label {
-    font-size: 0.78rem;
-    color: var(--muted);
-    margin: 0 0 0.6rem;
-    line-height: 1.5;
-  }
-
-  .preview-email-row {
-    display: flex;
-    gap: 0.5rem;
-    width: 100%;
-  }
-
-  .preview-email-row input {
-    flex: 1;
-    min-width: 0;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.85rem;
-    padding: 0.72rem 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .preview-email-row input:focus { border-color: var(--accent); }
-  .preview-email-row input.error { border-color: rgba(192,57,43,0.7); }
-
-  .preview-email-row .preview-watch-btn {
-    flex-shrink: 0;
-    width: auto;
-    padding: 0.72rem 1.2rem;
-    white-space: nowrap;
-  }
-
-  @media (max-width: 420px) {
-    .preview-email-row { flex-direction: column; }
-    .preview-email-row .preview-watch-btn { width: 100%; }
-    .preview-overlay { padding: 0.75rem; }
-    .preview-panel-info { padding: 1rem 1rem 1.25rem; }
-    .preview-panel-title { font-size: 1.5rem; }
-  }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-
-  /* ── ANIMATIONS ──────────────────────────────────────── */
-
-  /* Hero load-in stagger */
+  /* ── HERO STAGGER ANIMATIONS ──────────────────────────── */
   .hero-eyebrow {
     animation: fadeUp 0.8s ease both;
     animation-delay: 0.1s;
@@ -1307,191 +1019,45 @@
     animation-delay: 0.55s;
   }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(22px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  /* ── SCROLLBAR ────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-  /* Scroll fade-in for page elements */
-  .fade-in {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(40px);
-    transition: opacity 1s ease, transform 1s ease, visibility 0s linear 1s;
-    will-change: opacity, transform;
-  }
-  .fade-in.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    transition: opacity 1s ease, transform 1s ease, visibility 0s linear 0s;
-  }
-
-  /* Section headers */
-  .section-header {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .section-header.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Thumbnail hover lift + glow */
-  .video-card { transition: transform 0.25s ease; }
-  .video-card:hover { transform: translateY(-4px); }
-  .video-thumb { transition: box-shadow 0.3s ease; }
-  .video-card:hover .video-thumb {
-    box-shadow: 0 8px 32px rgba(200,169,110,0.13);
-  }
-
-  /* Respect reduced motion */
+  /* ── REDUCED MOTION ───────────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
-    /* Only disable animations/transitions — do NOT force opacity:1 on .fade-in,
-       that would bypass the scroll reveal entirely */
-    .section-header,
     .hero-eyebrow, .hero h1,
     .hero-content > p,
     .hero-content .btn-primary,
-    .hero-content .btn-ghost {
+    .hero-content .btn-ghost,
+    .section-header {
       animation: none !important;
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
     }
-    /* For .fade-in: skip transitions but still require JS to mark visible */
-    .fade-in {
-      transition: none !important;
-    }
+    .fade-in { transition: none !important; }
     .video-card:hover { transform: none; }
   }
 
+  /* ── RESPONSIVE ───────────────────────────────────────── */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
     nav ul { display: none; }
     .hero { padding: 0 1.5rem 3rem; height: auto; padding-top: 7rem; }
     section { padding: 3rem 1.5rem; }
     .video-grid { grid-template-columns: 1fr !important; }
-    .featured-grid { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; }
+    .about-left { padding: 3rem 1.5rem; }
+    .about-right { border-left: none; border-top: 1px solid var(--border); padding: 3rem 1.5rem; }
     .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    footer { flex-direction: column; }
-  }
-
-  /* ── CARD INDEX NUMBER ───────────────────────────────── */
-  .video-info {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.85rem;
-    padding: 0.75rem 0 0;
-  }
-
-  .video-index {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 4rem;
-    line-height: 1;
-    letter-spacing: 0.02em;
-    color: var(--text);
-    opacity: 0.2;
-    flex-shrink: 0;
-    user-select: none;
-    margin-top: -0.15rem;
-  }
-
-  .video-info-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 0.25rem;
-  }
-  /* ── DENSE FOOTER ────────────────────────────────────── */
-  footer {
-    padding: 0;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .footer-top {
-    padding: 1rem 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    border-bottom: 1px solid var(--border);
-    background: repeating-linear-gradient(
-      -55deg,
-      transparent,
-      transparent 10px,
-      rgba(255,255,255,0.015) 10px,
-      rgba(255,255,255,0.015) 20px
-    );
-  }
-
-  .footer-main {
-    padding: 3rem 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 3rem;
-  }
-
-  .footer-bottom {
-    padding: 1rem 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    border-top: 1px solid var(--border);
-    background: var(--bg2);
-  }
-
-  .footer-spec {
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    opacity: 0.35;
-    font-family: 'Outfit', sans-serif;
-  }
-
-  .footer-spec-row {
-    display: flex;
-    gap: 3.5rem;
-    align-items: flex-start;
-  }
-
-  .footer-spec-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .footer-spec-item .spec-key {
-    font-size: 0.48rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    opacity: 0.5;
-  }
-
-  .footer-spec-item .spec-val {
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    opacity: 0.55;
-  }
-
-  @media (max-width: 768px) {
-    .footer-top, .footer-main, .footer-bottom {
-      padding: 1rem 1.5rem;
-      flex-direction: column;
-      gap: 0.75rem;
-      text-align: center;
-    }
+    .footer-top, .footer-main, .footer-bottom { padding: 1rem 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
     .footer-spec-row { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
+    .preview-email-row { flex-direction: column; }
+    .preview-email-row .preview-watch-btn { width: 100%; }
+    .preview-overlay { padding: 0.75rem; }
+    .preview-panel-info { padding: 1rem 1rem 1.25rem; }
+    .preview-panel-title { font-size: 1.5rem; }
   }
 </style>
 </head>
@@ -1532,11 +1098,16 @@
     <span class="section-meta">9 Entries · 2024–2026</span>
   </div>
 
-  <div class="video-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 3rem;">
+  <div class="video-grid" id="video-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 3rem;">
 
-    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77fh5a/?pub=4pcu4u', 'Who Is Thinking', '2026 · Documentary · 4:21', 'What happens when intelligence becomes optional? AI can amplify creativity, accelerate learning, and help us solve problems faster than ever before. But there\'s another side to that evolution: the moment we stop struggling to think for ourselves.', '/images/WhoIsThinking.webp', false)">
+    <div class="video-card fade-in"
+      data-url="https://rumble.com/embed/v77fh5a/?pub=4pcu4u"
+      data-title="Who Is Thinking"
+      data-meta="2026 · Documentary · 4:21"
+      data-desc="What happens when intelligence becomes optional? AI can amplify creativity, accelerate learning, and help us solve problems faster than ever before. But there's another side to that evolution: the moment we stop struggling to think for ourselves."
+      data-img="/images/WhoIsThinking_THUMB.webp">
       <div class="video-thumb">
-        <img src="/images/WhoIsThinking_THUMB.webp" alt="Who Is Thinking">
+        <img src="/images/WhoIsThinking_THUMB.webp" alt="Who Is Thinking" width="320" height="180" loading="lazy">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
       </div>
       <div class="video-info">
@@ -1547,9 +1118,15 @@
         </div>
       </div>
     </div>
-    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v770b54/?pub=4pcu4u', 'Bodies', '2026 · Music Video · 3:57', 'A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn\'t training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.', '/images/Bodies.jpg', false)">
+
+    <div class="video-card fade-in"
+      data-url="https://rumble.com/embed/v770b54/?pub=4pcu4u"
+      data-title="Bodies"
+      data-meta="2026 · Music Video · 3:57"
+      data-desc="A world where performance is everything… and limits are optional. She was already at the top—disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step isn't training harder… it's upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren't meant to be fully unlocked."
+      data-img="/images/bodies_THUMB.jpg">
       <div class="video-thumb">
-        <img src="/images/bodies_THUMB.jpg" alt="Bodies">
+        <img src="/images/bodies_THUMB.jpg" alt="Bodies" width="320" height="180" loading="lazy">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-new">New</span>
         <span class="video-duration">3:57</span>
@@ -1563,9 +1140,14 @@
       </div>
     </div>
 
-    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 · Music Video · 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control.', '/images/simulation.jpg', false)">
+    <div class="video-card fade-in"
+      data-url="https://rumble.com/embed/v7708xs/?pub=4pcu4u"
+      data-title="The Simulation"
+      data-meta="2025 · Music Video · 2:21"
+      data-desc="A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence. What feels real slowly unravels, leaving only doubt, distortion, and the sense that something unseen is in control."
+      data-img="/images/TheSimulation_THUMB.jpg">
       <div class="video-thumb">
-        <img src="/images/TheSimulation_THUMB.jpg" alt="The Simulation">
+        <img src="/images/TheSimulation_THUMB.jpg" alt="The Simulation" width="320" height="180" loading="lazy">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-mv">Music Video</span>
         <span class="video-duration">2:21</span>
@@ -1579,9 +1161,14 @@
       </div>
     </div>
 
-    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772za6/?pub=4pcu4u', 'Saved', '2025 · Short Film · 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.', '/images/Saved.jpg', false)">
+    <div class="video-card fade-in"
+      data-url="https://rumble.com/embed/v772za6/?pub=4pcu4u"
+      data-title="Saved"
+      data-meta="2025 · Short Film · 3:50"
+      data-desc="A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space."
+      data-img="/images/Saved_THUMB.jpg">
       <div class="video-thumb">
-        <img src="/images/Saved_THUMB.jpg" alt="Saved">
+        <img src="/images/Saved_THUMB.jpg" alt="Saved" width="320" height="180" loading="lazy">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-film">Short Film</span>
         <span class="video-duration">3:50</span>
@@ -1595,9 +1182,14 @@
       </div>
     </div>
 
-    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2026 · Music Video · 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.', '/images/AuthorizedAccess.jpg', false)">
+    <div class="video-card fade-in"
+      data-url="https://rumble.com/embed/v772m6c/?pub=4pcu4u"
+      data-title="Authorized Access"
+      data-meta="2026 · Music Video · 2:13"
+      data-desc="A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again."
+      data-img="/images/authorized_THUMB.jpg">
       <div class="video-thumb">
-        <img src="/images/authorized_THUMB.jpg" alt="Authorized Access">
+        <img src="/images/authorized_THUMB.jpg" alt="Authorized Access" width="320" height="180" loading="lazy">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-mv">Music Video</span>
         <span class="video-duration">2:13</span>
@@ -1611,9 +1203,14 @@
       </div>
     </div>
 
-    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 · Series · 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all.', '/images/ThoseWhoSee.jpg', false)">
+    <div class="video-card fade-in"
+      data-url="https://rumble.com/embed/v7734om/?pub=4pcu4u"
+      data-title="Those Who See — Part 1: Arrival"
+      data-meta="2025 · Series · 3:26"
+      data-desc="After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don't align. Answers feel rehearsed. And on a world built for colonization, perception may be the greatest deception of all."
+      data-img="/images/ThoseWhoSee_part1_THUMB.jpg">
       <div class="video-thumb">
-        <img src="/images/ThoseWhoSee_part1_THUMB.jpg" alt="Those Who See Part 1">
+        <img src="/images/ThoseWhoSee_part1_THUMB.jpg" alt="Those Who See Part 1" width="320" height="180" loading="lazy">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-film">Series</span>
         <span class="video-duration">3:26</span>
@@ -1627,9 +1224,14 @@
       </div>
     </div>
 
-    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77660w/?pub=4pcu4u', 'You Gotta Run Away', '2025 · Music Video · 2:25', 'A high-octane music video about escape, speed, and the desperate need to leave everything behind.', '/images/YouGottaRunAway.jpg', false)">
+    <div class="video-card fade-in"
+      data-url="https://rumble.com/embed/v77660w/?pub=4pcu4u"
+      data-title="You Gotta Run Away"
+      data-meta="2025 · Music Video · 2:25"
+      data-desc="A high-octane music video about escape, speed, and the desperate need to leave everything behind."
+      data-img="/images/YouGottaRunAway_THUMB.jpg">
       <div class="video-thumb">
-        <img src="/images/YouGottaRunAway_THUMB.jpg" alt="You Gotta Run Away">
+        <img src="/images/YouGottaRunAway_THUMB.jpg" alt="You Gotta Run Away" width="320" height="180" loading="lazy">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-mv">Music Video</span>
         <span class="video-duration">2:25</span>
@@ -1643,10 +1245,14 @@
       </div>
     </div>
 
-
-    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v776hne/?pub=4pcu4u', 'Perfect Companion', '2024 · Music Video · 3:12', 'The video that started it all. Perfect Companion reached millions of viewers before the entire channel was removed overnight without warning. This is where Boiling Rocket began.', '/images/PerfectCompanion.jpg', false)">
+    <div class="video-card fade-in"
+      data-url="https://rumble.com/embed/v776hne/?pub=4pcu4u"
+      data-title="Perfect Companion"
+      data-meta="2024 · Music Video · 3:12"
+      data-desc="The video that started it all. Perfect Companion reached millions of viewers before the entire channel was removed overnight without warning. This is where Boiling Rocket began."
+      data-img="/images/PerfectCompanion_THUMB.jpg">
       <div class="video-thumb">
-        <img src="/images/PerfectCompanion_THUMB.jpg" alt="Perfect Companion">
+        <img src="/images/PerfectCompanion_THUMB.jpg" alt="Perfect Companion" width="320" height="180" loading="lazy">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-mv">Music Video</span>
         <span class="video-duration">3:12</span>
@@ -1660,9 +1266,14 @@
       </div>
     </div>
 
-    <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2026 · Music Video · 3:12', 'A man trades his physical reality for a virtual world of connection and escape. But in a digital paradise, “forever” is just a monthly fee. As his real life withers, he discovers the cost of living in a world he doesn’t own. Your life is a service. Your heart is a rental. What happens when the subscription expires?', '/images/Banned.jpg', false)">
+    <div class="video-card fade-in"
+      data-url="https://rumble.com/embed/v772klm/?pub=4pcu4u"
+      data-title="Banned"
+      data-meta="2026 · Music Video · 3:12"
+      data-desc="A man trades his physical reality for a virtual world of connection and escape. But in a digital paradise, 'forever' is just a monthly fee. As his real life withers, he discovers the cost of living in a world he doesn't own. Your life is a service. Your heart is a rental. What happens when the subscription expires?"
+      data-img="/images/Banned_THUMB.jpg">
       <div class="video-thumb">
-        <img src="/images/Banned_THUMB.jpg" alt="Banned">
+        <img src="/images/Banned_THUMB.jpg" alt="Banned" width="320" height="180" loading="lazy">
         <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <span class="video-tag tag-mv">Music Video</span>
         <span class="video-duration">3:12</span>
@@ -1688,10 +1299,11 @@
       <div class="section-line"></div>
       <a href="https://open.spotify.com/artist/4H0t0xJIkQg2STG2kJ7PNe" class="section-link" target="_blank">Open in Spotify →</a>
     </div>
-    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/4H0t0xJIkQg2STG2kJ7PNe?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/4H0t0xJIkQg2STG2kJ7PNe?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
-
 </section>
+
+<!-- PRODUCTS -->
 <section id="products" style="background: var(--bg2); border-top: 1px solid var(--border);">
   <div class="section-header">
     <span class="section-title"><span class="section-code">PRD-03</span>Digital Products</span>
@@ -1700,43 +1312,30 @@
   </div>
 
   <div class="products-grid">
-
     <div class="product-card fade-in">
-      <div class="product-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      </div>
+      <div class="product-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
       <h3>The Augmented Mind</h3>
       <p>Using AI without losing yourself. A five-phase framework for creative humans navigating an AI-saturated world.</p>
       <a href="https://boilingrocket.gumroad.com/l/kpakqm" class="btn-small" target="_blank">Get it →</a>
     </div>
-
     <div class="product-card fade-in">
-      <div class="product-icon">
-        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </div>
+      <div class="product-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
       <h3>The Muse Protocol</h3>
       <p>A deep guide to building AI companions on Nomi AI. Archetypes, Persona DNA system, and advanced prompting.</p>
       <a href="https://boilingrocket.gumroad.com/l/wyqbsr" class="btn-small" target="_blank">Get it →</a>
     </div>
-
     <div class="product-card fade-in">
-      <div class="product-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-      </div>
+      <div class="product-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
       <h3>The Digital Legacy</h3>
       <p>Preserve your life and digital identity. A practical guide for building a lasting digital presence and archive.</p>
-      <a href="https://YOUR-GUMROAD-LINK" class="btn-small" style="opacity:0.5;cursor:default;border-color:rgba(200,169,110,0.15);">Coming Soon</a>
+      <a href="#" class="btn-small" style="opacity:0.5;cursor:default;border-color:rgba(200,169,110,0.15);">Coming Soon</a>
     </div>
-
     <div class="product-card fade-in">
-      <div class="product-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      </div>
+      <div class="product-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
       <h3>Future-Proof</h3>
       <p>The friendly tech guide for navigating AI tools. Written for curious minds who want clarity, not overwhelm.</p>
-      <a href="https://YOUR-GUMROAD-LINK" class="btn-small" style="opacity:0.5;cursor:default;border-color:rgba(200,169,110,0.15);">Coming Soon</a>
+      <a href="#" class="btn-small" style="opacity:0.5;cursor:default;border-color:rgba(200,169,110,0.15);">Coming Soon</a>
     </div>
-
   </div>
 </section>
 
@@ -1774,7 +1373,6 @@
     <div class="contact-left fade-in">
       <h2>Work Together</h2>
       <p>Available for brand sponsorships, creative collaborations, and licensing. Reach out and let's talk.</p>
-
       <div class="contact-detail">
         <span class="contact-detail-label">For Sponsorships</span>
         <span class="contact-detail-value">contact@boilingrocket.com</span>
@@ -1788,7 +1386,6 @@
         <span class="contact-detail-value">Spotify — Boiling Rocket</span>
       </div>
     </div>
-
     <form class="contact-form fade-in" name="contact" method="POST" onsubmit="handleForm(event)">
       <input type="hidden" name="bot-field" style="display:none">
       <div class="form-group">
@@ -1812,7 +1409,7 @@
         <label>Message</label>
         <textarea name="message" placeholder="Tell me about your project or brand..." required></textarea>
       </div>
-      <button type="submit" class="btn-primary" style="align-self: flex-start;">Send Message</button>
+      <button type="submit" class="btn-primary" style="align-self:flex-start;">Send Message</button>
     </form>
   </div>
 </section>
@@ -1821,7 +1418,7 @@
 <footer>
   <div class="footer-top">
     <div class="footer-spec">Boiling Rocket &nbsp;·&nbsp; Visual Journal &nbsp;·&nbsp; Issue 01</div>
-    <div class="footer-spec">BR-CIN-SPEC-2026 &nbsp;·&nbsp; Format: AI-Rendered Cinematic &nbsp;·&nbsp; Build v2.1.0</div>
+    <div class="footer-spec">BR-CIN-SPEC-2026 &nbsp;·&nbsp; Format: AI-Rendered Cinematic &nbsp;·&nbsp; Build v3.1.0</div>
     <div class="footer-spec">45.5017°N &nbsp;73.5673°W &nbsp;·&nbsp; QC-CA</div>
   </div>
   <div class="footer-main">
@@ -1832,18 +1429,9 @@
       <a href="#contact">Contact</a>
     </div>
     <div class="footer-spec-row">
-      <div class="footer-spec-item">
-        <span class="spec-key">Sector</span>
-        <span class="spec-val">BR-CIN-07</span>
-      </div>
-      <div class="footer-spec-item">
-        <span class="spec-key">Catalog</span>
-        <span class="spec-val">9 Entries</span>
-      </div>
-      <div class="footer-spec-item">
-        <span class="spec-key">Status</span>
-        <span class="spec-val">Active · Ongoing</span>
-      </div>
+      <div class="footer-spec-item"><span class="spec-key">Sector</span><span class="spec-val">BR-CIN-07</span></div>
+      <div class="footer-spec-item"><span class="spec-key">Catalog</span><span class="spec-val">9 Entries</span></div>
+      <div class="footer-spec-item"><span class="spec-key">Status</span><span class="spec-val">Active · Ongoing</span></div>
     </div>
   </div>
   <div class="footer-bottom">
@@ -1853,23 +1441,21 @@
   </div>
 </footer>
 
-<!-- VIDEO PREVIEW PANEL -->
+<!-- PREVIEW PANEL -->
 <div class="preview-overlay" id="preview-overlay" onclick="closePreviewOnBg(event)">
-  <div class="preview-panel" id="preview-panel">
+  <div class="preview-panel">
     <button class="preview-panel-close" onclick="closePreview()">
       <svg width="10" height="10" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       Close
     </button>
     <div class="preview-panel-img">
-      <img id="preview-frame-img" src="" alt="">
+      <img id="preview-frame-img" src="" alt="" width="620" height="349">
       <div class="preview-panel-img-overlay"></div>
     </div>
     <div class="preview-panel-info">
-      <div class="preview-panel-eyebrow" id="preview-meta">Meta</div>
-      <div class="preview-panel-title" id="preview-title">Title</div>
-      <div class="preview-panel-desc" id="preview-desc">Description</div>
-
-      <!-- NEW VISITOR: email input -->
+      <div class="preview-panel-eyebrow" id="preview-meta"></div>
+      <div class="preview-panel-title" id="preview-title"></div>
+      <div class="preview-panel-desc" id="preview-desc"></div>
       <div class="preview-panel-actions" id="preview-email-gate">
         <p class="preview-gate-label">These films aren't on YouTube anymore. Enter your email to watch — and get notified when new ones drop.</p>
         <div class="preview-email-row">
@@ -1879,41 +1465,16 @@
             Watch
           </button>
         </div>
-        <div class="preview-panel-fine">No spam — just new releases from Boiling Rocket. <a href="#contact" onclick="closePreview()" style="color:var(--accent);text-decoration:none;">Privacy</a></div>
+        <div class="preview-panel-fine">No spam — just new releases from Boiling Rocket.</div>
       </div>
-
-      <!-- RETURNING VISITOR: direct watch -->
       <div class="preview-panel-actions" id="preview-returning" style="display:none;">
         <button class="preview-watch-btn" onclick="previewPlayNow()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           Watch Now
         </button>
-        <div class="preview-panel-fine" id="preview-fine">You're in — enjoy the full catalog.</div>
+        <div class="preview-panel-fine">You're in — enjoy the full catalog.</div>
       </div>
-
     </div>
-  </div>
-</div>
-
-<!-- EMAIL CAPTURE MODAL (free videos) -->
-<div class="sub-modal-overlay" id="email-modal" onclick="closeEmailModalOnBg(event)">
-  <div class="sub-modal">
-    <button class="sub-modal-close" onclick="closeEmailModal()">
-      <svg width="10" height="10" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      Close
-    </button>
-    <div class="sub-modal-lock">
-      <svg viewBox="0 0 24 24"><path d="M15 10h4a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h4"/><polyline points="12 2 12 13"/><polyline points="8 6 12 2 16 6"/></svg>
-    </div>
-    <div class="sub-modal-video-title" id="email-modal-video-title">Free Video</div>
-    <h2>Watch Free</h2>
-    <p id="email-modal-desc" style="font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;text-align:left;"></p>
-    <p style="margin-bottom:1rem;">These films aren't on YouTube anymore. Enter your email to watch — and get notified when new ones drop.</p>
-    <div style="display:flex;gap:0.5rem;margin-bottom:1rem;">
-      <input type="email" id="email-capture-input" placeholder="your@email.com" style="flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-size:0.88rem;padding:0.75rem 1rem;outline:none;">
-      <button onclick="submitEmailCapture()" class="sub-btn" style="width:auto;padding:0.75rem 1.5rem;margin:0;">Watch</button>
-    </div>
-    <div class="sub-modal-fine">Your email is never shared. <a href="#contact">Privacy policy</a></div>
   </div>
 </div>
 
@@ -1924,13 +1485,10 @@
       <svg width="10" height="10" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       Close
     </button>
-    <div class="sub-modal-lock">
-      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-    </div>
+    <div class="sub-modal-lock"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
     <div class="sub-modal-video-title" id="sub-modal-video-title">Members Only</div>
     <h2>Unlock Full Catalog</h2>
     <p>Get unlimited access to all music videos and short films — including new releases the moment they drop.</p>
-
     <div class="sub-plans">
       <div class="sub-plan" id="plan-monthly" onclick="selectPlan('monthly')">
         <div class="sub-plan-period">Monthly</div>
@@ -1944,317 +1502,252 @@
         <div class="sub-plan-save">Save 40%</div>
       </div>
     </div>
-
     <a href="https://boilingrocket.gumroad.com/l/nsddb" id="sub-btn" class="sub-btn" target="_blank">Subscribe &amp; Watch Now</a>
-
-    <div class="sub-modal-fine">
-      Already a member? <a href="members-vault.html">Access your catalog →</a>
-    </div>
+    <div class="sub-modal-fine">Already a member? <a href="members-vault.html">Access your catalog →</a></div>
   </div>
 </div>
 
 <!-- VIDEO MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModalOnBg(event)">
-  <div class="modal" id="modal-box">
+  <div class="modal">
     <button class="modal-close" onclick="closeModal()">
       <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       Close
     </button>
-    <div class="modal-video">
-      <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay"></iframe>
-    </div>
+    <div class="modal-video"><iframe id="modal-iframe" src="" allowfullscreen allow="autoplay"></iframe></div>
     <div class="modal-info">
       <div>
-        <div class="modal-title" id="modal-title">Title</div>
-        <div class="modal-meta" id="modal-meta">Meta</div>
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-meta" id="modal-meta"></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  // --- PREVIEW PANEL ---
-  let pendingVideoUrl = '';
-  let pendingVideoTitle = '';
-  let pendingVideoMeta = '';
-  let pendingVideoDesc = '';
+(function () {
+  'use strict';
 
-  function _beacon(name, data) {
-    try { window.cfBeacon && window.cfBeacon.push({ type: 'event', name, data }); } catch(e) {}
+  // ── STATE ──────────────────────────────────────────────
+  let pendingUrl = '', pendingTitle = '', pendingMeta = '';
+
+  // ── HERO H1: enable hover glitch without hiding from LCP ──
+  // h1 starts at opacity:1 (visible to browser/LCP immediately).
+  // We add .h1-ready after the first paint so the CSS :hover glitch
+  // rule activates only after the page has fully rendered.
+  requestAnimationFrame(function () {
+    var h1 = document.querySelector('.hero h1');
+    if (h1) h1.classList.add('h1-ready');
+  });
+
+  // ── VIDEO GRID: single delegated listener (better INP) ──
+  // One listener on the grid instead of 9 inline onclick handlers.
+  // The click fires on the card element, reads data attributes
+  // (cheap string reads), then opens the preview synchronously
+  // so the browser can paint the visual response immediately.
+  var grid = document.getElementById('video-grid');
+  if (grid) {
+    grid.addEventListener('click', function (e) {
+      var card = e.target.closest('.video-card');
+      if (!card) return;
+      e.preventDefault();
+
+      var url   = card.dataset.url;
+      var title = card.dataset.title;
+      var meta  = card.dataset.meta;
+      var desc  = card.dataset.desc;
+      var img   = card.dataset.img;
+
+      if (url && title) openPreview(url, title, meta, desc, img);
+    });
   }
 
-  function openPreview(url, title, meta, desc, frameImg, locked) {
-    pendingVideoUrl = url;
-    pendingVideoTitle = title;
-    pendingVideoMeta = meta;
-    pendingVideoDesc = desc;
+  // ── PREVIEW PANEL ──────────────────────────────────────
+  function openPreview(url, title, meta, desc, img) {
+    pendingUrl   = url;
+    pendingTitle = title;
+    pendingMeta  = meta;
 
-    document.getElementById('preview-frame-img').src = frameImg;
+    // Determine gate vs. direct-watch BEFORE touching the DOM.
+    // localStorage reads are synchronous but fast — do them here
+    // so the gate/returning state is correct when we update the DOM.
+    var savedEmail = localStorage.getItem('br_email');
+    var clickCount = parseInt(localStorage.getItem('br_click_count') || '0', 10) + 1;
+    localStorage.setItem('br_click_count', String(clickCount));
+    var showGate = !savedEmail && clickCount >= 2;
+
+    // All DOM writes in one batch — minimises layout thrash.
+    document.getElementById('preview-frame-img').src = img;
     document.getElementById('preview-frame-img').alt = title;
     document.getElementById('preview-title').textContent = title;
-    document.getElementById('preview-meta').textContent = meta;
-    document.getElementById('preview-desc').textContent = desc;
-
-    // Track video click
-    _beacon('video_click', { title });
-
-    const savedEmail = localStorage.getItem('br_email');
-
-    // 2nd-click gate: count clicks, show gate only on 2nd+
-    let clickCount = parseInt(localStorage.getItem('br_click_count') || '0', 10);
-    clickCount++;
-    localStorage.setItem('br_click_count', clickCount);
-
-    const showGate = !savedEmail && clickCount >= 2;
-    const showWatch = savedEmail || clickCount < 2;
-
+    document.getElementById('preview-meta').textContent  = meta;
+    document.getElementById('preview-desc').textContent  = desc;
     document.getElementById('preview-email-gate').style.display = showGate ? 'flex' : 'none';
-    document.getElementById('preview-returning').style.display = showWatch ? 'flex' : 'none';
+    document.getElementById('preview-returning').style.display  = showGate ? 'none'  : 'flex';
 
     if (showGate) {
-      _beacon('email_gate_shown', { title, click_count: clickCount });
-      document.getElementById('preview-email-input').value = '';
-      document.getElementById('preview-email-input').classList.remove('error');
+      var input = document.getElementById('preview-email-input');
+      if (input) { input.value = ''; input.classList.remove('error'); }
     }
 
     document.getElementById('preview-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
+    // FIX: defer overflow change to after the browser paints the overlay open.
+    // This prevents a synchronous layout recalculation during the click event,
+    // which is one of the main causes of the 320–352ms INP.
+    requestAnimationFrame(function () {
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Fire analytics beacon off the critical path
+    setTimeout(function () {
+      try { if (window.cfBeacon) window.cfBeacon.push({ type: 'event', name: 'video_click', data: { title: title } }); } catch (e) {}
+    }, 0);
   }
 
-  function closePreview() {
-    document.getElementById('preview-overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function closePreviewOnBg(e) {
-    if (e.target === document.getElementById('preview-overlay')) closePreview();
-  }
-
-  function previewPlayNow() {
+  window.previewPlayNow = function () {
     closePreview();
-    openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
-  }
+    openModal(pendingUrl, pendingTitle, pendingMeta);
+  };
 
-  function submitPreviewEmail() {
-    const input = document.getElementById('preview-email-input');
-    const email = input.value.trim();
+  window.submitPreviewEmail = function () {
+    var input = document.getElementById('preview-email-input');
+    var email = input ? input.value.trim() : '';
     if (!email || !email.includes('@')) {
-      input.classList.add('error');
-      input.focus();
+      if (input) input.classList.add('error');
       return;
     }
-    input.classList.remove('error');
+    if (input) input.classList.remove('error');
 
-    const btn = input.nextElementSibling;
-    btn.innerHTML = 'Loading…';
-    btn.disabled = true;
+    var btn = input.nextElementSibling;
+    if (btn) { btn.textContent = 'Loading…'; btn.disabled = true; }
 
     fetch('https://br-subscribe.shinomalf.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email,
-        group: '185394129199433480',
-        first_video: pendingVideoTitle
-      })
+      body: JSON.stringify({ email: email, group: '185394129199433480', first_video: pendingTitle })
     })
-    .finally(() => {
-      _beacon('email_gate_submitted', { title: pendingVideoTitle });
+    .finally(function () {
       localStorage.setItem('br_email', email);
       closePreview();
-      openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
+      openModal(pendingUrl, pendingTitle, pendingMeta);
     });
-  }
+  };
 
-  // --- EMAIL CAPTURE MODAL — kept for legacy, no longer triggered from preview ---
-  function openEmailCapture(url, title, meta, desc) {
-    // Redirect to preview panel instead
-    openPreview(url, title, meta, desc, '', false);
-  }
-
-  function closeEmailModal() {
-    document.getElementById('email-modal').classList.remove('open');
+  window.closePreview = function () {
+    document.getElementById('preview-overlay').classList.remove('open');
     document.body.style.overflow = '';
-  }
+  };
 
-  function closeEmailModalOnBg(e) {
-    if (e.target === document.getElementById('email-modal')) closeEmailModal();
-  }
+  window.closePreviewOnBg = function (e) {
+    if (e.target === document.getElementById('preview-overlay')) closePreview();
+  };
 
-  function submitEmailCapture() {
-    const email = document.getElementById('email-capture-input').value;
-    if (!email || !email.includes('@')) {
-      document.getElementById('email-capture-input').style.borderColor = 'rgba(192,57,43,0.6)';
-      return;
-    }
-    fetch('https://br-subscribe.shinomalf.workers.dev', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, group: '185394129199433480', first_video: pendingVideoTitle })
-    }).finally(() => {
-      localStorage.setItem('br_email', email);
-      closeEmailModal();
-      openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
-    });
-  }
-
-
+  // ── VIDEO MODAL ────────────────────────────────────────
   function openModal(url, title, meta) {
     document.getElementById('modal-iframe').src = url;
     document.getElementById('modal-title').textContent = title;
-    document.getElementById('modal-meta').textContent = meta;
+    document.getElementById('modal-meta').textContent  = meta;
     document.getElementById('modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-    try { window.cfBeacon && window.cfBeacon.push({ type: 'event', name: 'video_play', data: { title: title } }); } catch(e) {}
-    _beacon('video_play', { title });
+    requestAnimationFrame(function () {
+      document.body.style.overflow = 'hidden';
+    });
+    try { if (window.cfBeacon) window.cfBeacon.push({ type: 'event', name: 'video_play', data: { title: title } }); } catch (e) {}
   }
 
-  function closeModal() {
+  window.closeModal = function () {
     document.getElementById('modal-iframe').src = '';
     document.getElementById('modal').classList.remove('open');
     document.body.style.overflow = '';
-  }
+  };
 
-  function closeModalOnBg(e) {
+  window.closeModalOnBg = function (e) {
     if (e.target === document.getElementById('modal')) closeModal();
-  }
+  };
 
-  // --- SUBSCRIBE MODAL (locked videos) ---
-  const gumroadMonthly = 'https://boilingrocket.gumroad.com/l/zuzvds';
-  const gumroadYearly  = 'https://boilingrocket.gumroad.com/l/nsddb';
-  let currentPlan = 'yearly';
+  // ── SUBSCRIBE MODAL ────────────────────────────────────
+  var gumroadMonthly = 'https://boilingrocket.gumroad.com/l/zuzvds';
+  var gumroadYearly  = 'https://boilingrocket.gumroad.com/l/nsddb';
 
-  function openSubModal(videoTitle) {
-    document.getElementById('sub-modal-video-title').textContent = videoTitle || 'Members Only';
-    document.getElementById('sub-btn').href = gumroadYearly;
-    selectPlan('yearly');
-    document.getElementById('sub-modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeSubModal() {
-    document.getElementById('sub-modal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function closeSubModalOnBg(e) {
-    if (e.target === document.getElementById('sub-modal')) closeSubModal();
-  }
-
-  function selectPlan(plan) {
-    currentPlan = plan;
+  window.selectPlan = function (plan) {
     document.getElementById('plan-monthly').classList.toggle('selected', plan === 'monthly');
     document.getElementById('plan-yearly').classList.toggle('selected', plan === 'yearly');
     document.getElementById('sub-btn').href = plan === 'monthly' ? gumroadMonthly : gumroadYearly;
-  }
+  };
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeModal(); closeSubModal(); closePreview(); closeEmailModal(); }
-  });
+  window.closeSubModal = function () {
+    document.getElementById('sub-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  };
 
-  function handleForm(e) {
+  window.closeSubModalOnBg = function (e) {
+    if (e.target === document.getElementById('sub-modal')) closeSubModal();
+  };
+
+  // ── CONTACT FORM ───────────────────────────────────────
+  window.handleForm = function (e) {
     e.preventDefault();
-    const form = e.target;
-    const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Sending...';
-    btn.style.opacity = '0.7';
+    var form = e.target;
+    var btn  = form.querySelector('button[type="submit"]');
+    if (btn) { btn.textContent = 'Sending…'; btn.style.opacity = '0.7'; }
 
     fetch('https://br-contact.shinomalf.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(form)).toString()
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
+    .then(function () {
+      if (btn) {
         btn.textContent = 'Message Sent ✓';
         btn.style.background = '#1a6b3a';
         btn.style.color = '#a8f0c0';
         btn.style.opacity = '1';
-        form.reset();
-        setTimeout(() => {
-          btn.textContent = 'Send Message';
-          btn.style.background = '';
-          btn.style.color = '';
-        }, 4000);
-      } else {
-        throw new Error('Server error');
       }
-    })
-    .catch(() => {
-      btn.textContent = 'Message Sent ✓';
-      btn.style.background = '#1a6b3a';
-      btn.style.color = '#a8f0c0';
-      btn.style.opacity = '1';
       form.reset();
-      setTimeout(() => {
-        btn.textContent = 'Send Message';
-        btn.style.background = '';
-        btn.style.color = '';
+      setTimeout(function () {
+        if (btn) { btn.textContent = 'Send Message'; btn.style.background = ''; btn.style.color = ''; }
       }, 4000);
+    })
+    .catch(function () {
+      if (btn) { btn.textContent = 'Send Message'; btn.style.opacity = '1'; }
+    });
+  };
+
+  // ── SCROLL REVEAL ──────────────────────────────────────
+  // Cards only reveal on scroll — never pre-revealed on load.
+  // Stagger delay by column position for visual rhythm.
+  document.querySelectorAll('.video-grid .fade-in').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 4) * 80 + 'ms';
+  });
+
+  function revealInView() {
+    var vh = window.innerHeight;
+    document.querySelectorAll('.fade-in:not(.visible)').forEach(function (el) {
+      if (el.getBoundingClientRect().top < vh - 100) el.classList.add('visible');
+    });
+    document.querySelectorAll('.section-header:not(.visible)').forEach(function (el) {
+      if (el.getBoundingClientRect().top < vh - 80) el.classList.add('visible');
     });
   }
 
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
-    navLinks.forEach(a => {
+  window.addEventListener('scroll', revealInView, { passive: true });
+
+  // ── NAV ACTIVE STATE ───────────────────────────────────
+  var sections  = document.querySelectorAll('section[id]');
+  var navLinks  = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', function () {
+    var current = '';
+    sections.forEach(function (s) { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(function (a) {
       a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
     });
+  }, { passive: true });
+
+  // ── ESCAPE KEY ─────────────────────────────────────────
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closeModal(); closePreview(); closeSubModal(); }
   });
 
-  // ── Hero h1: play fadeUp once, then lock visible so hover glitch works cleanly
-  (function() {
-    const h1 = document.querySelector('.hero h1');
-    if (!h1) return;
-    // Add .h1-loaded after the intended delay to start fadeUp
-    setTimeout(() => {
-      h1.classList.add('h1-loaded');
-      // Once fadeUp finishes, swap to .h1-done (plain visible, no animation)
-      // so that :hover glitch never re-triggers fadeUp on mouseout
-      h1.addEventListener('animationend', function onEnd() {
-        h1.classList.remove('h1-loaded');
-        h1.classList.add('h1-done');
-        h1.removeEventListener('animationend', onEnd);
-      });
-    }, 250);
-  })();
-
-  // ── Scroll fade-in: cards reveal only when scrolled into view ───────────────
-  (function() {
-    // Use getBoundingClientRect on scroll — no IntersectionObserver (fires on load)
-    // Nothing is revealed until the user scrolls.
-
-    function revealInView() {
-      const vh = window.innerHeight;
-
-      document.querySelectorAll('.fade-in:not(.visible)').forEach(function(el) {
-        const rect = el.getBoundingClientRect();
-        // Card must have scrolled to within 120px of the bottom of the screen
-        if (rect.top < vh - 120) {
-          el.classList.add('visible');
-        }
-      });
-
-      document.querySelectorAll('.section-header:not(.visible)').forEach(function(el) {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < vh - 80) {
-          el.classList.add('visible');
-        }
-      });
-    }
-
-    // Stagger video cards by column position in a 4-col grid
-    document.querySelectorAll('.video-grid .fade-in').forEach(function(el, i) {
-      el.style.transitionDelay = (i % 4) * 120 + 'ms';
-    });
-
-    // ONLY on scroll — never on load
-    window.addEventListener('scroll', revealInView, { passive: true });
-  })();
+})();
 </script>
-
 </body>
 </html>
