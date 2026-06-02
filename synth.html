@@ -799,6 +799,61 @@ kbd {
 ::-webkit-scrollbar-thumb {
   background: var(--tl-border);
 }
+
+/* ── MAIN SITE NAV (mirrored from index) ───────── */
+.br-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: linear-gradient(to bottom, rgba(7,3,3,0.98) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255, 62, 62, 0.06);
+    backdrop-filter: blur(4px);
+}
+.br-nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--neon-red);
+    text-decoration: none;
+    text-shadow: 0 0 10px rgba(255, 62, 62, 0.3);
+}
+.br-nav-logo span { color: #fff; }
+.br-nav ul {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    margin: 0; padding: 0;
+    align-items: center;
+}
+.br-nav a {
+    color: #827070;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    font-family: 'Space Mono', monospace;
+}
+.br-nav a:hover { color: var(--neon-red); text-shadow: 0 0 8px var(--neon-red); }
+.br-nav-synth-active {
+    color: var(--neon-red) !important;
+    border: 1px solid rgba(255,62,62,0.3);
+    padding: 0.3rem 0.75rem;
+    letter-spacing: 0.12em;
+}
+/* Push body content below the fixed nav */
+body { padding-top: 64px; }
+@media (max-width: 1024px) {
+    .br-nav { padding: 1rem 1.5rem; }
+    .br-nav ul { display: none; }
+}
 </style>
 </head>
 <body>
@@ -806,14 +861,16 @@ kbd {
 <div class="crt-scanlines"></div>
 <div class="blueprint-grid"></div>
 
-<header class="tl-header">
-  <div class="tl-logo">BR <span>Synth_v3</span></div>
-  <div class="tl-hright">
-    <span class="status-dot" id="statusDot"></span>
-    <span id="noteDisplay" style="color:var(--tl-accent);">—</span>
-    <span class="badge">SECURE_LINK</span>
-  </div>
-</header>
+<nav class="br-nav">
+    <a href="index.html" class="br-nav-logo">Boiling<span>Rocket</span></a>
+    <ul>
+        <li><a href="index.html#catalog">Catalog</a></li>
+        <li><a href="index.html#products">Products</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="synth.html" class="br-nav-synth-active">⬡ Synth</a></li>
+    </ul>
+</nav>
 
 <div class="shell">
 
