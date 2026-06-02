@@ -19,7 +19,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@900&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CDN removed. Replaced with hand-extracted utilities (~300KB → ~400B). -->
+    <style>
+        /* Tailwind utility shim — only classes used in this page */
+        .font-mono { font-family: 'Space Mono', ui-monospace, monospace; }
+        .mt-12 { margin-top: 3rem; }
+        .p-0 { padding: 0; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+        .text-center { text-align: center; }
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        .text-red-500 { color: #ef4444; }
+        .uppercase { text-transform: uppercase; }
+        .opacity-55 { opacity: 0.55; }
+        .tracking-\[0\.4em\] { letter-spacing: 0.4em; }
+        @media (min-width: 640px) {
+            .sm\:px-12 { padding-left: 3rem; padding-right: 3rem; }
+        }
+    </style>
     <style>
         :root {
             --neon-red: #ff3e3e;
@@ -195,6 +212,14 @@
 
         .hero h1:hover { animation: glitch 0.4s ease forwards; opacity: 1; }
 
+        /* "Bold Cinema" scaled to match visual width of "Where AI Meets" line */
+        .hero-bold-cinema {
+            display: block;
+            font-size: clamp(3.78rem, 9.44vw, 8.86rem); /* ~1.18× parent font-size */
+            line-height: 0.88;
+            letter-spacing: -0.05em;
+        }
+
         .hero p {
             font-size: 1.15rem;
             color: var(--text-muted);
@@ -351,7 +376,12 @@
             overflow: hidden;
             background: var(--surface-dark);
             border: 1px solid var(--border-red-soft);
+            border-radius: 8px;
+            /* Stacking context above fixed CRT overlay (z-index:100) so scanlines don't render on thumbnails */
+            z-index: 101;
         }
+
+
 
         .video-thumb img {
             width: 100%;
@@ -1349,7 +1379,7 @@
         <div class="hero-bg"></div>
         <div class="hero-content">
             <p class="hero-eyebrow">// Bio-Neural Uplink Active // System v2.1.0</p>
-            <h1>Where <em>AI</em><br>Meets<br>Bold Cinema</h1>
+            <h1>Where <em>AI</em> Meets<br><span class="hero-bold-cinema">Bold Cinema</span></h1>
             <p>Handcrafted music videos and short films exploring the dark intersection of technology, identity, and human transformation.</p>
             <a href="#catalog" class="cyber-btn-primary">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -1359,7 +1389,7 @@
         </div>
     </section>
 
-    <section id="catalog">
+    <section id="catalog" style="padding-bottom: 2rem;">
         <div class="section-header">
             <span class="section-title"><span class="section-code">CAT-01</span>Catalog</span>
             <div class="section-line"></div>
@@ -1517,7 +1547,7 @@
             <span class="font-mono text-xs uppercase tracking-[0.4em] text-red-500 opacity-55">// Transmission Pending // More Coming Soon</span>
         </div>
 
-        <div class="fade-in mt-12">
+        <div class="fade-in mt-12" style="margin-bottom: 1rem;">
             <div class="section-header">
                 <span class="section-title"><span class="section-code">AUD-02</span>Music on Spotify</span>
                 <div class="section-line"></div>
@@ -1527,7 +1557,7 @@
         </div>
     </section>
 
-    <section id="products" style="background: var(--surface-dark); border-top: 1px solid var(--border-red-soft);">
+    <section id="products" style="background: var(--surface-dark); border-top: 1px solid var(--border-red-soft); padding-top: 2.5rem;">
         <div class="section-header">
             <span class="section-title"><span class="section-code">PRD-03</span>Digital Products</span>
             <div class="section-line"></div>
