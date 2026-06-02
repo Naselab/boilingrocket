@@ -4,8 +4,8 @@ This is the custom-coded portfolio for **Boiling Rocket**, featuring 40+ AI-driv
 
 ## 🛠 Tech Stack
 - **Frontend:** HTML5/CSS3 (Designed with Claude AI)
-- **Hosting:** Netlify
-- **Video Hosting:** Bunny.net Stream
+- **Hosting:** Cloudflare Pages
+- **Video Hosting:** Rumble
 - **Domain:** Porkbun (boilingrocket.com)
 
 ## 📁 Project Structure
