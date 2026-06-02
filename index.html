@@ -1332,6 +1332,119 @@
             .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
             footer { flex-direction: column; }
         }
+        /* SYNTH PROMO BANNER */
+        .synth-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 2rem 2.5rem;
+            background: var(--surface-dark);
+            border: 1px solid var(--border-red);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+        .synth-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--neon-red), transparent);
+        }
+        .synth-banner::after {
+            content: 'SYNTH';
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+            font-family: 'Space Mono', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            color: var(--neon-red);
+            opacity: 0.04;
+            pointer-events: none;
+            user-select: none;
+        }
+        .synth-banner:hover {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 30px rgba(255, 62, 62, 0.08);
+        }
+        .synth-banner-left { flex: 1; }
+        .synth-banner-eyebrow {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--neon-red);
+            margin-bottom: 0.6rem;
+        }
+        .synth-banner-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+        .synth-banner-title em {
+            font-style: normal;
+            color: var(--neon-red);
+        }
+        .synth-banner-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            max-width: 480px;
+            line-height: 1.65;
+        }
+        .synth-banner-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--neon-red);
+            color: #000;
+            padding: 0.7rem 1.6rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .synth-banner:hover .synth-banner-cta {
+            background: #fff;
+            box-shadow: 0 0 16px var(--neon-red);
+        }
+        .synth-keys-visual {
+            display: flex;
+            gap: 3px;
+            margin-top: 1rem;
+        }
+        .synth-key {
+            width: 18px;
+            height: 42px;
+            background: linear-gradient(to bottom, var(--surface-dark-2), #0a0404);
+            border: 1px solid var(--border-red);
+            border-radius: 0 0 3px 3px;
+            flex-shrink: 0;
+        }
+        .synth-key.black {
+            width: 12px;
+            height: 26px;
+            background: var(--neon-red);
+            opacity: 0.7;
+            margin: 0 -6px;
+            position: relative;
+            z-index: 1;
+            border-radius: 0 0 2px 2px;
+        }
     </style>
 </head>
 <body>
@@ -1347,6 +1460,7 @@
             <li><a href="#products">Products</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><a href="synth.html" style="color: var(--neon-red); border: 1px solid rgba(255,62,62,0.3); padding: 0.3rem 0.75rem; letter-spacing: 0.12em;">⬡ Synth</a></li>
         </ul>
     </nav>
 
@@ -1527,6 +1641,34 @@
             <span style="font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.4em; color:var(--neon-red); opacity:0.55;">// Transmission Pending // More Coming Soon</span>
         </div>
 
+        <!-- SYNTH PROMO BANNER -->
+        <a href="synth.html" class="synth-banner fade-in">
+            <div class="synth-banner-left">
+                <div class="synth-banner-eyebrow">// SYN-04 · Interactive Instrument</div>
+                <div class="synth-banner-title">BR <em>Synth</em> — Cyberpunk Edition</div>
+                <div class="synth-banner-desc">A fully functional synthesizer built in the Boiling Rocket aesthetic universe. Oscillators, sequencer, reverb, delay — playable in-browser.</div>
+                <div class="synth-keys-visual" aria-hidden="true">
+                    <div class="synth-key"></div>
+                    <div class="synth-key black"></div>
+                    <div class="synth-key"></div>
+                    <div class="synth-key black"></div>
+                    <div class="synth-key"></div>
+                    <div class="synth-key"></div>
+                    <div class="synth-key black"></div>
+                    <div class="synth-key"></div>
+                    <div class="synth-key black"></div>
+                    <div class="synth-key"></div>
+                    <div class="synth-key black"></div>
+                    <div class="synth-key"></div>
+                    <div class="synth-key"></div>
+                </div>
+            </div>
+            <div class="synth-banner-cta">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Launch Synth
+            </div>
+        </a>
+
         <div class="fade-in" style="margin-top: 1.5rem;">
             <div class="section-header">
                 <span class="section-title"><span class="section-code">AUD-02</span>Music on Spotify</span>
@@ -1670,6 +1812,7 @@
             <div class="social-links">
                 <a href="https://open.spotify.com/artist/4H0t0xJIkQg2STG2kJ7PNe?si=vgSk2AEfRfKYbqbghUnpCQ" target="_blank">Spotify</a>
                 <a href="https://boilingrocket.gumroad.com" target="_blank">Gumroad</a>
+                <a href="synth.html" style="color: var(--neon-red);">BR Synth</a>
                 <a href="#contact">Contact</a>
             </div>
             <div class="footer-spec-row">
