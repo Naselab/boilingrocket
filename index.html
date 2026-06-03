@@ -43,7 +43,7 @@
             overflow-x: hidden;
         }
 
-        /* Ambient scanline overlay */
+        /* Ambient scanline overlay — hero only after scroll */
         .crt-scanlines {
             position: fixed;
             inset: 0;
@@ -52,15 +52,10 @@
             z-index: 100;
             pointer-events: none;
             opacity: 1;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.6s ease;
         }
 
-        /* Reduce scanline opacity when hovering over the video grid area */
-        .video-grid:hover ~ * .crt-scanlines,
-        #catalog:hover .crt-scanlines { opacity: 0.3; }
-
-        /* Since .crt-scanlines is a sibling of body content, use body-level class approach */
-        body.thumb-hover .crt-scanlines { opacity: 0.3; }
+        body.past-hero .crt-scanlines { opacity: 0.06; }
 
         .blueprint-grid {
             position: fixed;
@@ -71,7 +66,11 @@
             background-size: 40px 40px;
             z-index: -1;
             pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.6s ease;
         }
+
+        body.past-hero .blueprint-grid { opacity: 0.15; }
 
         nav {
             position: fixed;
@@ -562,7 +561,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4rem;
+            padding: clamp(1.5rem, 3vw, 4rem);
+            overflow: hidden;
         }
 
         .about-text .eyebrow {
@@ -602,6 +602,7 @@
             transition: border-color 0.4s;
             width: 100%;
             max-width: 380px;
+            box-sizing: border-box;
         }
 
         .support-card::before {
@@ -1445,6 +1446,83 @@
             z-index: 1;
             border-radius: 0 0 2px 2px;
         }
+        /* LAB DROPDOWN */
+        .nav-lab-wrap { position: relative; }
+        .nav-lab-btn {
+            background: transparent;
+            border: 1px solid rgba(255,62,62,0.3);
+            color: var(--neon-red);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .nav-lab-btn:hover { background: rgba(255,62,62,0.08); box-shadow: 0 0 8px rgba(255,62,62,0.2); }
+        .lab-caret { font-size: 0.65rem; transition: transform 0.2s; }
+        .nav-lab-btn[aria-expanded="true"] .lab-caret { transform: rotate(180deg); }
+        .nav-lab-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 180px;
+            background: rgba(7,3,3,0.97);
+            border: 1px solid var(--border-red);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            z-index: 200;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 20px rgba(255,62,62,0.05);
+        }
+        .nav-lab-menu.open { display: block; }
+        .nav-lab-menu li { border-bottom: 1px solid var(--border-red-soft); }
+        .nav-lab-menu li:last-child { border-bottom: none; }
+        .nav-lab-menu a {
+            display: block;
+            padding: 0.65rem 1rem;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: color 0.15s, background 0.15s;
+        }
+        .nav-lab-menu a:hover { color: var(--neon-red); background: rgba(255,62,62,0.05); }
+
+        /* DIAGONAL STRIPE DIVIDER */
+        .diagonal-divider {
+            height: 48px;
+            overflow: hidden;
+            position: relative;
+            background: repeating-linear-gradient(
+                -60deg,
+                transparent,
+                transparent 8px,
+                rgba(255, 62, 62, 0.18) 8px,
+                rgba(255, 62, 62, 0.18) 9px
+            );
+            border-top: 1px solid rgba(255,62,62,0.2);
+            border-bottom: 1px solid rgba(255,62,62,0.2);
+        }
+
+        /* PRODUCT CARD COVER IMAGE */
+        .product-cover {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            display: block;
+            border: 1px solid var(--border-red-soft);
+            margin-bottom: 1.2rem;
+            filter: grayscale(20%) contrast(1.05);
+            transition: filter 0.3s;
+        }
+        .product-card:hover .product-cover { filter: grayscale(0%) contrast(1.1); }
     </style>
 </head>
 <body>
@@ -1460,7 +1538,13 @@
             <li><a href="#products">Products</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="synth.html" style="color: var(--neon-red); border: 1px solid rgba(255,62,62,0.3); padding: 0.3rem 0.75rem; letter-spacing: 0.12em;">⬡ Synth</a></li>
+            <li class="nav-lab-wrap">
+                <button class="nav-lab-btn" onclick="toggleLabMenu()" aria-haspopup="true" aria-expanded="false" id="lab-btn">⬡ Lab <span class="lab-caret">▾</span></button>
+                <ul class="nav-lab-menu" id="lab-menu" role="menu">
+                    <li><a href="synth.html" role="menuitem">⬡ BR Synth</a></li>
+                    <li><a href="#" role="menuitem" style="opacity:0.4;pointer-events:none;">⬡ Coming Soon</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 
@@ -1641,34 +1725,6 @@
             <span style="font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.4em; color:var(--neon-red); opacity:0.55;">// Transmission Pending // More Coming Soon</span>
         </div>
 
-        <!-- SYNTH PROMO BANNER -->
-        <a href="synth.html" class="synth-banner fade-in">
-            <div class="synth-banner-left">
-                <div class="synth-banner-eyebrow">// SYN-04 · Interactive Instrument</div>
-                <div class="synth-banner-title">BR <em>Synth</em> — Cyberpunk Edition</div>
-                <div class="synth-banner-desc">A fully functional synthesizer built in the Boiling Rocket aesthetic universe. Oscillators, sequencer, reverb, delay — playable in-browser.</div>
-                <div class="synth-keys-visual" aria-hidden="true">
-                    <div class="synth-key"></div>
-                    <div class="synth-key black"></div>
-                    <div class="synth-key"></div>
-                    <div class="synth-key black"></div>
-                    <div class="synth-key"></div>
-                    <div class="synth-key"></div>
-                    <div class="synth-key black"></div>
-                    <div class="synth-key"></div>
-                    <div class="synth-key black"></div>
-                    <div class="synth-key"></div>
-                    <div class="synth-key black"></div>
-                    <div class="synth-key"></div>
-                    <div class="synth-key"></div>
-                </div>
-            </div>
-            <div class="synth-banner-cta">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                Launch Synth
-            </div>
-        </a>
-
         <div class="fade-in" style="margin-top: 1.5rem;">
             <div class="section-header">
                 <span class="section-title"><span class="section-code">AUD-02</span>Music on Spotify</span>
@@ -1688,18 +1744,14 @@
 
         <div class="products-grid">
             <div class="product-card fade-in">
-                <div class="product-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                </div>
+                <img src="https://raw.githubusercontent.com/Naselab/boilingrocket/main/images/augmentedMind.jpeg" alt="The Augmented Mind" class="product-cover" loading="lazy">
                 <h3>The Augmented Mind</h3>
                 <p>Using AI without losing yourself. A five-phase framework for creative humans navigating an AI-saturated world.</p>
                 <a href="https://boilingrocket.gumroad.com/l/kpakqm" class="btn-small" target="_blank">Get Blueprint</a>
             </div>
 
             <div class="product-card fade-in">
-                <div class="product-icon">
-                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                </div>
+                <img src="https://raw.githubusercontent.com/Naselab/boilingrocket/main/images/Muse.jpeg" alt="The Muse Protocol" class="product-cover" loading="lazy">
                 <h3>The Muse Protocol</h3>
                 <p>A deep guide to building AI companions on Nomi AI. Archetypes, Persona DNA system, and advanced prompting.</p>
                 <a href="https://boilingrocket.gumroad.com/l/wyqbsr" class="btn-small" target="_blank">Get Blueprint</a>
@@ -1724,6 +1776,9 @@
             </div>
         </div>
     </section>
+
+    <!-- DIAGONAL DIVIDER: Products → About -->
+    <div class="diagonal-divider" aria-hidden="true"></div>
 
     <section id="about" style="padding: 0;">
         <div class="about-grid">
@@ -2172,16 +2227,20 @@
             });
         }
 
-        // Reduce CRT scanline opacity when hovering thumbnail grid
+        // Fade out CRT scanlines + grid once user scrolls past the hero
         (function() {
-            var grid = document.querySelector('.video-grid');
-            if (!grid) return;
-            grid.addEventListener('mouseenter', function() {
-                document.body.classList.add('thumb-hover');
-            }, { passive: true });
-            grid.addEventListener('mouseleave', function() {
-                document.body.classList.remove('thumb-hover');
-            }, { passive: true });
+            var hero = document.querySelector('.hero');
+            function updateOverlays() {
+                if (!hero) return;
+                var heroBottom = hero.offsetTop + hero.offsetHeight;
+                if (window.scrollY > heroBottom * 0.6) {
+                    document.body.classList.add('past-hero');
+                } else {
+                    document.body.classList.remove('past-hero');
+                }
+            }
+            window.addEventListener('scroll', updateOverlays, { passive: true });
+            updateOverlays();
         })();
 
         const sections = document.querySelectorAll('section[id]');
