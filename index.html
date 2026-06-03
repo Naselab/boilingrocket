@@ -1542,7 +1542,7 @@
                 <button class="nav-lab-btn" onclick="toggleLabMenu()" aria-haspopup="true" aria-expanded="false" id="lab-btn">⬡ Lab <span class="lab-caret">▾</span></button>
                 <ul class="nav-lab-menu" id="lab-menu" role="menu">
                     <li><a href="synth.html" role="menuitem">⬡ BR Synth</a></li>
-                    <li><a href="#" role="menuitem" style="opacity:0.4;pointer-events:none;">⬡ Coming Soon</a></li>
+                    <li><a href="neonnoir.html" role="menuitem">⬡ Neural Mesh</a></li>
                 </ul>
             </li>
         </ul>
@@ -2180,8 +2180,23 @@
             document.getElementById('sub-btn').href = plan === 'monthly' ? gumroadMonthly : gumroadYearly;
         }
 
+        // LAB DROPDOWN
+        function toggleLabMenu() {
+            const btn = document.getElementById('lab-btn');
+            const menu = document.getElementById('lab-menu');
+            const open = menu.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open);
+        }
+        document.addEventListener('click', function(e) {
+            const wrap = document.querySelector('.nav-lab-wrap');
+            if (wrap && !wrap.contains(e.target)) {
+                document.getElementById('lab-menu').classList.remove('open');
+                document.getElementById('lab-btn').setAttribute('aria-expanded', 'false');
+            }
+        });
+
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') { closeModal(); closeSubModal(); closePreview(); closeEmailModal(); }
+            if (e.key === 'Escape') { closeModal(); closeSubModal(); closePreview(); closeEmailModal(); document.getElementById('lab-menu').classList.remove('open'); document.getElementById('lab-btn').setAttribute('aria-expanded','false'); }
         });
 
         function handleForm(e) {
