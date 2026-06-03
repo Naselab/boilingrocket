@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neonnoir // Horror Engine</title>
+    <style>
+        :root { --blueprint-cyan: #ff0055; --bg-deep: #050202; --text-dim: #947878; }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body, html {
+            background-color: #000;
+            color: var(--text-dim);
+            font-family: 'Space Mono', monospace;
+            margin: 0; padding: 0;
+            height: 100vh;
+        }
+
+        /* Overlay — was: fixed inset-0 z-50 flex items-center justify-center bg-black/95 text-rose-500 cursor-pointer */
+        #audio-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.95);
+            color: #f43f5e;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+        }
+
+        .blueprint-bg {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 0, 85, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 85, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+        }
+
+        .shell-wrap {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+            height: calc(100vh - 4rem);
+            display: flex;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 80px 1fr 350px;
+            flex-grow: 1;
+            border: 1px solid rgba(255, 0, 85, 0.2);
+            background: rgba(5, 2, 2, 0.95);
+            overflow: hidden;
+        }
+
+        .nav-rail {
+            border-right: 1px solid rgba(255, 0, 85, 0.1);
+            background: rgba(5, 2, 2, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            gap: 20px;
+        }
+
+        .rail-icon {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255, 0, 85, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: var(--blueprint-cyan);
+        }
+
+        .workspace {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* header — was: p-8 */
+        .workspace header { padding: 2rem; }
+
+        /* h1 — was: text-rose-600 text-xl font-bold tracking-tighter */
+        .workspace header h1 {
+            color: #e11d48;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin: 0;
+        }
+
+        #mesh-canvas { flex-grow: 1; cursor: crosshair; }
+
+        .stats-panel {
+            background: rgba(5, 2, 2, 0.98);
+            border-left: 1px solid rgba(255, 0, 85, 0.2);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .btn-blueprint {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--blueprint-cyan);
+            color: var(--blueprint-cyan);
+            background: transparent;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .btn-blueprint:hover { background: var(--blueprint-cyan); color: #fff; }
+
+        /* stat labels — was: text-[9px] uppercase opacity-50 */
+        .stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        /* stat desc — was: text-[11px] leading-relaxed mt-2 opacity-80 */
+        .stat-desc {
+            font-size: 11px;
+            line-height: 1.625;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+
+        /* integrity value — was: text-rose-500 font-bold text-lg */
+        #stab {
+            color: #f43f5e;
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        /* diagnostics footer — was: stat-group mt-auto pt-6 border-t border-rose-900/30 */
+        .stat-footer {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(136, 19, 55, 0.3);
+        }
+
+        /* footer label — was: text-[9px] uppercase opacity-50 mb-2 */
+        .stat-footer .stat-label { margin-bottom: 0.5rem; display: block; }
+
+        /* diag lines — was: text-[10px] text-rose-300/60 space-y-1 */
+        .diag-lines {
+            font-size: 10px;
+            color: rgba(253, 164, 175, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="blueprint-bg"></div>
+    <div id="audio-overlay">[ ENGAGE NEURAL PARASITE ]</div>
+
+    <div class="shell-wrap">
+        <div class="main-container">
+            <nav class="nav-rail">
+                <div class="rail-icon">X-1</div>
+            </nav>
+            <main class="workspace">
+                <header><h1>PROJECT_CHIMERA // KERNEL V.108</h1></header>
+                <canvas id="mesh-canvas"></canvas>
+            </main>
+            <aside class="stats-panel">
+                <div>
+                    <div class="stat-label">System Engine</div>
+                    <p class="stat-desc">The Neural Mesh Architect translates spatial node density into cinematic synth-based feedback. Click and hold to engage the suppression filter. System automatically balances gain as connection density increases.</p>
+                </div>
+                <div>
+                    <div class="stat-label">Integrity</div>
+                    <div id="stab">04.2%</div>
+                </div>
+                <button class="btn-blueprint" onclick="scramble()">RESET TOPOLOGY</button>
+                <div class="stat-footer">
+                    <span class="stat-label">Sub-System Diagnostic</span>
+                    <div class="diag-lines">
+                        <div>> CLOCK_SYNC: ACTIVE</div>
+                        <div>> RESONANCE: UNSTABLE</div>
+                        <div>> BUFFER_LOAD: <span id="load-val">LOW</span></div>
+                        <div>> PARASITE_STATUS: DORMANT</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        let audioCtx, masterGain, filter;
+        let isMouseDown = false;
+        const canvas = document.getElementById('mesh-canvas');
+        const ctx = canvas.getContext('2d');
+        let nodes = [];
+        let clusters = [];
+
+        class NodeAudio {
+            constructor(ctx, master) {
+                this.lowOsc = ctx.createOscillator(); this.lowOsc.type = 'sawtooth';
+                this.highOsc = ctx.createOscillator(); this.highOsc.type = 'sine';
+                this.gain = ctx.createGain(); this.gain.gain.value = 0;
+                this.lowOsc.connect(this.gain); this.highOsc.connect(this.gain);
+                this.gain.connect(filter);
+                this.lowOsc.start(); this.highOsc.start();
+            }
+            update(dist, maxDist) {
+                const freqLow = 40 + (dist * 0.8);
+                const freqHigh = 400 + (dist * 5);
+                this.lowOsc.frequency.setTargetAtTime(freqLow, audioCtx.currentTime, 0.1);
+                this.highOsc.frequency.setTargetAtTime(freqHigh, audioCtx.currentTime, 0.1);
+                this.gain.gain.setTargetAtTime(Math.min(0.08, (dist / maxDist) * 0.1), audioCtx.currentTime, 0.1);
+            }
+            stop() { this.gain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1); }
+        }
+
+        class Node {
+            constructor() { this.reinit(); }
+            reinit() {
+                const cluster = clusters[Math.floor(Math.random()*clusters.length)];
+                this.x = cluster.x + (Math.random()-0.5)*300;
+                this.y = cluster.y + (Math.random()-0.5)*300;
+                this.vx = (Math.random()-0.5)*0.5; this.vy = (Math.random()-0.5)*0.5;
+            }
+            update() { this.x += this.vx; this.y += this.vy; }
+        }
+
+        function scramble() {
+            clusters = Array.from({length: 4}, () => ({x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight}));
+            nodes.forEach(n => n.reinit());
+        }
+
+        document.getElementById('audio-overlay').onclick = () => {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass'; filter.frequency.value = 1200;
+            masterGain = audioCtx.createGain();
+            filter.connect(masterGain);
+            masterGain.connect(audioCtx.destination);
+            document.getElementById('audio-overlay').style.display = 'none';
+            nodes.forEach(n => n.audio = new NodeAudio(audioCtx, masterGain));
+            animate();
+        };
+
+        window.onmousedown = () => isMouseDown = true;
+        window.onmouseup = () => isMouseDown = false;
+        canvas.onmouseleave = () => { mouse.x = null; mouse.y = null; nodes.forEach(n => n.audio && n.audio.stop()); };
+
+        let mouse = { x: null, y: null };
+        const interactionRadius = 450;
+
+        function animate() {
+            const targetFreq = isMouseDown ? 200 : 1200;
+            filter.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.2);
+
+            let activeCount = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            nodes.forEach(node => {
+                node.update();
+                const dist = Math.hypot(node.x - mouse.x, node.y - mouse.y);
+                if (mouse.x !== null && dist < interactionRadius) {
+                    activeCount++;
+                    node.audio.update(dist, interactionRadius);
+                    ctx.strokeStyle = `rgba(255,0,85,${(1 - dist/interactionRadius) * 0.6})`;
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath(); ctx.moveTo(node.x, node.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+                } else if (node.audio) node.audio.stop();
+                ctx.fillStyle = '#ff0055';
+                ctx.beginPath(); ctx.arc(node.x, node.y, 3, 0, Math.PI*2); ctx.fill();
+            });
+
+            const densityFactor = Math.max(0.2, 1 - (activeCount / 40));
+            masterGain.gain.setTargetAtTime(densityFactor, audioCtx.currentTime, 0.2);
+            document.getElementById('load-val').innerText = activeCount > 20 ? 'CRITICAL' : 'STABLE';
+
+            requestAnimationFrame(animate);
+        }
+
+        canvas.onmousemove = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        };
+
+        window.onload = () => {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            scramble();
+            for (let i = 0; i < 70; i++) nodes.push(new Node());
+        };
+    </script>
+</body>
+</html>
