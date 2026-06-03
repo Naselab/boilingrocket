@@ -153,23 +153,33 @@ body {
 
 /* ── APP SHELL ──────────────────────────────────── */
 .shell-wrap {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem 2rem 3rem;
+  padding: 1.5rem 1.5rem 2rem;
 }
 .shell {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 220px 1fr 220px;
   border: 1px solid var(--tl-border);
   background: var(--tl-surface-2);
+  min-height: 0;
 }
 .col-left {
   background: var(--tl-surface);
   border-right: 2px solid var(--tl-border);
-  padding: 14px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
+  overflow-y: auto;
+}
+.col-right {
+  background: var(--tl-surface);
+  border-left: 2px solid var(--tl-border);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   overflow-y: auto;
 }
 .col-main {
@@ -178,6 +188,69 @@ body {
   gap: 0;
   overflow-y: auto;
 }
+/* compact card rows in sidebars */
+.col-left .card, .col-right .card {
+  padding: 9px 10px;
+}
+.col-left .kr, .col-right .kr {
+  margin-bottom: 5px;
+}
+/* 2-col grid inside a card for tight param pairs */
+.card-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; }
+/* preset bank */
+.preset-bank {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 4px;
+  padding: 10px;
+  border-bottom: 1px solid var(--tl-border);
+  background: rgba(10,2,2,0.6);
+}
+.pre-btn {
+  font-family: var(--tl-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: var(--tl-surface);
+  border: 1px solid var(--tl-border);
+  color: var(--text-silver);
+  padding: 6px 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all .15s;
+}
+.pre-btn:hover { border-color: var(--neon-red); color: var(--neon-red); }
+.pre-btn.active { background: var(--neon-red); color: #000; border-color: var(--neon-red); }
+/* arp + chord row */
+.arp-chord-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--tl-border);
+}
+.arp-panel, .chord-panel {
+  padding: 10px 12px;
+}
+.arp-panel { border-right: 1px solid var(--tl-border); }
+.arp-btns, .chord-btns {
+  display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0 8px;
+}
+.arp-btn, .chord-btn {
+  font-family: var(--tl-font-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  background: var(--tl-surface); border: 1px solid var(--tl-border);
+  color: var(--text-silver); padding: 4px 8px; cursor: pointer;
+  transition: all .15s;
+}
+.arp-btn:hover,.chord-btn:hover { border-color:var(--neon-amber); color:var(--neon-amber); }
+.arp-btn.active,.chord-btn.active { background:var(--neon-amber); color:#000; border-color:var(--neon-amber); }
+.arp-status {
+  font-family: var(--tl-font-mono); font-size: 10px;
+  color: var(--text-muted); margin-top: 4px;
+}
+.arp-status span { color: var(--neon-amber); }
 
 /* ── SECTION / CARDS ────────────────────────────── */
 .sec-hd {
@@ -795,6 +868,8 @@ kbd {
   gap: 8px;
 }
 
+.tg.on-pink { background: var(--neon-amber); border-color: var(--neon-amber); color: #000; }
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -881,76 +956,119 @@ body { padding-top: 64px; }
 <div class="shell-wrap">
 <div class="shell">
 
-<!-- ── LEFT COLUMN: ADSR + LFO + FX ───────────── -->
+<!-- ── LEFT COLUMN: Voice + Mod ─────────────────── -->
 <aside class="col-left">
 
-  <!-- ADSR -->
   <div class="card">
     <div class="sec-hd">Envelope // ADSR</div>
-    <canvas id="adsr-canvas" style="width:100%;height:56px;display:block;background:#050101;border:1px solid var(--tl-border);margin-bottom:12px"></canvas>
-    
-    <div class="kr">
-      <div class="kl"><span>Attack</span><span class="kv c1" id="v-atk">10ms</span></div>
-      <input type="range" min="1" max="2000" value="10" step="1" oninput="sp('atk',this.value,'v-atk',v=>v+'ms');drawADSR()">
-    </div>
-    <div class="kr">
-      <div class="kl"><span>Decay</span><span class="kv c1" id="v-dec">120ms</span></div>
-      <input type="range" min="1" max="2000" value="120" step="1" oninput="sp('dec',this.value,'v-dec',v=>v+'ms');drawADSR()">
-    </div>
-    <div class="kr">
-      <div class="kl"><span>Sustain</span><span class="kv c1" id="v-sus">65%</span></div>
-      <input type="range" min="0" max="100" value="65" step="1" oninput="sp('sus',this.value,'v-sus',v=>v+'%');drawADSR()">
-    </div>
-    <div class="kr">
-      <div class="kl"><span>Release</span><span class="kv c1" id="v-rel">300ms</span></div>
-      <input type="range" min="10" max="6000" value="300" step="10" oninput="sp('rel',this.value,'v-rel',v=>v+'ms');drawADSR()">
+    <canvas id="adsr-canvas" style="width:100%;height:44px;display:block;background:#050101;border:1px solid var(--tl-border);margin-bottom:8px"></canvas>
+    <div class="card-2col">
+      <div class="kr"><div class="kl"><span>Atk</span><span class="kv c1" id="v-atk">10ms</span></div><input type="range" min="1" max="2000" value="10" step="1" oninput="sp('atk',this.value,'v-atk',v=>v+'ms');drawADSR()"></div>
+      <div class="kr"><div class="kl"><span>Dec</span><span class="kv c1" id="v-dec">120ms</span></div><input type="range" min="1" max="2000" value="120" step="1" oninput="sp('dec',this.value,'v-dec',v=>v+'ms');drawADSR()"></div>
+      <div class="kr"><div class="kl"><span>Sus</span><span class="kv c1" id="v-sus">65%</span></div><input type="range" min="0" max="100" value="65" step="1" oninput="sp('sus',this.value,'v-sus',v=>v+'%');drawADSR()"></div>
+      <div class="kr"><div class="kl"><span>Rel</span><span class="kv c1" id="v-rel">300ms</span></div><input type="range" min="10" max="6000" value="300" step="10" oninput="sp('rel',this.value,'v-rel',v=>v+'ms');drawADSR()"></div>
     </div>
   </div>
 
-  <!-- LFO -->
+  <div class="card">
+    <div class="sec-hd">Pitch Env // Blade Runner</div>
+    <div class="kr"><div class="kl"><span>Amt</span><span class="kv c2" id="v-peAmt">0st</span></div><input type="range" class="r2" min="-24" max="24" value="0" step="0.5" oninput="S.peAmt=+this.value;document.getElementById('v-peAmt').textContent=(this.value>0?'+':'')+parseFloat(this.value).toFixed(1)+'st'"></div>
+    <div class="card-2col">
+      <div class="kr"><div class="kl"><span>Atk</span><span class="kv c2" id="v-peAtk">80ms</span></div><input type="range" class="r2" min="1" max="2000" value="80" step="1" oninput="S.peAtk=+this.value;document.getElementById('v-peAtk').textContent=this.value+'ms'"></div>
+      <div class="kr"><div class="kl"><span>Dec</span><span class="kv c2" id="v-peDec">400ms</span></div><input type="range" class="r2" min="10" max="4000" value="400" step="10" oninput="S.peDec=+this.value;document.getElementById('v-peDec').textContent=this.value+'ms'"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hd">Portamento // Glide</div>
+    <div class="tg-group" style="margin-bottom:6px">
+      <button class="tg on" id="port-off" onclick="setPorta('off')">Off</button>
+      <button class="tg" id="port-on" onclick="setPorta('on')">On</button>
+      <button class="tg" id="port-leg" onclick="setPorta('legato')">Legato</button>
+    </div>
+    <div class="kr"><div class="kl"><span>Time</span><span class="kv c2" id="v-portTime">80ms</span></div><input type="range" class="r2" min="10" max="2000" value="80" step="10" oninput="S.portaTime=+this.value;document.getElementById('v-portTime').textContent=this.value+'ms'"></div>
+  </div>
+
   <div class="card">
     <div class="sec-hd">Modulator // LFO</div>
-    <div class="tg-group" style="margin-bottom:10px">
+    <div class="tg-group" style="margin-bottom:6px">
       <button class="tg on" id="lfo-freq" onclick="setLfoTarget('freq')">Pitch</button>
       <button class="tg" id="lfo-filter" onclick="setLfoTarget('filter')">Filter</button>
-      <button class="tg" id="lfo-gain" onclick="setLfoTarget('gain')">Volume</button>
+      <button class="tg" id="lfo-gain" onclick="setLfoTarget('gain')">Vol</button>
     </div>
-    <div class="kr"><div class="kl"><span>Rate</span><span class="kv c1" id="v-lrate">2.0Hz</span></div><input type="range" min="0.05" max="25" value="2" step="0.05" oninput="S.lfoRate=+this.value;document.getElementById('v-lrate').textContent=parseFloat(this.value).toFixed(1)+'Hz';syncLive()"></div>
-    <div class="kr"><div class="kl"><span>Depth</span><span class="kv c1" id="v-ldep">0</span></div><input type="range" min="0" max="600" value="0" step="1" oninput="S.lfoDepth=+this.value;document.getElementById('v-ldep').textContent=this.value;syncLive()"></div>
+    <div class="card-2col">
+      <div class="kr"><div class="kl"><span>Rate</span><span class="kv c1" id="v-lrate">2.0Hz</span></div><input type="range" min="0.05" max="25" value="2" step="0.05" oninput="S.lfoRate=+this.value;document.getElementById('v-lrate').textContent=parseFloat(this.value).toFixed(1)+'Hz';syncLive()"></div>
+      <div class="kr"><div class="kl"><span>Depth</span><span class="kv c1" id="v-ldep">0</span></div><input type="range" min="0" max="600" value="0" step="1" oninput="S.lfoDepth=+this.value;document.getElementById('v-ldep').textContent=this.value;syncLive()"></div>
+    </div>
   </div>
 
-  <!-- FILTER -->
   <div class="card">
     <div class="sec-hd">Bandpass // Filter</div>
-    <div class="tg-group" style="margin-bottom:10px">
+    <div class="tg-group" style="margin-bottom:6px">
       <button class="tg on" id="flt-lowpass" onclick="setFlt('lowpass')">LP</button>
       <button class="tg" id="flt-highpass" onclick="setFlt('highpass')">HP</button>
       <button class="tg" id="flt-bandpass" onclick="setFlt('bandpass')">BP</button>
       <button class="tg" id="flt-notch" onclick="setFlt('notch')">Notch</button>
     </div>
-    <div class="kr"><div class="kl"><span>Cutoff</span><span class="kv c1" id="v-cut">1200Hz</span></div><input type="range" min="40" max="18000" value="1200" step="10" oninput="S.cutoff=+this.value;document.getElementById('v-cut').textContent=this.value+'Hz';syncLive()"></div>
-    <div class="kr"><div class="kl"><span>Resonance</span><span class="kv c1" id="v-q">1.0</span></div><input type="range" min="0.1" max="20" value="1" step="0.1" oninput="S.q=+this.value;document.getElementById('v-q').textContent=parseFloat(this.value).toFixed(1);syncLive()"></div>
-  </div>
-
-  <!-- REVERB + DELAY -->
-  <div class="card">
-    <div class="sec-hd">Siphon FX // Reverb</div>
-    <div class="kr"><div class="kl"><span>Room</span><span class="kv c1" id="v-rvS">0.4</span></div><input type="range" min="0.01" max="1" value="0.4" step="0.01" oninput="S.rvbSize=+this.value;document.getElementById('v-rvS').textContent=parseFloat(this.value).toFixed(2);syncLive()"></div>
-    <div class="kr"><div class="kl"><span>Decay</span><span class="kv c1" id="v-rvD">2.0s</span></div><input type="range" min="0.2" max="8" value="2" step="0.1" oninput="S.rvbDecay=+this.value;document.getElementById('v-rvD').textContent=parseFloat(this.value).toFixed(1)+'s';buildIR()"></div>
-    <div class="kr"><div class="kl"><span>Wet</span><span class="kv c1" id="v-rvW">0%</span></div><input type="range" min="0" max="100" value="0" step="1" oninput="S.rvbWet=+this.value;document.getElementById('v-rvW').textContent=this.value+'%';syncLive()"></div>
-  </div>
-  
-  <div class="card">
-    <div class="sec-hd">Delay Buffer // Echo</div>
-    <div class="kr"><div class="kl"><span>Time</span><span class="kv c1" id="v-dT">250ms</span></div><input type="range" min="10" max="1000" value="250" step="10" oninput="S.dlyTime=+this.value;document.getElementById('v-dT').textContent=this.value+'ms';syncLive()"></div>
-    <div class="kr"><div class="kl"><span>Feedback</span><span class="kv c1" id="v-dFb">30%</span></div><input type="range" min="0" max="90" value="30" step="1" oninput="S.dlyFb=+this.value;document.getElementById('v-dFb').textContent=this.value+'%';syncLive()"></div>
-    <div class="kr"><div class="kl"><span>Wet</span><span class="kv c1" id="v-dW">0%</span></div><input type="range" min="0" max="100" value="0" step="1" oninput="S.dlyWet=+this.value;document.getElementById('v-dW').textContent=this.value+'%';syncLive()"></div>
+    <div class="card-2col">
+      <div class="kr"><div class="kl"><span>Cutoff</span><span class="kv c1" id="v-cut">1200Hz</span></div><input type="range" min="40" max="18000" value="1200" step="10" oninput="S.cutoff=+this.value;document.getElementById('v-cut').textContent=this.value+'Hz';syncLive()"></div>
+      <div class="kr"><div class="kl"><span>Res</span><span class="kv c1" id="v-q">1.0</span></div><input type="range" min="0.1" max="20" value="1" step="0.1" oninput="S.q=+this.value;document.getElementById('v-q').textContent=parseFloat(this.value).toFixed(1);syncLive()"></div>
+    </div>
   </div>
 
 </aside>
 
-<!-- ── MAIN COLUMN ─────────────────────────────── -->
+<!-- ── MIDDLE COLUMN ────────────────────────────── -->
 <main class="col-main">
+
+  <!-- PRESETS -->
+  <div class="preset-bank">
+    <button class="pre-btn active" id="pre-blade_runner" onclick="loadPreset('blade_runner')">Blade Runner</button>
+    <button class="pre-btn" id="pre-dark_city" onclick="loadPreset('dark_city')">Dark City</button>
+    <button class="pre-btn" id="pre-cyber_bass" onclick="loadPreset('cyber_bass')">Cyber Bass</button>
+    <button class="pre-btn" id="pre-void_pad" onclick="loadPreset('void_pad')">Void Pad</button>
+    <button class="pre-btn" id="pre-ghost_lead" onclick="loadPreset('ghost_lead')">Ghost Lead</button>
+    <button class="pre-btn" id="pre-tension" onclick="loadPreset('tension')">Tension</button>
+    <button class="pre-btn" id="pre-acid" onclick="loadPreset('acid')">Acid</button>
+    <button class="pre-btn" id="pre-init" onclick="loadPreset('init')">Init</button>
+  </div>
+
+  <!-- ARP + CHORD -->
+  <div class="arp-chord-row">
+    <div class="arp-panel">
+      <div class="sec-hd" style="margin:0 0 5px;padding:0;border:none">Arpeggiator</div>
+      <div class="arp-btns">
+        <button class="arp-btn active" id="arp-off" onclick="setArp('off')">Off</button>
+        <button class="arp-btn" id="arp-up" onclick="setArp('up')">Up</button>
+        <button class="arp-btn" id="arp-down" onclick="setArp('down')">Down</button>
+        <button class="arp-btn" id="arp-updown" onclick="setArp('updown')">Up↓</button>
+        <button class="arp-btn" id="arp-random" onclick="setArp('random')">Rand</button>
+        <button class="arp-btn" id="arp-chord" onclick="setArp('chord')">Chord</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+        <span style="font-family:var(--tl-font-mono);font-size:10px;color:var(--text-silver)">Rate</span>
+        <select class="steps-sel" style="font-size:10px;padding:2px 6px" onchange="S.arpDiv=this.value">
+          <option value="1/4">1/4</option><option value="1/8" selected>1/8</option><option value="1/16">1/16</option><option value="1/32">1/32</option>
+        </select>
+        <span class="arp-status">→ <span id="arp-status-txt" style="color:var(--neon-amber)">IDLE</span></span>
+      </div>
+    </div>
+    <div class="chord-panel">
+      <div class="sec-hd" style="margin:0 0 5px;padding:0;border:none">Chord Memory</div>
+      <div class="chord-btns">
+        <button class="chord-btn active" id="chord-none" onclick="setChord('none')">Mono</button>
+        <button class="chord-btn" id="chord-min" onclick="setChord('min')">Minor</button>
+        <button class="chord-btn" id="chord-maj" onclick="setChord('maj')">Major</button>
+        <button class="chord-btn" id="chord-maj7" onclick="setChord('maj7')">Maj7</button>
+        <button class="chord-btn" id="chord-min7" onclick="setChord('min7')">Min7</button>
+        <button class="chord-btn" id="chord-sus2" onclick="setChord('sus2')">Sus2</button>
+        <button class="chord-btn" id="chord-sus4" onclick="setChord('sus4')">Sus4</button>
+        <button class="chord-btn" id="chord-dim" onclick="setChord('dim')">Dim</button>
+        <button class="chord-btn" id="chord-aug" onclick="setChord('aug')">Aug</button>
+        <button class="chord-btn" id="chord-power" onclick="setChord('power')">Power</button>
+      </div>
+    </div>
+  </div>
 
   <!-- SCOPE + SPECTRUM -->
   <div class="viz-row">
@@ -1155,7 +1273,53 @@ body { padding-top: 64px; }
   </div>
 
 </main>
-</div>
+<!-- ── RIGHT COLUMN: FX ─────────────────────────── -->
+<aside class="col-right">
+
+  <div class="card">
+    <div class="sec-hd">Reverb // Space</div>
+    <div class="kr"><div class="kl"><span>Room</span><span class="kv c1" id="v-rvS">0.40</span></div><input type="range" min="0.01" max="1" value="0.4" step="0.01" oninput="S.rvbSize=+this.value;document.getElementById('v-rvS').textContent=parseFloat(this.value).toFixed(2);syncLive()"></div>
+    <div class="kr"><div class="kl"><span>Decay</span><span class="kv c1" id="v-rvD">2.0s</span></div><input type="range" min="0.2" max="8" value="2" step="0.1" oninput="S.rvbDecay=+this.value;document.getElementById('v-rvD').textContent=parseFloat(this.value).toFixed(1)+'s';buildIR()"></div>
+    <div class="kr"><div class="kl"><span>Wet</span><span class="kv c1" id="v-rvW">0%</span></div><input type="range" min="0" max="100" value="0" step="1" oninput="S.rvbWet=+this.value;document.getElementById('v-rvW').textContent=this.value+'%';syncLive()"></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hd">Delay // Echo</div>
+    <div class="kr"><div class="kl"><span>Time</span><span class="kv c1" id="v-dT">250ms</span></div><input type="range" min="10" max="1000" value="250" step="10" oninput="S.dlyTime=+this.value;document.getElementById('v-dT').textContent=this.value+'ms';syncLive()"></div>
+    <div class="kr"><div class="kl"><span>Fdbk</span><span class="kv c1" id="v-dFb">30%</span></div><input type="range" min="0" max="90" value="30" step="1" oninput="S.dlyFb=+this.value;document.getElementById('v-dFb').textContent=this.value+'%';syncLive()"></div>
+    <div class="kr"><div class="kl"><span>Wet</span><span class="kv c1" id="v-dW">0%</span></div><input type="range" min="0" max="100" value="0" step="1" oninput="S.dlyWet=+this.value;document.getElementById('v-dW').textContent=this.value+'%';syncLive()"></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hd">Distortion // Drive</div>
+    <div class="kr"><div class="kl"><span>Drive</span><span class="kv c1" id="v-distDrv">0%</span></div><input type="range" min="0" max="100" value="0" step="1" oninput="S.distDrive=+this.value;document.getElementById('v-distDrv').textContent=this.value+'%';syncLive()"></div>
+    <div class="kr"><div class="kl"><span>Tone</span><span class="kv c1" id="v-distTone">4kHz</span></div><input type="range" min="500" max="12000" value="4000" step="100" oninput="S.distTone=+this.value;document.getElementById('v-distTone').textContent=(this.value>=1000?(this.value/1000).toFixed(1)+'kHz':this.value+'Hz');syncLive()"></div>
+    <div class="kr"><div class="kl"><span>Mix</span><span class="kv c1" id="v-distMix">0%</span></div><input type="range" min="0" max="100" value="0" step="1" oninput="S.distMix=+this.value;document.getElementById('v-distMix').textContent=this.value+'%';syncLive()"></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hd">Chorus // Unison</div>
+    <div class="card-2col">
+      <div class="kr"><div class="kl"><span>Rate</span><span class="kv c2" id="v-chRate">0.40Hz</span></div><input type="range" class="r2" min="0.05" max="5" value="0.4" step="0.05" oninput="S.chRate=+this.value;document.getElementById('v-chRate').textContent=parseFloat(this.value).toFixed(2)+'Hz';syncLive()"></div>
+      <div class="kr"><div class="kl"><span>Depth</span><span class="kv c2" id="v-chDepth">0ms</span></div><input type="range" class="r2" min="0" max="25" value="0" step="0.5" oninput="S.chDepth=+this.value;document.getElementById('v-chDepth').textContent=parseFloat(this.value).toFixed(1)+'ms';syncLive()"></div>
+      <div class="kr"><div class="kl"><span>Sprd</span><span class="kv c2" id="v-chSpread">0%</span></div><input type="range" class="r2" min="0" max="100" value="0" step="1" oninput="S.chSpread=+this.value;document.getElementById('v-chSpread').textContent=this.value+'%';syncLive()"></div>
+      <div class="kr"><div class="kl"><span>Wet</span><span class="kv c2" id="v-chWet">0%</span></div><input type="range" class="r2" min="0" max="100" value="0" step="1" oninput="S.chWet=+this.value;document.getElementById('v-chWet').textContent=this.value+'%';syncLive()"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-hd">Noise // Texture</div>
+    <div class="tg-group" style="margin-bottom:6px">
+      <button class="tg on" id="ns-white" onclick="setNoiseType('white')">White</button>
+      <button class="tg on-pink" id="ns-pink" onclick="setNoiseType('pink')" style="background:transparent;color:var(--text-muted);">Pink</button>
+    </div>
+    <div class="kr"><div class="kl"><span>Level</span><span class="kv c3" id="v-nsLvl">0%</span></div><input type="range" class="r3" min="0" max="100" value="0" step="1" oninput="S.noiseLevel=+this.value;document.getElementById('v-nsLvl').textContent=this.value+'%';syncLive()"></div>
+    <div class="kr"><div class="kl"><span>Filter</span><span class="kv c3" id="v-nsFlt">8kHz</span></div><input type="range" class="r3" min="200" max="18000" value="8000" step="100" oninput="S.noiseFilter=+this.value;document.getElementById('v-nsFlt').textContent=(this.value>=1000?(this.value/1000).toFixed(1)+'kHz':this.value+'Hz');syncLive()"></div>
+  </div>
+
+</aside>
+
+</div><!-- /shell -->
 </div><!-- /shell-wrap -->
 
 <script>
@@ -1167,7 +1331,130 @@ const S = {
   lfoTarget:'freq',lfoRate:2,lfoDepth:0,
   rvbSize:0.4,rvbWet:0,rvbDecay:2,
   dlyTime:250,dlyFb:30,dlyWet:0,
+  distDrive:0,distTone:4000,distMix:0,
+  chRate:0.4,chDepth:0,chSpread:0,chWet:0,
+  noiseLevel:0,noiseFilter:8000,noiseType:'white',
+  peAmt:0,peAtk:80,peDec:400,
+  portaMode:'off',portaTime:80,
+  arpMode:'off',arpDiv:'1/8',
+  chordMode:'none',
 };
+
+// ── CHORD INTERVALS ───────────────────────────────
+const CHORDS = {
+  none:[0], min:[0,3,7], maj:[0,4,7], maj7:[0,4,7,11],
+  min7:[0,3,7,10], sus2:[0,2,7], sus4:[0,5,7],
+  dim:[0,3,6], aug:[0,4,8], power:[0,7,12],
+};
+
+// ── PORTAMENTO STATE ──────────────────────────────
+let lastPortaFreq = null;
+
+// ── ARPEGGIATOR STATE ─────────────────────────────
+let arpNotes=[], arpIdx=0, arpDir=1, arpTimer=null, arpActive=false;
+
+function setPorta(mode){
+  S.portaMode=mode;
+  ['off','on','legato'].forEach(m=>{
+    const b=document.getElementById('port-'+m);
+    if(b) b.className='tg'+(m===mode?' on':'');
+  });
+}
+
+function setArp(mode){
+  S.arpMode=mode;
+  ['off','up','down','updown','random','chord'].forEach(m=>{
+    const b=document.getElementById('arp-'+m);
+    if(b) b.className='arp-btn'+(m===mode?' active':'');
+  });
+  if(mode==='off'){ stopArp(); document.getElementById('arp-status-txt').textContent='IDLE'; }
+  else document.getElementById('arp-status-txt').textContent='ARMED';
+}
+
+function setChord(mode){
+  S.chordMode=mode;
+  Object.keys(CHORDS).forEach(m=>{
+    const b=document.getElementById('chord-'+m);
+    if(b) b.className='chord-btn'+(m===mode?' active':'');
+  });
+}
+
+function stopArp(){
+  arpActive=false;
+  if(arpTimer){ clearInterval(arpTimer); arpTimer=null; }
+  Object.keys(activeNotes).forEach(k=>noteOff(+k));
+}
+
+function startArp(notes){
+  stopArp();
+  if(!notes.length||S.arpMode==='off') return;
+  arpNotes=[...notes].sort((a,b)=>a-b);
+  arpIdx=0; arpDir=1; arpActive=true;
+  const divMap={'1/4':4,'1/8':8,'1/16':16,'1/32':32};
+  const stepsPerBeat=divMap[S.arpDiv]||8;
+  const ms=(60000/S.bpm)*(4/stepsPerBeat);
+  const tick=()=>{
+    if(!arpActive) return;
+    Object.keys(activeNotes).forEach(k=>noteOff(+k));
+    if(S.arpMode==='chord'){
+      arpNotes.forEach(n=>noteOn(n,null,true));
+    } else {
+      let n;
+      if(S.arpMode==='up') n=arpNotes[arpIdx%arpNotes.length];
+      else if(S.arpMode==='down') n=arpNotes[arpNotes.length-1-(arpIdx%arpNotes.length)];
+      else if(S.arpMode==='updown'){
+        n=arpNotes[arpIdx%arpNotes.length];
+        if(arpIdx>=arpNotes.length-1) arpDir=-1;
+        if(arpIdx<=0) arpDir=1;
+      } else n=arpNotes[Math.floor(Math.random()*arpNotes.length)];
+      noteOn(n,null,true);
+      document.getElementById('arp-status-txt').textContent='NOTE_'+n;
+    }
+    arpIdx=(arpIdx+arpDir+arpNotes.length)%arpNotes.length;
+  };
+  tick();
+  arpTimer=setInterval(tick,ms);
+}
+
+// ── PRESETS ───────────────────────────────────────
+const PRESETS = {
+  blade_runner:{ atk:800,dec:600,sus:70,rel:2000, cutoff:900,q:3, lfoTarget:'filter',lfoRate:0.3,lfoDepth:80, rvbWet:65,rvbDecay:4,rvbSize:0.8, dlyWet:30,dlyTime:380,dlyFb:45, distDrive:8,distMix:20, chWet:60,chDepth:12,chSpread:90, peAmt:-8,peAtk:20,peDec:600, noiseLevel:8,noiseFilter:1200, portaMode:'on',portaTime:200 },
+  dark_city:{ atk:50,dec:300,sus:50,rel:800, cutoff:600,q:8, lfoTarget:'filter',lfoRate:2,lfoDepth:200, rvbWet:40,rvbDecay:3,rvbSize:0.6, dlyWet:50,dlyTime:250,dlyFb:55, distDrive:35,distMix:60, chWet:30,chDepth:6,chSpread:70, peAmt:0, noiseLevel:5,noiseFilter:800 },
+  cyber_bass:{ atk:5,dec:180,sus:30,rel:300, cutoff:400,q:12, lfoTarget:'filter',lfoRate:4,lfoDepth:300, rvbWet:10,rvbDecay:1,rvbSize:0.2, dlyWet:20,dlyTime:120,dlyFb:30, distDrive:60,distMix:80, chWet:10,chDepth:3,chSpread:30, peAmt:12,peAtk:5,peDec:200, portaMode:'on',portaTime:60 },
+  void_pad:{ atk:2000,dec:1000,sus:80,rel:4000, cutoff:2000,q:1, lfoTarget:'freq',lfoRate:0.1,lfoDepth:20, rvbWet:80,rvbDecay:6,rvbSize:1, dlyWet:40,dlyTime:500,dlyFb:60, distDrive:0,distMix:0, chWet:80,chDepth:18,chSpread:100, noiseLevel:15,noiseFilter:3000 },
+  ghost_lead:{ atk:10,dec:200,sus:60,rel:600, cutoff:3000,q:4, lfoTarget:'freq',lfoRate:5,lfoDepth:30, rvbWet:50,rvbDecay:2,rvbSize:0.5, dlyWet:40,dlyTime:180,dlyFb:40, distDrive:20,distMix:35, chWet:40,chDepth:8,chSpread:60, peAmt:-4,peAtk:30,peDec:300, portaMode:'legato',portaTime:100 },
+  tension:{ atk:200,dec:400,sus:40,rel:1000, cutoff:500,q:15, lfoTarget:'filter',lfoRate:0.5,lfoDepth:400, rvbWet:55,rvbDecay:5,rvbSize:0.9, dlyWet:35,dlyTime:333,dlyFb:50, distDrive:15,distMix:30, chWet:20,chDepth:5,chSpread:50, noiseLevel:20,noiseFilter:600 },
+  acid:{ atk:5,dec:120,sus:20,rel:200, cutoff:300,q:18, lfoTarget:'filter',lfoRate:8,lfoDepth:500, rvbWet:15,rvbDecay:0.8,rvbSize:0.3, dlyWet:30,dlyTime:150,dlyFb:35, distDrive:50,distMix:70, chWet:0, peAmt:7,peAtk:5,peDec:150, portaMode:'on',portaTime:40 },
+  init:{ atk:10,dec:120,sus:65,rel:300, cutoff:1200,q:1, lfoTarget:'freq',lfoRate:2,lfoDepth:0, rvbWet:0,rvbDecay:2,rvbSize:0.4, dlyWet:0,dlyTime:250,dlyFb:30, distDrive:0,distMix:0, chWet:0,chDepth:0,chSpread:0, peAmt:0,peAtk:80,peDec:400, noiseLevel:0,noiseFilter:8000, portaMode:'off',portaTime:80 },
+};
+
+function loadPreset(name){
+  const p=PRESETS[name]; if(!p) return;
+  Object.entries(p).forEach(([k,v])=>{ S[k]=v; });
+  // sync all UI sliders/labels
+  const map={
+    atk:['v-atk',v=>v+'ms'], dec:['v-dec',v=>v+'ms'], sus:['v-sus',v=>v+'%'], rel:['v-rel',v=>v+'ms'],
+    cutoff:['v-cut',v=>v+'Hz'], q:['v-q',v=>parseFloat(v).toFixed(1)],
+    lfoRate:['v-lrate',v=>parseFloat(v).toFixed(1)+'Hz'], lfoDepth:['v-ldep',v=>v],
+    rvbSize:['v-rvS',v=>parseFloat(v).toFixed(2)], rvbDecay:['v-rvD',v=>parseFloat(v).toFixed(1)+'s'], rvbWet:['v-rvW',v=>v+'%'],
+    dlyTime:['v-dT',v=>v+'ms'], dlyFb:['v-dFb',v=>v+'%'], dlyWet:['v-dW',v=>v+'%'],
+    distDrive:['v-distDrv',v=>v+'%'], distTone:['v-distTone',v=>v>=1000?(v/1000).toFixed(1)+'kHz':v+'Hz'], distMix:['v-distMix',v=>v+'%'],
+    chRate:['v-chRate',v=>parseFloat(v).toFixed(2)+'Hz'], chDepth:['v-chDepth',v=>parseFloat(v).toFixed(1)+'ms'], chSpread:['v-chSpread',v=>v+'%'], chWet:['v-chWet',v=>v+'%'],
+    peAmt:['v-peAmt',v=>(v>0?'+':'')+parseFloat(v).toFixed(1)+'st'], peAtk:['v-peAtk',v=>v+'ms'], peDec:['v-peDec',v=>v+'ms'],
+    noiseLevel:['v-nsLvl',v=>v+'%'], noiseFilter:['v-nsFlt',v=>v>=1000?(v/1000).toFixed(1)+'kHz':v+'Hz'],
+    portaTime:['v-portTime',v=>v+'ms'],
+  };
+  Object.entries(map).forEach(([k,[id,fmt]])=>{
+    const el=document.getElementById(id); if(el) el.textContent=fmt(S[k]);
+  });
+  if(p.portaMode) setPorta(p.portaMode);
+  if(p.lfoTarget) setLfoTarget(p.lfoTarget);
+  // update preset buttons
+  document.querySelectorAll('.pre-btn').forEach(b=>b.classList.remove('active'));
+  const pb=document.getElementById('pre-'+name); if(pb) pb.classList.add('active');
+  if(ctx){ syncLive(); buildIR(); }
+  drawADSR();
+}
 
 // Oscillator configs
 const O = [
@@ -1205,6 +1492,9 @@ function sp(key,val,labelId,fmt){
 // ── AUDIO ENGINE ──────────────────────────────────
 let ctx=null;
 let masterGain,filter,analyser,reverbNode,reverbWet,reverbDry,delayNode,delayFb,delayWet,delayDry,lfo,lfoGain;
+let distWS,distFilter,distWet,distDry;
+let chorusDelays=[],chorusLFOs=[],chorusGains=[],chorusPans=[],chorusWet,chorusDry;
+let noiseSource,noiseGain,noiseFilter;
 let activeNotes={};
 
 function initCtx(){
@@ -1216,22 +1506,74 @@ function initCtx(){
   filter=ctx.createBiquadFilter(); filter.type=S.filterType; filter.frequency.value=S.cutoff; filter.Q.value=S.q;
   analyser=ctx.createAnalyser(); analyser.fftSize=2048;
 
+  // ── DISTORTION ──────────────────────────────────
+  distWS=ctx.createWaveShaper(); distWS.oversample='4x';
+  distFilter=ctx.createBiquadFilter(); distFilter.type='lowpass'; distFilter.frequency.value=S.distTone;
+  distWet=ctx.createGain(); distWet.gain.value=0;
+  distDry=ctx.createGain(); distDry.gain.value=1;
+  buildDistCurve();
+  // filter → distDry (bypass) + distWS → distFilter → distWet
+  // both merge into chorusDry/chorusNode
+
+  // ── CHORUS ──────────────────────────────────────
+  const CH=3;
+  chorusWet=ctx.createGain(); chorusWet.gain.value=0;
+  chorusDry=ctx.createGain(); chorusDry.gain.value=1;
+  const chPans=[-0.7,0,0.7];
+  for(let i=0;i<CH;i++){
+    const dly=ctx.createDelay(0.05);
+    dly.delayTime.value=0.003+i*0.004;
+    const chLfo=ctx.createOscillator();
+    chLfo.type='sine';
+    chLfo.frequency.value=S.chRate*(1+i*0.13);
+    const chLfoG=ctx.createGain();
+    chLfoG.gain.value=S.chDepth/1000/2;
+    chLfo.connect(chLfoG); chLfoG.connect(dly.delayTime);
+    chLfo.start();
+    const g=ctx.createGain(); g.gain.value=1/CH;
+    const pan=ctx.createStereoPanner(); pan.pan.value=chPans[i]*(S.chSpread/100);
+    dly.connect(g); g.connect(pan); pan.connect(chorusWet);
+    chorusDelays.push(dly); chorusLFOs.push({osc:chLfo,gain:chLfoG});
+    chorusGains.push(g); chorusPans.push(pan);
+  }
+
+  // ── REVERB ──────────────────────────────────────
   reverbNode=ctx.createConvolver(); buildIR();
   reverbWet=ctx.createGain(); reverbWet.gain.value=0;
   reverbDry=ctx.createGain(); reverbDry.gain.value=1;
 
+  // ── DELAY ───────────────────────────────────────
   delayNode=ctx.createDelay(2); delayNode.delayTime.value=0.25;
   delayFb=ctx.createGain(); delayFb.gain.value=0.3;
   delayWet=ctx.createGain(); delayWet.gain.value=0;
   delayDry=ctx.createGain(); delayDry.gain.value=1;
   delayNode.connect(delayFb); delayFb.connect(delayNode);
 
+  // ── LFO ─────────────────────────────────────────
   lfo=ctx.createOscillator(); lfo.type='sine'; lfo.frequency.value=S.lfoRate;
   lfoGain=ctx.createGain(); lfoGain.gain.value=S.lfoDepth;
   lfo.connect(lfoGain); lfo.start();
 
-  // Routing: voice → filter → rvbDry+rvbNode → delayDry+delayNode → masterGain → analyser → dest
-  filter.connect(reverbDry); filter.connect(reverbNode);
+  // ── NOISE ───────────────────────────────────────
+  noiseGain=ctx.createGain(); noiseGain.gain.value=0;
+  noiseFilter=ctx.createBiquadFilter(); noiseFilter.type='lowpass'; noiseFilter.frequency.value=S.noiseFilter;
+  buildNoise();
+  noiseSource.connect(noiseFilter); noiseFilter.connect(noiseGain); noiseGain.connect(filter);
+
+  // ── SIGNAL CHAIN ────────────────────────────────
+  // voice → filter → dist(dry+wet) → chorus(dry+wet) → rvb → delay → master → analyser
+  filter.connect(distDry);
+  filter.connect(distWS); distWS.connect(distFilter); distFilter.connect(distWet);
+
+  const distMerge=ctx.createGain(); distMerge.gain.value=1;
+  distDry.connect(distMerge); distWet.connect(distMerge);
+
+  distMerge.connect(chorusDry);
+  chorusDelays.forEach(d=>distMerge.connect(d));
+  const chorusMerge=ctx.createGain(); chorusMerge.gain.value=1;
+  chorusDry.connect(chorusMerge); chorusWet.connect(chorusMerge);
+
+  chorusMerge.connect(reverbDry); chorusMerge.connect(reverbNode);
   reverbNode.connect(reverbWet);
   reverbDry.connect(delayDry); reverbDry.connect(delayNode);
   reverbWet.connect(delayDry); reverbWet.connect(delayNode);
@@ -1255,6 +1597,54 @@ function buildIR(){
   reverbNode.buffer=ir;
 }
 
+function buildDistCurve(){
+  if(!distWS) return;
+  const n=256, curve=new Float32Array(n);
+  const drive=S.distDrive/100*400; // 0–400 amount
+  for(let i=0;i<n;i++){
+    const x=(i*2/n)-1;
+    curve[i]=drive>0
+      ? (Math.PI+drive)*x/(Math.PI+drive*Math.abs(x))
+      : x;
+  }
+  distWS.curve=curve;
+}
+
+function buildNoise(){
+  if(!ctx) return;
+  if(noiseSource){ try{noiseSource.stop();noiseSource.disconnect();}catch(e){} }
+  const bufLen=ctx.sampleRate*2;
+  const buf=ctx.createBuffer(1,bufLen,ctx.sampleRate);
+  const d=buf.getChannelData(0);
+  if(S.noiseType==='pink'){
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+    for(let i=0;i<bufLen;i++){
+      const w=Math.random()*2-1;
+      b0=0.99886*b0+w*0.0555179; b1=0.99332*b1+w*0.0750759;
+      b2=0.96900*b2+w*0.1538520; b3=0.86650*b3+w*0.3104856;
+      b4=0.55000*b4+w*0.5329522; b5=-0.7616*b5-w*0.0168980;
+      d[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.11;
+      b6=w*0.115926;
+    }
+  } else {
+    for(let i=0;i<bufLen;i++) d[i]=Math.random()*2-1;
+  }
+  noiseSource=ctx.createBufferSource();
+  noiseSource.buffer=buf; noiseSource.loop=true;
+  noiseSource.connect(noiseFilter);
+  noiseSource.start();
+}
+
+function setNoiseType(type){
+  S.noiseType=type;
+  document.getElementById('ns-white').className='tg'+(type==='white'?' on':'');
+  const pBtn=document.getElementById('ns-pink');
+  pBtn.className='tg'+(type==='pink'?' on-pink':'');
+  pBtn.style.background=type==='pink'?'':'transparent';
+  pBtn.style.color=type==='pink'?'#000':'var(--text-muted)';
+  if(ctx) buildNoise();
+}
+
 function connectLfo(){
   if(!lfoGain) return;
   try{lfoGain.disconnect()}catch(e){}
@@ -1272,6 +1662,12 @@ function syncLive(){
   delayWet.gain.value=S.dlyWet/100; delayDry.gain.value=1-S.dlyWet/100;
   lfo.frequency.value=S.lfoRate; lfoGain.gain.value=S.lfoDepth;
   connectLfo();
+  // distortion
+  if(distWS){ buildDistCurve(); distFilter.frequency.value=S.distTone; distWet.gain.value=S.distMix/100; distDry.gain.value=1-S.distMix/100; }
+  // chorus
+  if(chorusLFOs.length){ chorusLFOs.forEach((c,i)=>{ c.osc.frequency.value=S.chRate*(1+i*0.13); c.gain.gain.value=S.chDepth/1000/2; }); const pans=[-0.7,0,0.7]; chorusPans.forEach((p,i)=>p.pan.value=pans[i]*(S.chSpread/100)); chorusWet.gain.value=S.chWet/100; chorusDry.gain.value=1-S.chWet/100; }
+  // noise
+  if(noiseGain){ noiseGain.gain.value=S.noiseLevel/100*0.4; noiseFilter.frequency.value=S.noiseFilter; }
   Object.values(activeNotes).forEach(n=>{
     n.oscs.forEach((o,i)=>{
       o.type=O[i].wave;
@@ -1290,25 +1686,59 @@ function noteFreqFromMidi(midi){ return 440*Math.pow(2,(midi-69)/12); }
 function noteOn(midi,label,seqTriggered){
   initCtx();
   if(!ctx) return;
+
+  // Arpeggiator: hold notes → hand off to arp engine
+  if(S.arpMode!=='off' && !seqTriggered){
+    if(!arpNotes.includes(midi)){ arpNotes.push(midi); arpNotes.sort((a,b)=>a-b); }
+    startArp(arpNotes);
+    return;
+  }
+
+  // Chord memory: fire all chord intervals
+  const intervals = CHORDS[S.chordMode]||[0];
+  intervals.forEach(semis => _noteOnSingle(midi+semis, label));
+}
+
+function _noteOnSingle(midi, label){
   const key=midi;
   if(activeNotes[key]) return;
+  const t=ctx.currentTime;
 
   const oscs=[],gains=[],panners=[];
   O.forEach((cfg,i)=>{
     if(!cfg.enabled) return;
     const midiShifted=midi+cfg.octave*12;
-    const freq=noteFreqFromMidi(midiShifted);
+    const targetFreq=noteFreqFromMidi(midiShifted);
     const osc=ctx.createOscillator();
-    osc.type=cfg.wave; osc.frequency.value=freq; osc.detune.value=cfg.detune;
+    osc.type=cfg.wave; osc.detune.value=cfg.detune;
+
+    // Portamento
+    if(S.portaMode!=='off' && lastPortaFreq!==null){
+      const shouldGlide = S.portaMode==='on' || (S.portaMode==='legato' && Object.keys(activeNotes).length>0);
+      if(shouldGlide){
+        osc.frequency.setValueAtTime(lastPortaFreq, t);
+        osc.frequency.exponentialRampToValueAtTime(Math.max(targetFreq,0.01), t+S.portaTime/1000);
+      } else { osc.frequency.value=targetFreq; }
+    } else { osc.frequency.value=targetFreq; }
+    lastPortaFreq=targetFreq;
+
+    // Pitch envelope
+    if(S.peAmt!==0){
+      const semisToHz=s=>targetFreq*(Math.pow(2,s/12)-1);
+      const startFreq=targetFreq+semisToHz(S.peAmt);
+      osc.frequency.setValueAtTime(Math.max(startFreq,1), t);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(targetFreq,0.01), t+S.peAtk/1000);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(targetFreq,0.01), t+S.peAtk/1000+S.peDec/1000);
+    }
+
     const g=ctx.createGain(); g.gain.value=0;
     const pan=ctx.createStereoPanner(); pan.pan.value=cfg.pan;
     osc.connect(g); g.connect(pan); pan.connect(filter);
     if(S.lfoTarget==='freq'){ try{lfoGain.connect(osc.frequency)}catch(e){} }
     osc.start();
-    // ADSR attack
-    g.gain.setValueAtTime(0,ctx.currentTime);
-    g.gain.linearRampToValueAtTime(cfg.level,ctx.currentTime+S.atk/1000);
-    g.gain.linearRampToValueAtTime(cfg.level*S.sus/100,ctx.currentTime+S.atk/1000+S.dec/1000);
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(cfg.level,t+S.atk/1000);
+    g.gain.linearRampToValueAtTime(cfg.level*S.sus/100,t+S.atk/1000+S.dec/1000);
     oscs.push(osc); gains.push(g); panners.push(pan);
   });
 
@@ -1317,6 +1747,22 @@ function noteOn(midi,label,seqTriggered){
 }
 
 function noteOff(midi){
+  if(!ctx) return;
+
+  // Arpeggiator: remove from held notes
+  if(S.arpMode!=='off'){
+    arpNotes=arpNotes.filter(n=>n!==midi);
+    if(!arpNotes.length) stopArp();
+    else startArp(arpNotes);
+    return;
+  }
+
+  // Chord memory: release all chord notes
+  const intervals = CHORDS[S.chordMode]||[0];
+  intervals.forEach(semis => _noteOffSingle(midi+semis));
+}
+
+function _noteOffSingle(midi){
   if(!ctx||!activeNotes[midi]) return;
   const {oscs,gains}=activeNotes[midi];
   const t=ctx.currentTime;
