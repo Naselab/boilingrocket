@@ -152,18 +152,24 @@ body {
 }
 
 /* ── APP SHELL ──────────────────────────────────── */
+.shell-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 2rem 3rem;
+}
 .shell {
   display: grid;
-  grid-template-columns: 310px 1fr; /* Retains wider sidebar for comfortable slider labels */
-  min-height: calc(100vh - 58px);
+  grid-template-columns: 260px 1fr;
+  border: 1px solid var(--tl-border);
+  background: var(--tl-surface-2);
 }
 .col-left {
   background: var(--tl-surface);
   border-right: 2px solid var(--tl-border);
-  padding: 18px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
   overflow-y: auto;
 }
 .col-main {
@@ -188,7 +194,7 @@ body {
 .card {
   background: var(--tl-surface);
   border: 1px solid var(--tl-border);
-  padding: 16px;
+  padding: 12px;
   position: relative;
 }
 .card::after {
@@ -335,7 +341,7 @@ input[type=range]::-webkit-slider-thumb:hover {
   display: none;
   background: var(--surface-dark-2);
   border: 1px solid var(--tl-border);
-  padding: 16px;
+  padding: 12px;
 }
 .osc-panel.active {
   display: block;
@@ -395,8 +401,8 @@ input[type=range]::-webkit-slider-thumb:hover {
 .viz-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  padding: 16px;
+  gap: 12px;
+  padding: 12px;
   border-bottom: 1px solid var(--tl-border);
 }
 canvas.scope, canvas.spec {
@@ -418,7 +424,7 @@ canvas.scope, canvas.spec {
 
 /* ── SEQUENCER (COMPACTED) ──────────────────────── */
 .seq-wrap {
-  padding: 14px 16px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--tl-border);
 }
 .seq-hd {
@@ -561,7 +567,7 @@ canvas.scope, canvas.spec {
 
 /* ── KEYBOARD (COMPACTED) ───────────────────────── */
 .kb-section {
-  padding: 12px 16px;
+  padding: 10px 12px;
 }
 .kb-meta {
   display: flex;
@@ -688,7 +694,7 @@ kbd {
 
 /* ── GROSS BEAT (UNIFIED MATRIX COHESION) ───────── */
 .gb-wrap {
-  padding: 16px;
+  padding: 12px;
   border-bottom: 1px solid var(--tl-border);
   background: rgba(18, 7, 7, 0.4);
 }
@@ -872,6 +878,7 @@ body { padding-top: 64px; }
     </ul>
 </nav>
 
+<div class="shell-wrap">
 <div class="shell">
 
 <!-- ── LEFT COLUMN: ADSR + LFO + FX ───────────── -->
@@ -1149,6 +1156,7 @@ body { padding-top: 64px; }
 
 </main>
 </div>
+</div><!-- /shell-wrap -->
 
 <script>
 // ── STATE ─────────────────────────────────────────
