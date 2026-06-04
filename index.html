@@ -574,6 +574,7 @@
             text-transform: uppercase;
             color: var(--neon-red);
             margin-bottom: 1rem;
+            text-align: center;
         }
 
         .about-text h2 {
@@ -585,13 +586,16 @@
             margin-bottom: 1.5rem;
             color: #fff;
             text-transform: uppercase;
+            text-align: center;
         }
 
         .about-text p {
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 1.2rem;
+            line-height: 1.65;
+            margin-bottom: 0.75rem;
+            text-align: justify;
+            text-align-last: left;
         }
 
         /* SUPPORT SIDEBAR CARD */
@@ -684,11 +688,6 @@
             line-height: 1.6;
         }
 
-        #contact {
-            background: var(--surface-dark);
-            border-top: 1px solid var(--border-red-soft);
-            border-bottom: 1px solid var(--border-red-soft);
-        }
 
         .contact-grid {
             display: grid;
@@ -1431,7 +1430,7 @@
         .synth-key {
             width: 18px;
             height: 42px;
-            background: linear-gradient(to bottom, var(--surface-dark-2), #0a0404);
+            background: linear-gradient(to bottom, var(--surface-dark-2), #1a0808);
             border: 1px solid var(--border-red);
             border-radius: 0 0 3px 3px;
             flex-shrink: 0;
@@ -1495,7 +1494,116 @@
         }
         .nav-lab-menu a:hover { color: var(--neon-red); background: rgba(255,62,62,0.05); }
 
-        /* DIAGONAL STRIPE DIVIDER */
+        /* ── SECTION CONTRAST ── */
+        #products {
+            background: var(--surface-dark) !important;
+        }
+        #about {
+            background: #1c0808;
+            padding: 5rem 4rem !important;
+        }
+        #contact {
+            background: var(--surface-dark-2) !important;
+        }
+
+        /* ── CHEVRON DIVIDER ── */
+        .chevron-divider {
+            position: relative;
+            height: 22px;
+            overflow: hidden;
+            border-top: 1px solid rgba(255,62,62,0.5);
+            border-bottom: 1px solid rgba(255,62,62,0.5);
+            background: repeating-linear-gradient(
+                -60deg,
+                transparent,
+                transparent 8px,
+                rgba(255,62,62,0.45) 8px,
+                rgba(255,62,62,0.45) 13px
+            );
+        }
+        .chevron-divider::before,
+        .chevron-divider::after { display: none; }
+        .chevron-divider.reverse {
+            background: repeating-linear-gradient(
+                60deg,
+                transparent,
+                transparent 8px,
+                rgba(255,62,62,0.45) 8px,
+                rgba(255,62,62,0.45) 13px
+            );
+        }
+
+        /* ── ABOUT SECTION REWORK ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+        .about-left { padding: 0; text-align: center; }
+        .about-right {
+            background: transparent;
+            border-left: none;
+            padding: 0;
+            display: block;
+            padding-top: 3.2rem;
+        }
+        /* Support card gets a strong visual presence */
+        .support-card {
+            background: #1a0606;
+            border: 1px solid rgba(255,62,62,0.35);
+            box-shadow: 0 0 40px rgba(255,62,62,0.05), inset 0 0 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .support-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                -55deg,
+                transparent,
+                transparent 14px,
+                rgba(255,62,62,0.025) 14px,
+                rgba(255,62,62,0.025) 15px
+            );
+            pointer-events: none;
+        }
+
+        /* ── CONTACT SECTION ── */
+        .contact-left h2 {
+            position: relative;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .contact-left h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--neon-red);
+            box-shadow: 0 0 8px var(--neon-red);
+        }
+
+        /* ── RED SECTION LABEL STRIPE ── */
+        .section-flag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--neon-red);
+            color: #000;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── DIAGONAL STRIPE DIVIDER (legacy) ── */
         .diagonal-divider {
             height: 48px;
             overflow: hidden;
@@ -1735,7 +1843,9 @@
         </div>
     </section>
 
-    <section id="products" style="background: var(--surface-dark); border-top: 1px solid var(--border-red-soft); padding-top: 3rem;">
+    <!-- DIVIDER removed: Catalog → Products -->
+
+    <section id="products" style="border-top: none; padding-top: 3rem;">
         <div class="section-header">
             <span class="section-title"><span class="section-code">PRD-03</span>Digital Products</span>
             <div class="section-line"></div>
@@ -1777,14 +1887,15 @@
         </div>
     </section>
 
-    <!-- DIAGONAL DIVIDER: Products → About -->
-    <div class="diagonal-divider" aria-hidden="true"></div>
+    <!-- CHEVRON DIVIDER: Products → About -->
+    <div class="chevron-divider" aria-hidden="true"></div>
 
-    <section id="about" style="padding: 0;">
+    <section id="about">
         <div class="about-grid">
             <div class="about-left fade-in" style="padding-left: clamp(1.5rem, 4vw, 3rem); padding-right: clamp(1.5rem, 4vw, 3rem);">
                 <div class="about-text">
-                    <p class="eyebrow">// Archive Dossier // Project Origin</p>
+                    <div class="section-flag">⬡ ABT-04 · Archive Dossier</div>
+                    <p class="eyebrow">// Project Origin</p>
                     <h2>Cinematic Worlds Built with AI</h2>
                     <p>Boiling Rocket started as a series of short films and music exploring AI, identity, and the systems shaping human behavior.</p>
                     <p>One of those films — <em>Perfect Companion</em> — reached millions of viewers before the entire channel disappeared during a moderation sweep, with no warning and no recovery.</p>
@@ -1807,9 +1918,13 @@
         </div>
     </section>
 
+    <!-- CHEVRON DIVIDER: About → Contact -->
+    <div class="chevron-divider reverse" aria-hidden="true"></div>
+
     <section id="contact">
         <div class="contact-grid">
             <div class="contact-left fade-in">
+                <div class="section-flag">⬡ CON-05 · Establish Link</div>
                 <h2>Establish Link</h2>
                 <p>Available for brand sponsorships, creative collaborations, and licensing. Reach out and let's talk.</p>
 
@@ -1854,6 +1969,8 @@
             </form>
         </div>
     </section>
+
+    <!-- DIVIDER removed: Contact → Footer -->
 
     <!-- FOOTER -->
     <footer>
