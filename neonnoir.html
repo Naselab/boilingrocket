@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neonnoir // Horror Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --blueprint-cyan: #ff0055; --bg-deep: #050202; --text-dim: #947878; }
+        :root {
+            --blueprint-cyan: #ff0055;
+            --neon-red: #ff3e3e;
+            --border-red: rgba(255, 62, 62, 0.15);
+            --border-red-soft: rgba(255, 62, 62, 0.06);
+            --text-muted: #827070;
+            --text-dim: #947878;
+        }
 
         *, *::before, *::after { box-sizing: border-box; }
 
@@ -15,13 +25,108 @@
             font-family: 'Space Mono', monospace;
             margin: 0; padding: 0;
             height: 100vh;
+            overflow: hidden;
         }
 
-        /* Overlay — was: fixed inset-0 z-50 flex items-center justify-center bg-black/95 text-rose-500 cursor-pointer */
+        /* ── SCANLINES ── */
+        .crt-scanlines {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 1;
+        }
+
+        /* ── NAV — matches index exactly ── */
+        nav.topbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 4rem;
+            background: rgba(7,3,3,0.98);
+            border-bottom: 1px solid var(--border-red-soft);
+            backdrop-filter: blur(4px);
+        }
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: var(--neon-red);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255, 62, 62, 0.3);
+        }
+        .logo span { color: #fff; }
+        nav.topbar > ul { display: flex; gap: 2.5rem; list-style: none; margin: 0; padding: 0; align-items: center; }
+        nav.topbar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+            font-family: 'Space Mono', monospace;
+        }
+        nav.topbar a:hover { color: var(--neon-red); text-shadow: 0 0 8px var(--neon-red); }
+        .nav-lab-wrap { position: relative; }
+        .nav-lab-btn {
+            background: transparent;
+            border: 1px solid rgba(255,62,62,0.3);
+            color: var(--neon-red);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .nav-lab-btn:hover { background: rgba(255,62,62,0.08); box-shadow: 0 0 8px rgba(255,62,62,0.2); }
+        .lab-caret { font-size: 0.65rem; transition: transform 0.2s; }
+        .nav-lab-btn[aria-expanded="true"] .lab-caret { transform: rotate(180deg); }
+        .nav-lab-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 180px;
+            background: rgba(7,3,3,0.97);
+            border: 1px solid var(--border-red);
+            list-style: none;
+            padding: 0; margin: 0;
+            z-index: 300;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 20px rgba(255,62,62,0.05);
+        }
+        .nav-lab-menu.open { display: block; }
+        .nav-lab-menu li { border-bottom: 1px solid var(--border-red-soft); }
+        .nav-lab-menu li:last-child { border-bottom: none; }
+        .nav-lab-menu a {
+            display: block;
+            padding: 0.65rem 1rem;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: color 0.15s, background 0.15s;
+        }
+        .nav-lab-menu a:hover { color: var(--neon-red); background: rgba(255,62,62,0.05); }
+
+        /* ── ORIGINAL NEONNOIR LAYOUT (unchanged) ── */
         #audio-overlay {
             position: fixed;
             inset: 0;
-            z-index: 50;
+            z-index: 150;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -47,7 +152,8 @@
             max-width: 1280px;
             margin: 0 auto;
             padding: 2rem;
-            height: calc(100vh - 4rem);
+            padding-top: calc(57px + 2rem);
+            height: 100vh;
             display: flex;
         }
 
@@ -87,10 +193,8 @@
             flex-direction: column;
         }
 
-        /* header — was: p-8 */
         .workspace header { padding: 2rem; }
 
-        /* h1 — was: text-rose-600 text-xl font-bold tracking-tighter */
         .workspace header h1 {
             color: #e11d48;
             font-size: 1.25rem;
@@ -99,7 +203,7 @@
             margin: 0;
         }
 
-        #mesh-canvas { flex-grow: 1; cursor: crosshair; }
+        #mesh-canvas { flex-grow: 1; cursor: crosshair; display: block; }
 
         .stats-panel {
             background: rgba(5, 2, 2, 0.98);
@@ -108,6 +212,7 @@
             display: flex;
             flex-direction: column;
             gap: 30px;
+            overflow-y: auto;
         }
 
         .btn-blueprint {
@@ -125,14 +230,12 @@
         }
         .btn-blueprint:hover { background: var(--blueprint-cyan); color: #fff; }
 
-        /* stat labels — was: text-[9px] uppercase opacity-50 */
         .stat-label {
             font-size: 9px;
             text-transform: uppercase;
             opacity: 0.5;
         }
 
-        /* stat desc — was: text-[11px] leading-relaxed mt-2 opacity-80 */
         .stat-desc {
             font-size: 11px;
             line-height: 1.625;
@@ -140,24 +243,20 @@
             opacity: 0.8;
         }
 
-        /* integrity value — was: text-rose-500 font-bold text-lg */
         #stab {
             color: #f43f5e;
             font-weight: 700;
             font-size: 1.125rem;
         }
 
-        /* diagnostics footer — was: stat-group mt-auto pt-6 border-t border-rose-900/30 */
         .stat-footer {
             margin-top: auto;
             padding-top: 1.5rem;
             border-top: 1px solid rgba(136, 19, 55, 0.3);
         }
 
-        /* footer label — was: text-[9px] uppercase opacity-50 mb-2 */
         .stat-footer .stat-label { margin-bottom: 0.5rem; display: block; }
 
-        /* diag lines — was: text-[10px] text-rose-300/60 space-y-1 */
         .diag-lines {
             font-size: 10px;
             color: rgba(253, 164, 175, 0.6);
@@ -169,13 +268,31 @@
 </head>
 <body>
     <div class="blueprint-bg"></div>
+    <div class="crt-scanlines"></div>
     <div id="audio-overlay">[ ENGAGE NEURAL PARASITE ]</div>
+
+    <nav class="topbar">
+        <a href="index.html" class="logo">Boiling<span>Rocket</span></a>
+        <ul>
+            <li><a href="index.html#catalog">Catalog</a></li>
+            <li><a href="index.html#products">Products</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li class="nav-lab-wrap">
+                <button class="nav-lab-btn" onclick="toggleLabMenu()" aria-haspopup="true" aria-expanded="false" id="lab-btn">⬡ Lab <span class="lab-caret">▾</span></button>
+                <ul class="nav-lab-menu" id="lab-menu" role="menu">
+                    <li><a href="index.html" role="menuitem">⬡ Home</a></li>
+                    <li><a href="synth.html" role="menuitem">⬡ BR Synth</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
 
     <div class="shell-wrap">
         <div class="main-container">
-            <nav class="nav-rail">
+            <div class="nav-rail">
                 <div class="rail-icon">X-1</div>
-            </nav>
+            </div>
             <main class="workspace">
                 <header><h1>PROJECT_CHIMERA // KERNEL V.108</h1></header>
                 <canvas id="mesh-canvas"></canvas>
@@ -304,6 +421,27 @@
             scramble();
             for (let i = 0; i < 70; i++) nodes.push(new Node());
         };
+
+        // NAV DROPDOWN
+        function toggleLabMenu() {
+            const btn = document.getElementById('lab-btn');
+            const menu = document.getElementById('lab-menu');
+            const open = menu.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open);
+        }
+        document.addEventListener('click', function(e) {
+            const wrap = document.querySelector('.nav-lab-wrap');
+            if (wrap && !wrap.contains(e.target)) {
+                document.getElementById('lab-menu').classList.remove('open');
+                document.getElementById('lab-btn').setAttribute('aria-expanded', 'false');
+            }
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.getElementById('lab-menu').classList.remove('open');
+                document.getElementById('lab-btn').setAttribute('aria-expanded', 'false');
+            }
+        });
     </script>
 </body>
 </html>
