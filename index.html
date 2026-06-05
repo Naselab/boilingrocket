@@ -1,283 +1,3 @@
-
-Claude finished the response
-
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Boiling Rocket — Cinematic AI Music Videos & Short Films</title> <meta name="description" content="Handcrafted music videos and short fil
-
-pasted
-
-https://rumble.com/embed/v78n5yu/?pub=4pcu4u , https://rumble.com/embed/v78n5ms/?pub=4pcu4u, https://rumble.com/embed/v78n3oc/?pub=4pcu4u, https://rumble.com/embed/v78fkii/?pub=4pcu4u, https://rumble.com/embed/v78fhsq/?pub=4pcu4u, can you include these videos on my page:
-
-Jun 4
-
-Check frontend design skill
-Check frontend design skill
-I need to add 5 new video cards to the catalog. I'll look at the existing video structure to add them properly — continuing from entry 09 ("Banned") with entries 10–14.
-
-Looking at the existing HTML, I need to:
-
-Add 5 new video cards (entries 10–14) to the video grid
-Update the catalog section meta count from "9 Active Nodes" to "14 Active Nodes"
-Update the footer catalog count from "9 Entries" to "14 Entries"
-Since I don't know the titles/descriptions for these 5 new Rumble embeds, I'll add them with placeholder info the user can fill in, styled consistently with the rest.
-
-Let me create the updated file:
-
-
-Check for uploaded files
-Check for uploaded files
-I'll work directly from the document provided. Let me create the updated HTML file with the 5 new video cards inserted:
-
-
-Ran a command, created a file
-Ran a command, created a file
-you finished?
-
-12:04 AM
-Yes! The file is ready — let me share it.
-
-
-Presented file
-Presented file
-Here's what was changed:
-
-5 new video cards added (entries 10–14) with the Rumble embed URLs you provided, in the correct order
-Catalog counter updated from "9 Active Nodes" to "14 Active Nodes"
-Footer catalog count updated from "9 Entries" to "14 Entries"
-The new cards show a subtle placeholder visual (since there are no thumbnail images yet) with a "New" tag and play-on-click behavior identical to the existing cards. You'll want to fill in the actual titles, meta strings (year/type/duration), descriptions, and thumbnail image paths for entries 10–14 — they're clearly marked with comments in the HTML (<!-- ═══ NEW ENTRIES 10–14 ═══ -->).
-
-
-Index
-Code · HTML 
-ok, i put the thumbnails and frames for the email area here: https://github.com/Naselab/boilingrocket/tree/main/images , Also here are the titles and descriptions: NEW VIDEO 10 - TITLE: Do It
-DESCRIPTION: Caught up in the deafening hype of a viral new cryptocurrency, a skeptic finally abandons his caution and dives into the market. But as the charts take a turn he never saw coming, he quickly realizes that what seemed like a golden ticket is a much more dangerous game than he imagined.
-NEW VIDEO 11 - TITLE: STALKER
-DESCRIPTION: A global pop icon checks into a secluded, high-end Airbnb for a rare moment of peace, but soon discovers she isn’t as alone as she thought. As the walls begin to reveal hidden secrets, her private sanctuary quickly transforms into a claustrophobic trap where someone—or something—is watching her every move.
-NEW VIDEO 12 - TITLE: Something Is Coming
-DESCRIPTION:A surreal 2D animation where shifting colors and morphing shapes create a constant, flowing visual experience. The video uses AI-generated art to blend impossible forms and fluid transitions into a surreal, dreamlike sequence.
-NEW VIDEO 13 - TITLE: Shame & Glory
-DESCRIPTION:In a landscape of grinding steel, Amazonian warriors in lethal mecha suits are fed into the meat grinder of a endless war. While the soldiers perish for a cause they barely understand, their leaders remain insulated in ivory towers, harvesting the glory of a victory built on the bones of those they sent to die.
-NEW VIDEO 14 - TITLE: Beautiful World
-DESCRIPTION:In this sun-drenched town, the smiles never fade and the laughter is endless. But when the town falls into its rhythmic, synchronized slumber, something descends from the silence above to claim the one thing the residents don't know they’re missing.
-Ok, let me know if all is good for you to proceed
-
-Show more
-12:40 AM
-Let me check the GitHub repo to find the right thumbnail filenames for these 5 videos.
-
-
-Searched the web
-Searched the web
-The search didn't find the repo directly. Let me try fetching the raw GitHub API:
-
-
-Searched the web
-Searched the web
-Can't get to the repo through search. Let me just try fetching the raw content directly for one of the likely thumbnail filenames to figure out the naming convention:
-
-
-Failed to fetch: https://raw.githubusercontent.com/Naselab/boilingrocket/main/images/DoIt_THUMB.jpg
-Failed to fetch: https://raw.githubusercontent.com/Naselab/boilingrocket/main/images/DoIt_THUMB.jpg
-GitHub's blocking direct fetches without a prior search result. Based on the existing naming pattern in your site (e.g. bodies_THUMB.jpg, Banned_THUMB.jpg, WhoIsThinking_THUMB.webp), I can work with the most likely filenames. Can you confirm the exact filenames you uploaded? For example, are they named like:
-
-DoIt_THUMB.jpg / DoIt.jpg
-Stalker_THUMB.jpg / Stalker.jpg
-SomethingIsComing_THUMB.jpg / SomethingIsComing.jpg
-ShameAndGlory_THUMB.jpg / ShameAndGlory.jpg
-BeautifulWorld_THUMB.jpg / BeautifulWorld.jpg
-Or do they follow a different pattern? Just paste the filenames and I'll plug them straight in.
-
-different pattern, let me do it well. How i erase the images i uploaded?
-
-12:43 AM
-To remove uploaded images from a conversation in Claude.ai, you'd need to start a new conversation — there's no way to delete individual uploaded files from within an existing chat.
-
-That said, for this task you don't actually need to upload the images here. Just paste the exact filenames from your GitHub repo (e.g. DoIt_THUMB.webp, Stalker_THUMB.jpg, etc.) and I'll plug them into the HTML. That's all I need.
-
-erase from github
-
-12:44 AM
-That's outside what I can help with directly — I don't have access to your GitHub account.
-
-To delete files from GitHub, you can do it right in the browser:
-
-Go to https://github.com/Naselab/boilingrocket/tree/main/images
-Click the file you want to delete
-Click the pencil/edit icon (top right of the file view)
-Click the trash icon to delete
-Scroll down and click Commit changes
-Repeat for each file. Or if you want to delete multiple at once, do it via Git locally:
-
-bash
-git rm images/filename.jpg
-git commit -m "remove image"
-git push
-Once you've sorted the filenames, just drop them here and I'll update the HTML.
-
-IS OK IF I UPLOAD WEBP INSTEAD OF JPG to github?
-
-12:52 AM
-Yes, absolutely. WebP is actually better — smaller file size, faster loading. Just make sure the filenames in the HTML match exactly what you upload (extension included).
-
-So if you upload DoIt_THUMB.webp, the HTML needs to reference /images/DoIt_THUMB.webp — not .jpg. Just share the exact filenames once they're uploaded and I'll update everything correctly.
-
-ok, they are up, same convention
-
-12:53 AM
-Let me check what's there now:
-
-
-Failed to fetch: https://raw.githubusercontent.com/Naselab/boilingrocket/main/images/DoIt_THUMB.webp
-Failed to fetch: https://raw.githubusercontent.com/Naselab/boilingrocket/main/images/DoIt_THUMB.webp
-I can't directly access the raw files. But based on your existing convention (e.g. bodies_THUMB.jpg, Banned_THUMB.jpg, PerfectCompanion_THUMB.jpg), I'm going to guess the new ones follow the same pattern. Can you just confirm the exact filenames? For example, is it:
-
-DoIt_THUMB.webp + DoIt.webp
-Stalker_THUMB.webp + Stalker.webp
-SomethingIsComing_THUMB.webp + SomethingIsComing.webp
-ShameAndGlory_THUMB.webp + ShameAndGlory.webp
-BeautifulWorld_THUMB.webp + BeautifulWorld.webp
-Just confirm (or correct) and I'll update the HTML immediately.
-
-yes
-
-12:53 AM
-Perfect. Now I'll update all 5 new cards with the correct titles, descriptions, and image paths.
-
-
-Edited 6 files
-Edited 6 files
-All done. Let me also remove the now-unused placeholder CSS:
-
-
-Edited a file, read a file
-Edited a file, read a file
-All 5 cards are fully updated:
-
-10 — Do It → DoIt_THUMB.webp / DoIt.webp
-11 — Stalker → Stalker_THUMB.webp / Stalker.webp
-12 — Something Is Coming → SomethingIsComing_THUMB.webp / SomethingIsComing.webp
-13 — Shame & Glory → ShameAndGlory_THUMB.webp / ShameAndGlory.webp
-14 — Beautiful World → BeautifulWorld_THUMB.webp / BeautifulWorld.webp
-Each has the correct title, full description, thumbnail, and frame image for the preview panel. Ready to deploy.
-
-
-Index
-Code · HTML 
-add this product to Digital Assets: https://boilingrocket.gumroad.com/l/vjhxv, the thumbnail is in the same folder in Github
-
-1:04 AM
-What's the title and description for this product?
-
-NEONNOIR_09
-
-1:04 AM
-Got it — what's the title and description for the product? I need those to fill in the card properly.
-
-title: NEONNOIR_09, description: NEONNOIR — a fiction magazine. Cyberpunk reports, comics, and propaganda from a world that hasn't arrived yet. Entertainment, not instruction.
-
-1:06 AM
-Perfect, got everything I need.
-
-
-Edited a file, read a file
-Edited a file, read a file
-Done. NEONNOIR_09 is added as the third product card, with the thumbnail pulling from NEONNOIR_09_THUMB.webp in your GitHub images folder. If the filename is different, just let me know and I'll fix it.
-
-
-Index
-Code · HTML 
-[shameanddGlory_THUMB.webp](https://github.com/Naselab/boilingrocket/blob/main/images/shameanddGlory_THUMB.webp), [shameanddGlory.webp](https://github.com/Naselab/boilingrocket/blob/main/images/shameanddGlory_THUMB.webp), beautifulWorld.webp
-beautifulWorld_THUMB.webp -there was a mistake in the names. This are the image names for shame & glory and Beautiful world. Please, fix
-
-1:11 AM
-Got it — fixing both now.
-
-
-Edited 2 files, read a file
-Edited 2 files, read a file
-Fixed. Both corrected:
-
-Shame & Glory → shameanddGlory_THUMB.webp / shameanddGlory.webp
-Beautiful World → beautifulWorld_THUMB.webp / beautifulWorld.webp
-
-Index
-Code · HTML 
-[NEONNOIR_09.webp](https://github.com/Naselab/boilingrocket/blob/main/images/NEONNOIR_09.webp)  is not showing. Also make the description shorter. remove Neonnoir_ from the description
-
-1:14 AM
-Two things to fix — the thumbnail filename and the description. Let me check what I have:
-
-
-Check NEONNOIR product card
-Check NEONNOIR product card
-I can see the issue — the image is using the raw GitHub URL with _THUMB suffix but the actual file is NEONNOIR_09.webp. Let me fix both the image path and the description:
-
-
-Edited a file, read a file
-Edited a file, read a file
-Fixed both:
-
-Image → now points to NEONNOIR_09.webp directly (no _THUMB)
-Description → shortened to: "A fiction magazine. Cyberpunk reports, comics, and propaganda from a world that hasn't arrived yet."
-
-Index
-Code · HTML 
-Screenshot 2026-06-05 011748.png
-the Digital Legacy area  and Future Proof are messed after we add Neonnoir. Put all the products in a row
-
-1:19 AM
-I can see the issue — "The Digital Legacy" lost its cover image and is misaligned. The grid broke because the NEONNOIR card pushed things around. Let me fix the order so all 5 products sit cleanly in one row.
-
-
-Viewed 2 files, edited a file
-Viewed 2 files, edited a file
-I can see it — the Digital Legacy card got corrupted, missing its opening div and icon. Let me fix the whole products grid:
-
-
-Fix broken products grid - restore Digital Legacy card and align all 5
-Fix broken products grid - restore Digital Legacy card and align all 5
-Now also update the grid CSS to force 5 columns on wide screens:
-
-
-Edited a file, read a file
-Edited a file, read a file
-Fixed. The Digital Legacy card was missing its opening <div> and icon — restored now. All 5 products are properly structured and the grid column minimum is reduced to 200px so they all fit in one row on wider screens.
-
-
-Index
-Code · HTML 
-ok, now. shame&glory is from 2024, Do it and Stalker are from 2025, Beautiful World and Something is coming is from 2026
-
-1:23 AM
-Quick fix:
-
-
-Edited 6 files
-Edited 6 files
-Good — Something Is Coming and Beautiful World are already set to 2026 so those are correct. Done!
-
-
-Presented file
-Presented file
-All years corrected:
-
-Shame & Glory → 2024
-Do It → 2025
-Stalker → 2025
-Something Is Coming → 2026
-Beautiful World → 2026
-
-Index
-Code · HTML 
-
-
-
-
-
-Claude is AI and can make mistakes. Please double-check responses.
-
-
-raw
-Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -366,7 +86,7 @@ Index · HTML
         .video-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; transition: color 0.2s; }
         .video-card:hover .video-title { color: var(--neon-red); }
         .video-meta { font-size: 0.82rem; color: var(--text-muted); letter-spacing: 0.03em; font-family: 'Space Mono', monospace; }
- 
+
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
         .product-card { background: var(--surface-dark); border: 1px solid var(--border-red-soft); padding: 2rem 1.5rem; transition: border-color 0.2s, transform 0.2s; position: relative; }
         .product-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--border-red-soft); transition: background 0.2s; }
@@ -507,10 +227,10 @@ Index · HTML
     </style>
 </head>
 <body>
- 
+
     <div class="crt-scanlines"></div>
     <div class="blueprint-grid"></div>
- 
+
     <nav>
         <a href="#" class="logo">Boiling<span>Rocket</span></a>
         <ul>
@@ -527,7 +247,7 @@ Index · HTML
             </li>
         </ul>
     </nav>
- 
+
     <section class="hero" id="home">
         <div class="hero-bg-img">
             <img src="/images/hero_bg.webp" alt="Boiling Rocket Background" fetchpriority="high" loading="eager" decoding="async">
@@ -544,16 +264,16 @@ Index · HTML
             <a href="#about" class="cyber-btn-ghost">Project Dossier</a>
         </div>
     </section>
- 
+
     <section id="catalog">
         <div class="section-header">
             <span class="section-title"><span class="section-code">CAT-01</span>Catalog</span>
             <div class="section-line"></div>
             <span class="section-meta">14 Active Nodes &middot; 2024&ndash;2026</span>
         </div>
- 
+
         <div class="video-grid">
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77fh5a/?pub=4pcu4u', 'Who Is Thinking', '2026 &middot; Documentary &middot; 4:21', 'What happens when intelligence becomes optional? AI can amplify creativity, accelerate learning, and help us solve problems faster than ever before. But there\'s another side to that evolution: the moment we stop struggling to think for ourselves.', '/images/WhoIsThinking.webp', false)">
                 <div class="video-thumb">
                     <img src="/images/WhoIsThinking_THUMB.webp" alt="Who Is Thinking" loading="lazy" width="320" height="180" decoding="async">
@@ -567,7 +287,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v770b54/?pub=4pcu4u', 'Bodies', '2026 &middot; Music Video &middot; 3:57', 'A world where performance is everything and limits are optional. She was already at the top — disciplined, precise, unstoppable. But when progress slows and perfection slips, the next step is not training harder… it\'s upgrading. With the help of an AI assistant and experimental biohacking technology, she pushes beyond human limits. But some systems aren\'t meant to be fully unlocked.', '/images/Bodies.jpg', false)">
                 <div class="video-thumb">
                     <img src="/images/bodies_THUMB.jpg" alt="Bodies" loading="lazy" width="320" height="180" decoding="async">
@@ -583,7 +303,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v7708xs/?pub=4pcu4u', 'The Simulation', '2025 &middot; Music Video &middot; 2:21', 'A surreal sci-fi music video that blurs the line between reality and illusion. As the protagonist descends deeper into a fractured world, hallucinations and parasitic forces begin to take hold, revealing a hidden layer beneath the surface of existence.', '/images/simulation.jpg', false)">
                 <div class="video-thumb">
                     <img src="/images/TheSimulation_THUMB.jpg" alt="The Simulation" loading="lazy" width="320" height="180" decoding="async">
@@ -599,7 +319,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772za6/?pub=4pcu4u', 'Saved', '2025 &middot; Short Film &middot; 3:50', 'A remote space station becomes the site of secret experiments on advanced gynoids designed to mimic human behavior. When one achieves full autonomy and escapes containment, the station descends into chaos — forcing military forces to confront a rapidly evolving threat in the depths of space.', '/images/Saved.jpg', false)">
                 <div class="video-thumb">
                     <img src="/images/Saved_THUMB.jpg" alt="Saved" loading="lazy" width="320" height="180" decoding="async">
@@ -615,7 +335,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772m6c/?pub=4pcu4u', 'Authorized Access', '2026 &middot; Music Video &middot; 2:13', 'A man walks into a bar at the edge of a dark neon-lit city, keeping his head down and his past buried. The regulars barely notice him, until the door opens again.', '/images/AuthorizedAccess.jpg', false)">
                 <div class="video-thumb">
                     <img src="/images/authorized_THUMB.jpg" alt="Authorized Access" loading="lazy" width="320" height="180" decoding="async">
@@ -631,7 +351,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v7734om/?pub=4pcu4u', 'Those Who See — Part 1: Arrival', '2025 &middot; Series &middot; 3:26', 'After arriving on a distant world to complete a critical deployment mission, Vera encounters what appears to be the surviving terraforming team assigned to prepare the planet for humanity. But beneath the surface of their isolated outpost, something feels wrong. Signals don\'t align. Answers feel rehearsed.', '/images/ThoseWhoSee.jpg', false)">
                 <div class="video-thumb">
                     <img src="/images/ThoseWhoSee_part1_THUMB.jpg" alt="Those Who See Part 1" loading="lazy" width="320" height="180" decoding="async">
@@ -647,7 +367,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v77660w/?pub=4pcu4u', 'You Gotta Run Away', '2025 &middot; Music Video &middot; 2:25', 'A high-octane music video about escape, speed, and the desperate need to leave everything behind.', '/images/YouGottaRunAway.jpg', false)">
                 <div class="video-thumb">
                     <img src="/images/YouGottaRunAway_THUMB.jpg" alt="You Gotta Run Away" loading="lazy" width="320" height="180" decoding="async">
@@ -663,7 +383,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v776hne/?pub=4pcu4u', 'Perfect Companion', '2024 &middot; Music Video &middot; 3:12', 'The video that started it all. Perfect Companion reached millions of viewers before the entire channel was removed overnight without warning. This is where Boiling Rocket began.', '/images/PerfectCompanion.jpg', false)">
                 <div class="video-thumb">
                     <img src="/images/PerfectCompanion_THUMB.jpg" alt="Perfect Companion" loading="lazy" width="320" height="180" decoding="async">
@@ -679,7 +399,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v772klm/?pub=4pcu4u', 'Banned', '2026 &middot; Music Video &middot; 3:12', 'A man trades his physical reality for a virtual world of connection and escape. But in a digital paradise, forever is just a monthly fee. As his real life withers, he discovers the cost of living in a world he does not own. Your life is a service. Your heart is a rental. What happens when the subscription expires?', '/images/Banned.jpg', false)">
                 <div class="video-thumb">
                     <img src="/images/Banned_THUMB.jpg" alt="Banned" loading="lazy" width="320" height="180" decoding="async">
@@ -695,10 +415,10 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <!-- ═══ NEW ENTRIES 10–14 ═══ -->
             <!-- Update: title, meta string, description, thumbnail path, and tag for each card below -->
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v78n5yu/?pub=4pcu4u', 'Do It', '2025 &middot; Music Video', 'Caught up in the deafening hype of a viral new cryptocurrency, a skeptic finally abandons his caution and dives into the market. But as the charts take a turn he never saw coming, he quickly realizes that what seemed like a golden ticket is a much more dangerous game than he imagined.', '/images/DoIt.webp', false)">
                 <div class="video-thumb">
                     <img src="/images/DoIt_THUMB.webp" alt="Do It" loading="lazy" width="320" height="180" decoding="async">
@@ -713,7 +433,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v78n5ms/?pub=4pcu4u', 'Stalker', '2025 &middot; Music Video', 'A global pop icon checks into a secluded, high-end Airbnb for a rare moment of peace, but soon discovers she is not as alone as she thought. As the walls begin to reveal hidden secrets, her private sanctuary quickly transforms into a claustrophobic trap where someone — or something — is watching her every move.', '/images/Stalker.webp', false)">
                 <div class="video-thumb">
                     <img src="/images/Stalker_THUMB.webp" alt="Stalker" loading="lazy" width="320" height="180" decoding="async">
@@ -728,7 +448,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v78n3oc/?pub=4pcu4u', 'Something Is Coming', '2026 &middot; Music Video', 'A surreal 2D animation where shifting colors and morphing shapes create a constant, flowing visual experience. The video uses AI-generated art to blend impossible forms and fluid transitions into a surreal, dreamlike sequence.', '/images/SomethingIsComing.webp', false)">
                 <div class="video-thumb">
                     <img src="/images/SomethingIsComing_THUMB.webp" alt="Something Is Coming" loading="lazy" width="320" height="180" decoding="async">
@@ -743,7 +463,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v78fkii/?pub=4pcu4u', 'Shame &amp; Glory', '2024 &middot; Music Video', 'In a landscape of grinding steel, Amazonian warriors in lethal mecha suits are fed into the meat grinder of an endless war. While the soldiers perish for a cause they barely understand, their leaders remain insulated in ivory towers, harvesting the glory of a victory built on the bones of those they sent to die.', '/images/shameanddGlory.webp', false)">
                 <div class="video-thumb">
                     <img src="/images/shameanddGlory_THUMB.webp" alt="Shame &amp; Glory" loading="lazy" width="320" height="180" decoding="async">
@@ -758,7 +478,7 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
             <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed/v78fhsq/?pub=4pcu4u', 'Beautiful World', '2026 &middot; Music Video', 'In this sun-drenched town, the smiles never fade and the laughter is endless. But when the town falls into its rhythmic, synchronized slumber, something descends from the silence above to claim the one thing the residents do not know they are missing.', '/images/beautifulWorld.webp', false)">
                 <div class="video-thumb">
                     <img src="/images/beautifulWorld_THUMB.webp" alt="Beautiful World" loading="lazy" width="320" height="180" decoding="async">
@@ -773,13 +493,13 @@ Index · HTML
                     </div>
                 </div>
             </div>
- 
+
         </div>
- 
+
         <div class="fade-in" style="text-align:center; padding: 3rem 0;">
             <span style="font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.4em; color:var(--neon-red); opacity:0.55;">// Transmission Pending // More Coming Soon</span>
         </div>
- 
+
         <div class="fade-in" style="margin-top: 1.5rem;">
             <div class="section-header">
                 <span class="section-title"><span class="section-code">AUD-02</span>Music on Spotify</span>
@@ -789,14 +509,14 @@ Index · HTML
             <iframe style="border-radius:0px; border: 1px solid var(--border-red);" src="https://open.spotify.com/embed/artist/4H0t0xJIkQg2STG2kJ7PNe?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
     </section>
- 
+
     <section id="products" style="border-top: none; padding-top: 3rem;">
         <div class="section-header">
             <span class="section-title"><span class="section-code">PRD-03</span>Digital Products</span>
             <div class="section-line"></div>
             <a href="https://boilingrocket.gumroad.com" class="section-link" target="_blank">Access Gumroad Terminal &rarr;</a>
         </div>
- 
+
         <div class="products-grid">
             <div class="product-card fade-in">
                 <img src="https://raw.githubusercontent.com/Naselab/boilingrocket/main/images/augmentedMind.jpeg" alt="The Augmented Mind" class="product-cover" loading="lazy">
@@ -830,9 +550,9 @@ Index · HTML
             </div>
         </div>
     </section>
- 
+
     <div class="chevron-divider" aria-hidden="true"></div>
- 
+
     <section id="about">
         <div class="about-grid">
             <div class="about-left fade-in" style="padding-left: clamp(1.5rem, 4vw, 3rem); padding-right: clamp(1.5rem, 4vw, 3rem);">
@@ -860,9 +580,9 @@ Index · HTML
             </div>
         </div>
     </section>
- 
+
     <div class="chevron-divider reverse" aria-hidden="true"></div>
- 
+
     <section id="contact">
         <div class="contact-grid">
             <div class="contact-left fade-in">
@@ -909,7 +629,7 @@ Index · HTML
             </form>
         </div>
     </section>
- 
+
     <footer>
         <div class="footer-top">
             <div class="footer-spec">Boiling Rocket &nbsp;&middot;&nbsp; Visual Journal &nbsp;&middot;&nbsp; Issue 01</div>
@@ -945,7 +665,7 @@ Index · HTML
             <div class="footer-spec">Signal Active</div>
         </div>
     </footer>
- 
+
     <!-- VIDEO PREVIEW PANEL -->
     <div class="preview-overlay" id="preview-overlay" onclick="closePreviewOnBg(event)">
         <div class="preview-panel" id="preview-panel">
@@ -982,7 +702,7 @@ Index · HTML
             </div>
         </div>
     </div>
- 
+
     <!-- EMAIL CAPTURE MODAL -->
     <div class="sub-modal-overlay" id="email-modal" onclick="closeEmailModalOnBg(event)">
         <div class="sub-modal">
@@ -1004,7 +724,7 @@ Index · HTML
             <div class="sub-modal-fine">No junk data. Pure visual releases. <a href="#contact">Privacy Node</a></div>
         </div>
     </div>
- 
+
     <!-- SUBSCRIBE MODAL -->
     <div class="sub-modal-overlay" id="sub-modal" onclick="closeSubModalOnBg(event)">
         <div class="sub-modal">
@@ -1037,7 +757,7 @@ Index · HTML
             </div>
         </div>
     </div>
- 
+
     <!-- VIDEO MODAL -->
     <div class="modal-overlay" id="modal" onclick="closeModalOnBg(event)">
         <div class="modal" id="modal-box">
@@ -1056,17 +776,17 @@ Index · HTML
             </div>
         </div>
     </div>
- 
+
     <script>
         let pendingVideoUrl = '';
         let pendingVideoTitle = '';
         let pendingVideoMeta = '';
         let pendingVideoDesc = '';
- 
+
         function _beacon(name, data) {
             try { window.cfBeacon && window.cfBeacon.push({ type: 'event', name, data }); } catch(e) {}
         }
- 
+
         function openPreview(url, title, meta, desc, frameImg, locked) {
             pendingVideoUrl = url;
             pendingVideoTitle = title;
@@ -1094,21 +814,21 @@ Index · HTML
             document.getElementById('preview-overlay').classList.add('open');
             document.body.style.overflow = 'hidden';
         }
- 
+
         function closePreview() {
             document.getElementById('preview-overlay').classList.remove('open');
             document.body.style.overflow = '';
         }
- 
+
         function closePreviewOnBg(e) {
             if (e.target === document.getElementById('preview-overlay')) closePreview();
         }
- 
+
         function previewPlayNow() {
             closePreview();
             openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
         }
- 
+
         function submitPreviewEmail() {
             const input = document.getElementById('preview-email-input');
             const email = input.value.trim();
@@ -1128,18 +848,18 @@ Index · HTML
                 openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
             });
         }
- 
+
         function openEmailCapture(url, title, meta, desc) { openPreview(url, title, meta, desc, '', false); }
- 
+
         function closeEmailModal() {
             document.getElementById('email-modal').classList.remove('open');
             document.body.style.overflow = '';
         }
- 
+
         function closeEmailModalOnBg(e) {
             if (e.target === document.getElementById('email-modal')) closeEmailModal();
         }
- 
+
         function submitEmailCapture() {
             const email = document.getElementById('email-capture-input').value;
             if (!email || !email.includes('@')) { document.getElementById('email-capture-input').style.borderColor = 'rgba(255,62,62,0.6)'; return; }
@@ -1153,7 +873,7 @@ Index · HTML
                 openModal(pendingVideoUrl, pendingVideoTitle, pendingVideoMeta);
             });
         }
- 
+
         function openModal(url, title, meta) {
             document.getElementById('modal-iframe').src = url;
             document.getElementById('modal-title').textContent = title;
@@ -1162,21 +882,21 @@ Index · HTML
             document.body.style.overflow = 'hidden';
             _beacon('video_play', { title });
         }
- 
+
         function closeModal() {
             document.getElementById('modal-iframe').src = '';
             document.getElementById('modal').classList.remove('open');
             document.body.style.overflow = '';
         }
- 
+
         function closeModalOnBg(e) {
             if (e.target === document.getElementById('modal')) closeModal();
         }
- 
+
         const gumroadMonthly = 'https://boilingrocket.gumroad.com/l/zuzvds';
         const gumroadYearly  = 'https://boilingrocket.gumroad.com/l/nsddb';
         let currentPlan = 'yearly';
- 
+
         function openSubModal(videoTitle) {
             document.getElementById('sub-modal-video-title').textContent = videoTitle || 'Members Only';
             document.getElementById('sub-btn').href = gumroadYearly;
@@ -1184,30 +904,30 @@ Index · HTML
             document.getElementById('sub-modal').classList.add('open');
             document.body.style.overflow = 'hidden';
         }
- 
+
         function closeSubModal() {
             document.getElementById('sub-modal').classList.remove('open');
             document.body.style.overflow = '';
         }
- 
+
         function closeSubModalOnBg(e) {
             if (e.target === document.getElementById('sub-modal')) closeSubModal();
         }
- 
+
         function selectPlan(plan) {
             currentPlan = plan;
             document.getElementById('plan-monthly').classList.toggle('selected', plan === 'monthly');
             document.getElementById('plan-yearly').classList.toggle('selected', plan === 'yearly');
             document.getElementById('sub-btn').href = plan === 'monthly' ? gumroadMonthly : gumroadYearly;
         }
- 
+
         function toggleLabMenu() {
             const btn = document.getElementById('lab-btn');
             const menu = document.getElementById('lab-menu');
             const open = menu.classList.toggle('open');
             btn.setAttribute('aria-expanded', open);
         }
- 
+
         document.addEventListener('click', function(e) {
             const wrap = document.querySelector('.nav-lab-wrap');
             if (wrap && !wrap.contains(e.target)) {
@@ -1215,7 +935,7 @@ Index · HTML
                 document.getElementById('lab-btn').setAttribute('aria-expanded', 'false');
             }
         });
- 
+
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 closeModal(); closeSubModal(); closePreview(); closeEmailModal();
@@ -1223,7 +943,7 @@ Index · HTML
                 document.getElementById('lab-btn').setAttribute('aria-expanded','false');
             }
         });
- 
+
         function handleForm(e) {
             e.preventDefault();
             const form = e.target;
@@ -1255,7 +975,7 @@ Index · HTML
                 setTimeout(() => { btn.textContent = 'Send Transmission'; btn.style.background = ''; btn.style.color = ''; }, 4000);
             });
         }
- 
+
         (function() {
             var hero = document.querySelector('.hero');
             var catalog = document.getElementById('catalog');
@@ -1270,7 +990,7 @@ Index · HTML
             window.addEventListener('scroll', updateOverlays, { passive: true });
             updateOverlays();
         })();
- 
+
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('nav a');
         window.addEventListener('scroll', () => {
@@ -1278,7 +998,7 @@ Index · HTML
             sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
             navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--neon-red)' : ''; });
         });
- 
+
         (function() {
             function revealInView() {
                 const vh = window.innerHeight;
@@ -1300,6 +1020,3 @@ Index · HTML
     </script>
 </body>
 </html>
- 
-
-
