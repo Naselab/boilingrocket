@@ -778,16 +778,15 @@
     </div>
 
     <script>
-        // Preload frame image on card hover so it's cached before click
+        // Preload frame image on hover by deriving it from the thumbnail src
         document.querySelectorAll('.video-card').forEach(function(card) {
-            var onclick = card.getAttribute('onclick') || '';
-            var match = onclick.match(/openPreview\([^,]+,[^,]+,[^,]+,[^,]+,\s*'([^']+)'/);
-            if (match && match[1] && match[1] !== '') {
-                card.addEventListener('mouseenter', function() {
-                    var img = new Image();
-                    img.src = match[1];
-                }, { once: true, passive: true });
-            }
+            var thumb = card.querySelector('.video-thumb img');
+            if (!thumb) return;
+            var frameSrc = thumb.src.replace('_THUMB', '');
+            card.addEventListener('mouseenter', function() {
+                var img = new Image();
+                img.src = frameSrc;
+            }, { once: true, passive: true });
         });
 
         let pendingVideoUrl = '';
