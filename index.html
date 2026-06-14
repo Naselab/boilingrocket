@@ -98,36 +98,39 @@
         .product-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
         .btn-small { display: inline-block; font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--neon-red); text-decoration: none; border: 1px solid var(--border-red); padding: 0.45rem 1rem; transition: background 0.2s, color 0.2s; }
         .btn-small:hover { background: var(--neon-red); color: #000; box-shadow: 0 0 10px var(--neon-red); }
-        .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: start; }
-        .about-left { padding: 0; text-align: center; }
-        .about-right { background: transparent; border-left: none; padding: 0; display: block; padding-top: 3.2rem; }
-        .about-text .eyebrow { font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--neon-red); margin-bottom: 1rem; text-align: center; }
-        .about-text h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1.5rem; color: #fff; text-transform: uppercase; text-align: center; }
-        .about-text p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 0.75rem; text-align: justify; text-align-last: left; }
-        .support-card { background: #1a0606; border: 1px solid rgba(255,62,62,0.35); box-shadow: 0 0 40px rgba(255,62,62,0.05), inset 0 0 40px rgba(0,0,0,0.3); padding: 2.5rem 2rem; position: relative; overflow: hidden; width: 100%; max-width: 380px; box-sizing: border-box; min-width: 0; transition: border-color 0.4s; }
-        .support-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--neon-red), transparent); }
-        .support-card::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-55deg, transparent, transparent 14px, rgba(255,62,62,0.025) 14px, rgba(255,62,62,0.025) 15px); pointer-events: none; }
-        .support-card:hover { border-color: var(--neon-red); box-shadow: 0 0 15px rgba(255,62,62,0.1); }
+        .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 0; align-items: stretch; }
+        .about-left { padding: 4rem clamp(2rem, 5vw, 5rem); background: #0a0303; border-right: 1px solid rgba(255,62,62,0.2); text-align: left; }
+        .about-right { background: #0d0404; padding: 4rem clamp(1.5rem, 3vw, 3rem); display: flex; align-items: flex-start; justify-content: center; }
+        .about-text .eyebrow { font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--neon-red); margin-bottom: 1rem; text-align: left; }
+        .about-text h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1.5rem; color: #fff; text-transform: uppercase; text-align: left; }
+        .about-text p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 0.9rem; text-align: left; }
+        .support-card { background: #120505; border: 1px solid rgba(255,62,62,0.4); box-shadow: 0 0 60px rgba(255,62,62,0.06), inset 0 0 40px rgba(0,0,0,0.4); padding: 2.5rem 2rem; position: relative; overflow: hidden; width: 100%; max-width: 360px; box-sizing: border-box; min-width: 0; transition: border-color 0.4s; }
+        .support-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, transparent, var(--neon-red), transparent); }
+        .support-card::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-55deg, transparent, transparent 14px, rgba(255,62,62,0.02) 14px, rgba(255,62,62,0.02) 15px); pointer-events: none; }
+        .support-card:hover { border-color: var(--neon-red); box-shadow: 0 0 30px rgba(255,62,62,0.12); }
         .support-eyebrow { font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--neon-red); margin-bottom: 1rem; }
         .support-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.8rem; letter-spacing: -0.01em; color: #fff; margin-bottom: 1rem; line-height: 1.1; text-transform: uppercase; }
-        .support-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 1.8rem; }
-        .btn-support { display: flex; align-items: center; gap: 0.55rem; background: transparent; color: var(--neon-red); padding: 0.72rem 1.4rem; font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--border-red); transition: all 0.25s; width: 100%; box-sizing: border-box; justify-content: center; }
-        .btn-support:hover { background: rgba(255, 62, 62, 0.08); border-color: var(--neon-red); color: #fff; transform: translateY(-1px); }
-        .support-fine { font-size: 0.65rem; color: var(--text-muted); opacity: 0.6; margin-top: 1rem; letter-spacing: 0.03em; line-height: 1.6; }
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+        .support-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 1.8rem; }
+        .btn-support { display: flex; align-items: center; gap: 0.55rem; background: var(--neon-red); color: #000; padding: 0.85rem 1.4rem; font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border: none; transition: all 0.25s; width: 100%; box-sizing: border-box; justify-content: center; }
+        .btn-support:hover { background: #fff; box-shadow: 0 0 20px var(--neon-red); transform: translateY(-1px); }
+        .support-fine { font-size: 0.65rem; color: var(--text-muted); opacity: 0.55; margin-top: 1rem; letter-spacing: 0.03em; line-height: 1.6; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0; align-items: stretch; }
+        .contact-left { padding: 4rem clamp(2rem, 5vw, 5rem); border-right: 1px solid rgba(255,62,62,0.2); }
+        .contact-right { padding: 4rem clamp(2rem, 4vw, 4rem); background: #0a0303; }
         .contact-left h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1.2rem; color: #fff; text-transform: uppercase; position: relative; padding-bottom: 1rem; }
         .contact-left h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 60px; height: 2px; background: var(--neon-red); box-shadow: 0 0 8px var(--neon-red); }
-        .contact-left p { font-size: 1.05rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; }
+        .contact-left p { font-size: 1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; }
         .contact-detail { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1.5rem; font-family: 'Space Mono', monospace; }
         .contact-detail-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--neon-red); }
         .contact-detail-value { font-size: 1rem; color: var(--text-silver); }
-        .contact-form { display: flex; flex-direction: column; gap: 1rem; }
-        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-        .form-group label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); font-family: 'Space Mono', monospace; }
-        .form-group input, .form-group textarea, .form-group select { background: var(--surface-dark-2); border: 1px solid var(--border-red-soft); color: var(--text-silver); font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s; resize: none; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--neon-red); }
-        .form-group select { appearance: none; cursor: pointer; }
-        .form-group textarea { height: 120px; }
+        .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-group label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--neon-red); font-family: 'Space Mono', monospace; }
+        .form-group input, .form-group textarea, .form-group select { background: #160808; border: 1px solid rgba(255,62,62,0.25); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 0.92rem; padding: 0.9rem 1.1rem; outline: none; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; resize: none; }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(168,152,152,0.4); }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--neon-red); background: #1a0808; box-shadow: 0 0 0 3px rgba(255,62,62,0.08); }
+        .form-group select { appearance: none; cursor: pointer; color: var(--text-silver); }
+        .form-group textarea { height: 130px; }
         footer { border-top: 1px solid var(--border-red-soft); display: flex; flex-direction: column; }
         .footer-top { padding: 1rem 4rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-bottom: 1px solid var(--border-red-soft); background: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255, 62, 62, 0.01) 10px, rgba(255, 62, 62, 0.01) 20px); }
         .footer-main { padding: 3.5rem 4rem; display: flex; align-items: center; justify-content: space-between; gap: 3rem; }
@@ -216,8 +219,8 @@
         .nav-lab-menu a { display: block; padding: 0.65rem 1rem; color: var(--text-muted); font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: color 0.15s, background 0.15s; }
         .nav-lab-menu a:hover { color: var(--neon-red); background: rgba(255,62,62,0.05); }
         #products { background: var(--surface-dark) !important; }
-        #about { background: #1c0808; padding: 5rem 4rem !important; }
-        #contact { background: var(--surface-dark-2) !important; }
+        #about { background: #0a0303 !important; padding: 0 !important; }
+        #contact { background: #0d0505 !important; padding: 0 !important; }
         .chevron-divider { position: relative; height: 22px; overflow: hidden; border-top: 1px solid rgba(255,62,62,0.5); border-bottom: 1px solid rgba(255,62,62,0.5); background: repeating-linear-gradient(-60deg, transparent, transparent 8px, rgba(255,62,62,0.45) 8px, rgba(255,62,62,0.45) 13px); }
         .chevron-divider::before, .chevron-divider::after { display: none; }
         .chevron-divider.reverse { background: repeating-linear-gradient(60deg, transparent, transparent 8px, rgba(255,62,62,0.45) 8px, rgba(255,62,62,0.45) 13px); }
@@ -555,7 +558,7 @@
 
     <section id="about">
         <div class="about-grid">
-            <div class="about-left fade-in" style="padding-left: clamp(1.5rem, 4vw, 3rem); padding-right: clamp(1.5rem, 4vw, 3rem);">
+            <div class="about-left fade-in">
                 <div class="about-text">
                     <div class="section-flag">&#x2B21; ABT-04 &middot; Archive Dossier</div>
                     <p class="eyebrow">// Project Origin</p>
@@ -602,7 +605,8 @@
                     <span class="contact-detail-value">Spotify &mdash; Boiling Rocket</span>
                 </div>
             </div>
-            <form class="contact-form fade-in" name="contact" method="POST" onsubmit="handleForm(event)">
+            <div class="contact-right fade-in">
+            <form class="contact-form" name="contact" method="POST" onsubmit="handleForm(event)">
                 <input type="hidden" name="bot-field" style="display:none">
                 <div class="form-group">
                     <label>Identity / Name</label>
@@ -627,6 +631,7 @@
                 </div>
                 <button type="submit" class="cyber-btn-primary" style="align-self: flex-start;">Send Transmission</button>
             </form>
+            </div>
         </div>
     </section>
 
