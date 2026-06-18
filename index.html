@@ -24,10 +24,11 @@
         --text-silver:#d8cece;
         --text-muted:#a89898;
         --border-red:rgba(255,62,62,0.15);--border-red-soft:rgba(255,62,62,0.06);--font-header:'Space Grotesk',sans-serif;--font-header-weight:700;--font-header-spacing:-0.05em}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         html{scroll-behavior:smooth}
         body{background-color:var(--bg-dark);color:var(--text-silver);font-family:'Space Grotesk',sans-serif;font-weight:400;line-height:1.6;overflow-x:hidden}
         .crt-scanlines{position:fixed;inset:0;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,0.25) 50%);background-size:100% 4px;z-index:100;pointer-events:none;opacity:1;transition:opacity 0.6s ease}
-        body.in-catalog .crt-scanlines{opacity:0.03}
+        body.in-catalog .crt-scanlines{opacity:0.18}
         .blueprint-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,62,62,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,62,62,0.03) 1px,transparent 1px);background-size:40px 40px;z-index:-1;pointer-events:none;opacity:1;transition:opacity 0.6s ease}
         body.past-hero .blueprint-grid{opacity:0.15}
         nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4rem;background:linear-gradient(to bottom,rgba(7,3,3,0.98) 0%,transparent 100%);border-bottom:1px solid var(--border-red-soft);backdrop-filter:blur(4px)}
@@ -75,8 +76,19 @@
         .video-card:hover .play-btn{transform:scale(1)}
         .play-btn svg{width:20px;height:20px;fill:#000;margin-left:3px}
         .video-duration{position:absolute;bottom:0.5rem;right:0.5rem;background:var(--surface-dark-2);border:1px solid var(--border-red);color:var(--text-silver);font-size:0.72rem;font-weight:500;padding:0.15rem 0.4rem;letter-spacing:0.05em;font-family:'Space Mono',monospace}
-        .video-tag{position:absolute;top:0.6rem;left:0.6rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.25rem 0.6rem;font-family:'Space Mono',monospace}
-        .tag-mv{background:var(--neon-red);color:#000}.tag-film{background:#000;color:var(--neon-red);border:1px solid var(--neon-red)}.tag-new{background:#fff;color:#000}
+        .video-tag{position:absolute;top:0.6rem;left:0.6rem}
+        .video-tag{font-family:'Space Mono',monospace;font-size:0.63rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.22rem 0.55rem;border:1px solid transparent}
+        /* genre colors */
+        .tag-mv{background:var(--neon-red);color:#000;border-color:var(--neon-red)}
+        .tag-film{background:#0a0a0a;color:var(--neon-red);border-color:var(--neon-red)}
+        .tag-new{background:#fff;color:#000}
+        .tag-scifi{background:#1a0000;color:#ff7a45;border-color:#ff7a45}
+        .tag-cyberpunk{background:#1a0000;color:#ff3e3e;border-color:#ff3e3e}
+        .tag-horror{background:#1a0000;color:#ff1744;border-color:#ff1744}
+        .tag-drama{background:#1a1200;color:#ffca28;border-color:#ffca28}
+        .tag-anim{background:#1a0a00;color:#ffb74d;border-color:#ffb74d}
+        .tag-fantasy{background:#1a0900;color:#ff8a65;border-color:#ff8a65}
+        .tag-action{background:#1a0a00;color:#ff9800;border-color:#ff9800}
         .video-info{display:flex;align-items:flex-start;gap:0.85rem;padding:1rem 0.5rem}
         .video-index{font-family:'Space Mono',monospace;font-size:2rem;line-height:1;letter-spacing:0.02em;color:var(--neon-red);opacity:0.25;flex-shrink:0;user-select:none}
         .video-title{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:0.25rem;transition:color 0.2s}
@@ -95,11 +107,11 @@
         .btn-small:hover{background:var(--neon-red);color:#000;box-shadow:0 0 10px var(--neon-red)}
         .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:0;align-items:stretch}
         .about-left{padding:4rem clamp(2rem,5vw,5rem);background:#0a0303;border-right:1px solid rgba(255,62,62,0.2);text-align:left}
-        .about-right{background:#0d0404;padding:4rem clamp(1.5rem,3vw,3rem);display:flex;align-items:flex-start;justify-content:center}
+        .about-right{background:#0d0404;padding:4rem clamp(2rem,4vw,3.5rem);display:flex;flex-direction:column;align-items:center;justify-content:center}
         .about-text .eyebrow{font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--neon-red);margin-bottom:1rem}
         .about-text h2{font-family:var(--font-header);font-weight:var(--font-header-weight);font-size:calc(clamp(2rem,4vw,3rem) * 1);letter-spacing:var(--font-header-spacing);line-height:1.1;margin-bottom:1.5rem;color:#fff;text-transform:uppercase}
         .about-text p{font-size:0.95rem;color:var(--text-muted);line-height:1.75;margin-bottom:0.9rem}
-        .support-card{background:#120505;border:1px solid rgba(255,62,62,0.4);box-shadow:0 0 60px rgba(255,62,62,0.06),inset 0 0 40px rgba(0,0,0,0.4);padding:2.5rem 2rem;position:relative;overflow:hidden;width:100%;max-width:360px;transition:border-color 0.4s}
+        .support-card{background:#120505;border:1px solid rgba(255,62,62,0.4);box-shadow:0 0 60px rgba(255,62,62,0.06),inset 0 0 40px rgba(0,0,0,0.4);padding:2.5rem 2rem;position:relative;overflow:hidden;width:100%;max-width:400px;align-self:center;transition:border-color 0.4s}
         .support-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,var(--neon-red),transparent)}
         .support-card::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 14px,rgba(255,62,62,0.02) 14px,rgba(255,62,62,0.02) 15px);pointer-events:none}
         .support-card:hover{border-color:var(--neon-red)}
@@ -212,8 +224,7 @@
         #products{background:var(--surface-dark)!important}
         #about{background:#0a0303!important;padding:0!important}
         #contact{background:#0d0505!important;padding:0!important}
-        .chevron-divider{position:relative;height:22px;overflow:hidden;border-top:1px solid rgba(255,62,62,0.5);border-bottom:1px solid rgba(255,62,62,0.5);background:repeating-linear-gradient(-60deg,transparent,transparent 8px,rgba(255,62,62,0.45) 8px,rgba(255,62,62,0.45) 13px)}
-        .chevron-divider.reverse{background:repeating-linear-gradient(60deg,transparent,transparent 8px,rgba(255,62,62,0.45) 8px,rgba(255,62,62,0.45) 13px)}
+        @keyframes marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}.section-divider{height:26px;overflow:hidden;border-top:1px solid rgba(255,62,62,0.25);border-bottom:1px solid rgba(255,62,62,0.25);background:rgba(255,62,62,0.04);display:flex;align-items:center}.section-divider-inner{display:inline-flex;white-space:nowrap;animation:marquee-scroll 30s linear infinite;will-change:transform}.section-divider.reverse .section-divider-inner{animation-direction:reverse}.section-divider-inner span{font-family:'Space Mono',monospace;font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,62,62,0.85);padding:0 1.2rem;flex-shrink:0}
         .section-flag{display:inline-flex;align-items:center;gap:0.5rem;background:var(--neon-red);color:#000;font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 0.8rem;margin-bottom:1.5rem}
         .product-cover{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;border:1px solid var(--border-red-soft);margin-bottom:1.2rem;filter:grayscale(20%) contrast(1.05);transition:filter 0.3s}
         .product-card:hover .product-cover{filter:grayscale(0%) contrast(1.1)}
@@ -224,7 +235,7 @@
     <div class="blueprint-grid"></div>
     <nav>
         <a href="#" class="logo">Boiling<span>Rocket</span></a>
-        <ul><li><a href="#catalog">Catalog</a></li><li><a href="#products">Products</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li>
+        <ul><li><a href="#catalog">Videos</a></li><li><a href="#products">Products</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li>
             <li class="nav-lab-wrap">
                 <button class="nav-lab-btn" onclick="toggleLabMenu()" aria-haspopup="true" aria-expanded="false" id="lab-btn">&#x2B21; Lab <span class="lab-caret">&#9662;</span></button>
                 <ul class="nav-lab-menu" id="lab-menu" role="menu"><li><a href="synth.html" role="menuitem">&#x2B21; BR Synth</a></li><li><a href="neonnoir.html" role="menuitem">&#x2B21; Neural Mesh</a></li></ul>
@@ -237,7 +248,7 @@
         <div class="hero-bg"></div>
         <div class="hero-content">
             <p class="hero-eyebrow">// // Bio-Neural Uplink Active // System v2.1.0 // System v2.1.0</p>
-            <h1>Where <em>AI</em><br>Meets Bold Ideas</h1>
+            <h1>Where <em>AI</em><br>Meets Bold   &gt;Ideas</h1>
             <p>Handcrafted music videos and short films exploring the dark intersection of technology, identity, and human transformation.</p>
             <a href="#catalog" class="cyber-btn-primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Access Catalog</a>
             <a href="#about" class="cyber-btn-ghost">Project Dossier</a>
@@ -246,9 +257,9 @@
     
     <section id="catalog">
         <div class="section-header">
-            <span class="section-title"><span class="section-code">CAT-02</span>Catalog</span>
+            <span class="section-title"><span class="section-code">VID-02</span>Videos</span>
             <div class="section-line"></div>
-            <span class="section-meta">15 Active Nodes &middot; 2024&ndash;2026</span>
+            <span class="section-meta">16 Active Nodes &middot; 2024&ndash;2026</span>
         </div>
         <div class="video-grid">
 
@@ -280,7 +291,7 @@
                 <div class="video-thumb">
                     <img src="/images/TheSimulation_THUMB.jpg" alt="The Simulation" loading="lazy" width="320" height="180" decoding="async">
                     <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-                    <span class="video-tag tag-mv">Horror</span><span class="video-duration">2:21</span>
+                    <span class="video-tag tag-horror">Horror</span><span class="video-duration">2:21</span>
                 </div>
                 <div class="video-info">
                     <div class="video-index">03</div>
@@ -292,7 +303,7 @@
                 <div class="video-thumb">
                     <img src="/images/Saved_THUMB.jpg" alt="Saved" loading="lazy" width="320" height="180" decoding="async">
                     <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-                    <span class="video-tag tag-mv">Horror</span><span class="video-duration">3:50</span>
+                    <span class="video-tag tag-horror">Horror</span><span class="video-duration">3:50</span>
                 </div>
                 <div class="video-info">
                     <div class="video-index">04</div>
@@ -304,7 +315,7 @@
                 <div class="video-thumb">
                     <img src="/images/authorized_THUMB.jpg" alt="Authorized Access" loading="lazy" width="320" height="180" decoding="async">
                     <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-                    <span class="video-tag tag-mv">Cyberpunk</span><span class="video-duration">2:13</span>
+                    <span class="video-tag tag-cyberpunk">Cyberpunk</span><span class="video-duration">2:13</span>
                 </div>
                 <div class="video-info">
                     <div class="video-index">05</div>
@@ -328,7 +339,7 @@
                 <div class="video-thumb">
                     <img src="/images/YouGottaRunAway_THUMB.jpg" alt="You Gotta Run Away" loading="lazy" width="320" height="180" decoding="async">
                     <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-                    <span class="video-tag tag-mv">Cyberpunk</span><span class="video-duration">2:25</span>
+                    <span class="video-tag tag-cyberpunk">Cyberpunk</span><span class="video-duration">2:25</span>
                 </div>
                 <div class="video-info">
                     <div class="video-index">07</div>
@@ -352,7 +363,7 @@
                 <div class="video-thumb">
                     <img src="/images/Banned_THUMB.jpg" alt="Banned" loading="lazy" width="320" height="180" decoding="async">
                     <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-                    <span class="video-tag tag-mv">Drama</span><span class="video-duration">3:12</span>
+                    <span class="video-tag tag-drama">Drama</span><span class="video-duration">3:12</span>
                 </div>
                 <div class="video-info">
                     <div class="video-index">09</div>
@@ -364,7 +375,7 @@
                 <div class="video-thumb">
                     <img src="/images/DoIt_THUMB.webp" alt="Do It" loading="lazy" width="320" height="180" decoding="async">
                     <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-                    <span class="video-tag tag-new">New</span>
+                    <span class="video-tag tag-mv">Crypto</span>
                 </div>
                 <div class="video-info">
                     <div class="video-index">10</div>
@@ -376,7 +387,7 @@
                 <div class="video-thumb">
                     <img src="/images/Stalker_THUMB.webp" alt="Stalker" loading="lazy" width="320" height="180" decoding="async">
                     <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-                    <span class="video-tag tag-mv">Horror</span>
+                    <span class="video-tag tag-horror">Horror</span>
                 </div>
                 <div class="video-info">
                     <div class="video-index">11</div>
@@ -388,7 +399,7 @@
                 <div class="video-thumb">
                     <img src="/images/SomethingIsComing_THUMB.webp" alt="Something Is Coming" loading="lazy" width="320" height="180" decoding="async">
                     <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-                    <span class="video-tag tag-mv">Animation</span>
+                    <span class="video-tag tag-anim">Animation</span>
                 </div>
                 <div class="video-info">
                     <div class="video-index">12</div>
@@ -424,11 +435,23 @@
                 <div class="video-thumb">
                     <img src="/images/Astro_THUMB.webp" alt="The Astro Alliance" loading="lazy" width="320" height="180" decoding="async">
                     <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-                    <span class="video-tag tag-mv">Superheroes</span><span class="video-duration">3:39</span>
+                    <span class="video-tag tag-action">Superheroes</span><span class="video-duration">3:39</span>
                 </div>
                 <div class="video-info">
                     <div class="video-index">15</div>
                     <div class="video-info-text"><div class="video-title">The Astro Alliance</div><div class="video-meta">2026 &middot; Music Video &middot; 3:39</div></div>
+                </div>
+            </div>
+
+            <div class="video-card fade-in" onclick="openPreview('https://rumble.com/embed//?pub=4pcu4u','','2026 · Music Video','','',false)">
+                <div class="video-thumb">
+                    <img src="" alt="" loading="lazy" width="320" height="180" decoding="async">
+                    <div class="video-thumb-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                    <span class="video-tag tag-new">New</span>
+                </div>
+                <div class="video-info">
+                    <div class="video-index">16</div>
+                    <div class="video-info-text"><div class="video-title"></div><div class="video-meta">2026 &middot; Music Video</div></div>
                 </div>
             </div>
         </div>
@@ -455,7 +478,7 @@
 
             <div class="product-card fade-in"><div class="product-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h3>Future-Proof</h3><p>The friendly tech guide for navigating AI tools. Written for curious minds who want clarity, not overwhelm.</p><a href="#" class="btn-small" style="opacity:0.3;cursor:default;border-color:rgba(255,62,62,0.1);">Coming Soon</a></div></div>
     </section>
-    
+    <div class="section-divider" data-style="marquee" aria-hidden="true"><div class="section-divider-inner"><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span></div></div>
     
     <section id="about">
         <div class="about-grid">
@@ -481,7 +504,7 @@
             </div>
         </div>
     </section>
-    
+    <div class="section-divider reverse" data-style="marquee" aria-hidden="true"><div class="section-divider-inner"><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span><span>INDEPENDENT FILM &middot; AI CINEMA &middot; BOILING ROCKET &middot;</span></div></div>
     
     <section id="contact">
         <div class="contact-grid">
@@ -514,7 +537,7 @@
             <div class="social-links"><a href="https://open.spotify.com/artist/4H0t0xJIkQg2STG2kJ7PNe?si=vgSk2AEfRfKYbqbghUnpCQ" target="_blank" style="">Spotify</a><a href="https://boilingrocket.gumroad.com" target="_blank" style="">Gumroad</a><a href="synth.html" style="color: var(--neon-red);">BR Synth</a><a href="#contact" style="">Contact</a></div>
             <div class="footer-spec-row">
                 <div class="footer-spec-item"><span class="spec-key">Sector</span><span class="spec-val">BR-CIN-07</span></div>
-                <div class="footer-spec-item"><span class="spec-key">Catalog</span><span class="spec-val">15 Entries</span></div>
+                <div class="footer-spec-item"><span class="spec-key">Catalog</span><span class="spec-val">16 Entries</span></div>
                 <div class="footer-spec-item"><span class="spec-key">Status</span><span class="spec-val">Active · Ongoing</span></div>
             </div>
         </div>
