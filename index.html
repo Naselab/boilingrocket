@@ -108,16 +108,16 @@
         .video-title{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:0.25rem;transition:color 0.2s}
         .video-card:hover .video-title{color:var(--neon-red)}
         .video-meta{font-size:0.82rem;color:var(--text-muted);letter-spacing:0.03em;font-family:'Space Mono',monospace}
-        .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}@media(max-width:1200px){.products-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.products-grid{grid-template-columns:1fr}}
+        .products-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem}@media(max-width:1000px){.products-grid{grid-template-columns:repeat(4,1fr)}}@media(max-width:600px){.products-grid{grid-template-columns:repeat(2,1fr)}}
         .btn-small.btn-soon{opacity:0.75;cursor:default;color:var(--text-muted);border-color:rgba(255,62,62,0.3)}.btn-small.btn-soon:hover{background:transparent;color:var(--text-muted);box-shadow:none}
-        .product-card{background:var(--surface-dark);border:1px solid var(--border-red-soft);padding:2rem 1.5rem;transition:border-color 0.2s,transform 0.2s;position:relative}
+        .product-card{background:var(--surface-dark);border:1px solid var(--border-red-soft);padding:1.25rem 1rem;transition:border-color 0.2s,transform 0.2s;position:relative}
         .product-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--border-red-soft);transition:background 0.2s}
         .product-card:hover{border-color:var(--border-red);transform:translateY(-2px)}
         .product-card:hover::before{background:var(--neon-red)}
         .product-icon{width:40px;height:40px;background:rgba(255,62,62,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;border:1px solid var(--border-red-soft)}
         .product-icon svg{width:20px;height:20px;stroke:var(--neon-red);fill:none;stroke-width:1.5}
-        .product-card h3{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:0.5rem}
-        .product-card p{font-size:0.92rem;color:var(--text-muted);line-height:1.6;margin-bottom:1.5rem}
+        .product-card h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:0.5rem}
+        .product-card p{font-size:0.85rem;color:var(--text-muted);line-height:1.6;margin-bottom:1.5rem}
         .btn-small{display:inline-block;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--neon-red);text-decoration:none;border:1px solid var(--border-red);padding:0.45rem 1rem;transition:background 0.2s,color 0.2s}
         .btn-small:hover{background:var(--neon-red);color:#000;box-shadow:0 0 10px var(--neon-red)}
         .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:0;align-items:stretch}
@@ -241,7 +241,7 @@
         #contact{background:#0d0505!important;padding:0!important}
         @keyframes marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}.section-divider{height:26px;overflow:hidden;border-top:1px solid rgba(255,62,62,0.25);border-bottom:1px solid rgba(255,62,62,0.25);background:rgba(255,62,62,0.04);display:flex;align-items:center}.section-divider-inner{display:inline-flex;white-space:nowrap;animation:marquee-scroll 30s linear infinite;will-change:transform}.section-divider.reverse .section-divider-inner{animation-direction:reverse}.section-divider-inner span{font-family:'Space Mono',monospace;font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,62,62,0.85);padding:0 1.2rem;flex-shrink:0}
         .section-flag{display:inline-flex;align-items:center;gap:0.5rem;background:var(--neon-red);color:#000;font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 0.8rem;margin-bottom:1.5rem}
-        .product-cover{width:50%;aspect-ratio:1/1;object-fit:cover;object-position:top;display:block;border:1px solid var(--border-red-soft);margin-bottom:1.2rem;border-radius:12px;filter:grayscale(20%) contrast(1.05);transition:filter 0.3s}
+        .product-cover{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:top;display:block;border:1px solid var(--border-red-soft);margin-bottom:1.2rem;border-radius:12px;filter:grayscale(20%) contrast(1.05);transition:filter 0.3s}
         .product-card:hover .product-cover{filter:grayscale(0%) contrast(1.1)}
         .product-cover[src$="augmentedMind.jpeg"]{object-position:center}
     </style>
